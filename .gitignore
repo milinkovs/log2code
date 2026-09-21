@@ -1,0 +1,9 @@
+target/
+node_modules/
+web/dist/
+# root-level runtime data only (logs, archives, work dirs); anchored so that
+# source folders named "data" (e.g. web/src/data) are not ignored by accident
+/data/
+.idea/
+*.iml
+.vscode/
