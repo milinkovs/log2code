@@ -1,17 +1,22 @@
 package org.log2code.analyzer.cli;
 
+import com.github.javaparser.ast.CompilationUnit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import org.log2code.analyzer.AnalyzerCli;
 import org.log2code.analyzer.AnalyzerVersion;
+import org.log2code.analyzer.ast.JavaSources;
 import org.log2code.analyzer.config.AnalyzerConfig;
 import org.log2code.analyzer.config.AnalyzerConfigLoader;
 import org.log2code.analyzer.git.GitRepo;
+import org.log2code.analyzer.logging.LogCall;
+import org.log2code.analyzer.logging.LogCallDetector;
 import org.log2code.analyzer.modules.ModuleScanner;
 import org.log2code.core.ids.StableIds;
 import org.log2code.core.model.AnalysisRun;
@@ -43,6 +48,10 @@ public final class ProjectCommand implements Callable<Integer> {
         description = "Allow uncommitted .java changes in the project repo; the version gets a '-dirty' suffix.")
     private boolean allowDirty;
 
+    @Option(names = "--list-calls",
+        description = "Print every detected log call (file:line, API, logger, level) instead of analyzing/writing anything.")
+    private boolean listCalls;
+
     @Override
     public Integer call() throws IOException {
         AnalyzerConfig config = AnalyzerConfigLoader.load(parent.configPath());
@@ -69,6 +78,11 @@ public final class ProjectCommand implements Callable<Integer> {
         List<ModuleInfo> modules = new ModuleScanner().scan(
             projectRoot, config.project().includeModules(), config.project().excludeModules());
         Instant finishedAt = Instant.now();
+
+        if (listCalls) {
+            printListCalls(projectRoot, modules);
+            return 0;
+        }
 
         if (dryRun) {
             printDryRun(headCommit, remoteUrl, projectRoot, modules);
@@ -117,6 +131,48 @@ public final class ProjectCommand implements Callable<Integer> {
         for (ModuleInfo module : modules) {
             long javaFiles = ModuleScanner.countJavaFiles(projectRoot.resolve(module.module()));
             System.out.printf("  %-40s service=%-20s java_files=%d%n", module.module(), module.service(), javaFiles);
+        }
+    }
+
+    /**
+     * T08 step 8: parses every module's {@code src/main/java} (one code unit, so inheritance across
+     * modules is resolved just like within one), detects log calls and prints one line per call.
+     * Read-only: writes nothing, regardless of {@code --dry-run}/{@code --out}.
+     */
+    private void printListCalls(Path projectRoot, List<ModuleInfo> modules) {
+        List<CompilationUnit> units = new ArrayList<>();
+        List<String> fileLabels = new ArrayList<>();
+        List<JavaSources.ParseFailure> failures = new ArrayList<>();
+
+        for (ModuleInfo module : modules) {
+            String sourceRoot = module.sourceRoots().get(0);
+            JavaSources.Result parsed = JavaSources.parseAll(projectRoot.resolve(module.module()).resolve(sourceRoot));
+            for (JavaSources.ParsedFile file : parsed.files()) {
+                units.add(file.unit());
+                fileLabels.add(module.module() + "/" + sourceRoot + "/" + file.relativePath().toString().replace('\\', '/'));
+            }
+            failures.addAll(parsed.failures());
+        }
+
+        List<List<LogCall>> perFile = LogCallDetector.detectAll(units);
+        int total = 0;
+        for (int i = 0; i < perFile.size(); i++) {
+            for (LogCall call : perFile.get(i)) {
+                int line = call.node().getRange().map(r -> r.begin.line).orElse(-1);
+                String throwableMarker = call.throwableArg() != null ? " +throwable" : "";
+                System.out.printf("%s:%d  api=%-20s logger=%-10s level=%-6s detection=%-10s logger_name_kind=%-14s logger_name=%s%s%n",
+                    fileLabels.get(i), line, call.api(), call.loggerExpr(), call.level(), call.detection(),
+                    call.loggerNameKind(), call.loggerName(), throwableMarker);
+                total++;
+            }
+        }
+        System.out.println("total: " + total + " log call(s)");
+
+        if (!failures.isEmpty()) {
+            System.err.println(failures.size() + " file(s) failed to parse:");
+            for (JavaSources.ParseFailure failure : failures) {
+                System.err.println("  " + failure.relativePath() + ": " + failure.message());
+            }
         }
     }
 }
