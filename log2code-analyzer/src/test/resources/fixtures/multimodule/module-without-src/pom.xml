@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.log2code.fixture</groupId>
+    <artifactId>multimodule-root</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>module-without-src</artifactId>
+  <packaging>pom</packaging>
+</project>

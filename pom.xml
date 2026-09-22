@@ -50,6 +50,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- our own modules -->
+      <dependency>
+        <groupId>org.log2code</groupId>
+        <artifactId>log2code-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
       <!-- AST -->
       <dependency>
         <groupId>com.github.javaparser</groupId>

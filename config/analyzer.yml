@@ -1,0 +1,15 @@
+# log2code-analyzer configuration (0.11). Paths are relative to log2code/.
+project:
+  name: spring-petclinic-microservices
+  path: ../spring-petclinic-microservices
+  include-modules: []          # empty = all Maven modules that have src/main/java
+  exclude-modules: []
+context:
+  snippet-lines: 5
+  max-preceding-statements: 10
+dependencies:
+  include: []                  # groupId:artifactId patterns, e.g. "org.springframework:*"
+  exclude: ["org.webjars:*"]
+  auto-select-from-logs: [data/logs, fixtures/logs]
+opensearch:
+  url: http://localhost:9200
