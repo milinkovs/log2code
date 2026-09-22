@@ -1,0 +1,784 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.1)
+
+2026-09-21T18:36:02.059Z  INFO 1 --- [           main] o.s.s.p.config.ConfigServerApplication   : Starting ConfigServerApplication v4.0.1 using Java 17.0.20 with PID 1 (/application/BOOT-INF/classes started by root in /application)
+2026-09-21T18:36:02.065Z  INFO 1 --- [           main] o.s.s.p.config.ConfigServerApplication   : The following 1 profile is active: "docker"
+2026-09-21T18:36:04.276Z  INFO 1 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=6d1c9e9d-ef40-32be-9e63-ab5fef88f9b6
+2026-09-21T18:36:05.011Z  INFO 1 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8888 (http)
+2026-09-21T18:36:05.048Z  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-21T18:36:05.049Z  INFO 1 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-09-21T18:36:05.164Z  INFO 1 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2960 ms
+2026-09-21T18:36:05.477Z  INFO 1 --- [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-09-21T18:36:07.240Z  INFO 1 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8888 (http) with context path '/'
+2026-09-21T18:36:07.287Z  INFO 1 --- [           main] o.s.s.p.config.ConfigServerApplication   : Started ConfigServerApplication in 6.524 seconds (process running for 8.7)
+2026-09-21T18:36:08.999Z  INFO 1 --- [nio-8888-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-21T18:36:08.999Z  INFO 1 --- [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-21T18:36:09.001Z  INFO 1 --- [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-09-21T18:36:20.629Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/discovery-server.yml]' via location 'file:/tmp/config-repo-10604983012312709102/'
+2026-09-21T18:36:20.630Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:20.630Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:21.809Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/discovery-server.yml]' via location 'file:/tmp/config-repo-10604983012312709102/'
+2026-09-21T18:36:21.810Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:40.297Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:40.300Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:40.301Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:45.222Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:45.224Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:45.226Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:45.227Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:46.327Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:46.331Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:46.336Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:46.338Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:47.083Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:47.084Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:47.902Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:47.904Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:47.905Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:47.905Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:48.726Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:48.726Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:48.727Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:36:48.727Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:48.727Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:49.437Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:49.439Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:50.280Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:36:50.281Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:50.281Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:51.207Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:36:51.208Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:22.725Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:22.747Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:22.748Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:23.556Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:23.557Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:23.557Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:24.296Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:24.296Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:24.296Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:24.296Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:25.070Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:25.070Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:25.071Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:25.071Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:25.729Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:25.729Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:25.729Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:26.430Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:26.430Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:26.430Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:27.138Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:27.138Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:27.138Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:27.138Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:27.845Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:27.846Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:27.846Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:27.846Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:28.505Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:28.506Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:28.507Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:29.162Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:29.162Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:29.162Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:29.820Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:29.820Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:29.820Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:29.820Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:30.549Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:30.550Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:30.550Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:30.550Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:31.316Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:31.317Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:31.317Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:31.977Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:31.978Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:31.978Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:32.621Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:32.622Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:32.622Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:32.622Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:33.345Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:33.345Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:33.345Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:33.345Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:34.030Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:34.031Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:34.031Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:34.712Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:34.712Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:34.712Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:35.357Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:35.357Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:35.357Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:35.357Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:35.995Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:35.995Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:35.995Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:35.995Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:36.645Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:36.646Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:36.646Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:37.301Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:37.304Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:37.304Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:38.012Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:38.012Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:38.013Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:38.014Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:38.672Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:38.673Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:38.673Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:38.673Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:39.311Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:39.312Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:39.312Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:39.989Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:39.989Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:39.989Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:40.647Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:40.648Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:40.648Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:40.648Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:41.344Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:41.345Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:41.345Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:41.345Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:41.977Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:41.978Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:41.978Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:42.642Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:42.642Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:42.642Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:43.298Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:43.299Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:43.300Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:43.302Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:44.018Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:44.018Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:44.019Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:44.019Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:44.652Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:44.652Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:44.652Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:45.296Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:45.296Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:45.296Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:45.938Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:45.938Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:45.938Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:45.938Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:46.608Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:46.609Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:46.609Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:46.610Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:47.264Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:47.264Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:47.264Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:47.918Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:47.918Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:47.919Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:48.571Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:48.572Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:48.572Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:48.572Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:49.231Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:49.232Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:49.232Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:49.232Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:49.899Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:49.899Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:49.899Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:50.548Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:50.548Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:50.549Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:51.214Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:51.214Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:51.214Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:51.214Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:51.905Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:51.905Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:51.906Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:51.906Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:52.568Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:52.568Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:52.568Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:53.160Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:53.161Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:53.161Z  INFO 1 --- [nio-8888-exec-6] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:53.819Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:53.819Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:53.819Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:53.819Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:54.643Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:54.644Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:54.644Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:54.644Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:55.341Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:55.341Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:55.341Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:55.990Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:55.990Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:55.990Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:56.653Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:56.654Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:56.654Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:56.654Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:57.311Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:57.312Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:57.312Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:57.312Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:57.992Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:57.992Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:57.992Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:58.675Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:58.675Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:58.675Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:59.349Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:59.350Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:59.355Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:59.356Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:59.978Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:43:59.978Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:43:59.978Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:43:59.978Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:00.672Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:00.672Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:00.672Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:01.571Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:01.571Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:01.571Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:02.227Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:02.227Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:02.227Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:02.227Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:02.870Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:02.870Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:02.870Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:02.870Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:03.539Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:03.540Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:03.540Z  INFO 1 --- [io-8888-exec-10] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:04.189Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:04.189Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:04.189Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:04.856Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:04.856Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:04.856Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:04.856Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:05.505Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:05.505Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:05.506Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:05.506Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:06.215Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:06.216Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:06.216Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:06.883Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:06.884Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:06.884Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:07.560Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:07.560Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:07.560Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:07.560Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:08.214Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:08.215Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:08.215Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:08.215Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:08.841Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:08.841Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:08.841Z  INFO 1 --- [nio-8888-exec-8] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:09.522Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:09.523Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:09.523Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:10.207Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:10.208Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:10.208Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:10.208Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:10.943Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:10.943Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:10.943Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:10.943Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:11.621Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:11.621Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:11.622Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:12.241Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:12.241Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:12.241Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:12.889Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:12.890Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:12.890Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:12.890Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:13.553Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:13.553Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:13.553Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:13.553Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:14.230Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:14.231Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:14.231Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:14.874Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:14.874Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:14.874Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:15.542Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:15.542Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:15.542Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:15.542Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:16.185Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:16.185Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:16.185Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:16.185Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:16.839Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:16.839Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:16.839Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:17.491Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:17.491Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:17.491Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:18.118Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:18.118Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:18.118Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:18.118Z  INFO 1 --- [nio-8888-exec-3] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:18.791Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:18.791Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:18.791Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:18.791Z  INFO 1 --- [nio-8888-exec-4] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:19.443Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/customers-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:19.443Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:19.443Z  INFO 1 --- [nio-8888-exec-5] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:20.110Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/visits-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:44:20.110Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:20.110Z  INFO 1 --- [nio-8888-exec-7] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:20.742Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:44:20.743Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:44:20.743Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:46:00.986Z  WARN 1 --- [nio-8888-exec-8] .c.s.e.MultipleJGitEnvironmentRepository : Could not find label no-such-label-xyz for application customers-service and profile docker
+
+org.springframework.cloud.config.server.environment.NoSuchLabelException: No such label: no-such-label-xyz
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:330) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.getLocations(JGitEnvironmentRepository.java:278) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.getLocations(MultipleJGitEnvironmentRepository.java:145) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOneInternal(AbstractScmEnvironmentRepository.java:96) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOne(AbstractScmEnvironmentRepository.java:76) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.findOne(JGitEnvironmentRepository.java:266) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOneFromCandidate(MultipleJGitEnvironmentRepository.java:196) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOne(MultipleJGitEnvironmentRepository.java:179) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.CompositeEnvironmentRepository.findOne(CompositeEnvironmentRepository.java:83) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.lambda$findOne$3(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at io.micrometer.observation.Observation.observe(Observation.java:563) ~[micrometer-observation-1.16.1.jar:1.16.1]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.findOne(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentEncryptorEnvironmentRepository.findOne(EnvironmentEncryptorEnvironmentRepository.java:64) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.getEnvironment(EnvironmentController.java:134) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.labelled(EnvironmentController.java:121) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:480) ~[spring-cloud-context-5.0.0.jar:5.0.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.config.server.environment.EnvironmentController$$SpringCGLIB$$0.labelled(<generated>) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.eclipse.jgit.api.errors.RefNotFoundException: Ref no-such-label-xyz cannot be resolved
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:222) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.checkout(JGitEnvironmentRepository.java:484) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:323) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	... 68 common frames omitted
+
+2026-09-21T18:46:01.027Z  WARN 1 --- [nio-8888-exec-8] o.s.c.c.s.e.EnvironmentController        : Error getting the Environment with name=customers-service profiles=docker label=no-such-label-xyz includeOrigin=false
+
+org.springframework.cloud.config.server.environment.NoSuchLabelException: No such label: no-such-label-xyz
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:330) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.getLocations(JGitEnvironmentRepository.java:278) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.getLocations(MultipleJGitEnvironmentRepository.java:145) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOneInternal(AbstractScmEnvironmentRepository.java:96) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOne(AbstractScmEnvironmentRepository.java:76) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.findOne(JGitEnvironmentRepository.java:266) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOneFromCandidate(MultipleJGitEnvironmentRepository.java:196) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOne(MultipleJGitEnvironmentRepository.java:179) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.CompositeEnvironmentRepository.findOne(CompositeEnvironmentRepository.java:83) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.lambda$findOne$3(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at io.micrometer.observation.Observation.observe(Observation.java:563) ~[micrometer-observation-1.16.1.jar:1.16.1]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.findOne(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentEncryptorEnvironmentRepository.findOne(EnvironmentEncryptorEnvironmentRepository.java:64) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.getEnvironment(EnvironmentController.java:134) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.labelled(EnvironmentController.java:121) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:480) ~[spring-cloud-context-5.0.0.jar:5.0.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.config.server.environment.EnvironmentController$$SpringCGLIB$$0.labelled(<generated>) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.eclipse.jgit.api.errors.RefNotFoundException: Ref no-such-label-xyz cannot be resolved
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:222) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.checkout(JGitEnvironmentRepository.java:484) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:323) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	... 68 common frames omitted
+
+2026-09-21T18:46:01.762Z  WARN 1 --- [io-8888-exec-10] .c.s.e.MultipleJGitEnvironmentRepository : Could not find label 00000000000000000000000000000000000000ab for application customers-service and profile docker
+
+java.lang.IllegalStateException: Cannot load environment
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:339) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.getLocations(JGitEnvironmentRepository.java:278) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.getLocations(MultipleJGitEnvironmentRepository.java:145) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOneInternal(AbstractScmEnvironmentRepository.java:96) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOne(AbstractScmEnvironmentRepository.java:76) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.findOne(JGitEnvironmentRepository.java:266) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOneFromCandidate(MultipleJGitEnvironmentRepository.java:196) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOne(MultipleJGitEnvironmentRepository.java:179) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.CompositeEnvironmentRepository.findOne(CompositeEnvironmentRepository.java:83) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.lambda$findOne$3(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at io.micrometer.observation.Observation.observe(Observation.java:563) ~[micrometer-observation-1.16.1.jar:1.16.1]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.findOne(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentEncryptorEnvironmentRepository.findOne(EnvironmentEncryptorEnvironmentRepository.java:64) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.getEnvironment(EnvironmentController.java:134) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.labelled(EnvironmentController.java:121) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:480) ~[spring-cloud-context-5.0.0.jar:5.0.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.config.server.environment.EnvironmentController$$SpringCGLIB$$0.labelled(<generated>) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.eclipse.jgit.api.errors.JGitInternalException: Missing unknown 00000000000000000000000000000000000000ab
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:306) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.checkout(JGitEnvironmentRepository.java:484) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:323) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	... 68 common frames omitted
+Caused by: org.eclipse.jgit.errors.MissingObjectException: Missing unknown 00000000000000000000000000000000000000ab
+	at org.eclipse.jgit.internal.storage.file.WindowCursor.open(WindowCursor.java:149) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.lib.ObjectReader.open(ObjectReader.java:216) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.revwalk.RevWalk.parseAny(RevWalk.java:1163) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.revwalk.RevWalk.parseCommit(RevWalk.java:1074) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:232) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	... 70 common frames omitted
+
+2026-09-21T18:46:01.765Z  WARN 1 --- [io-8888-exec-10] o.s.c.c.s.e.EnvironmentController        : Error getting the Environment with name=customers-service profiles=docker label=00000000000000000000000000000000000000ab includeOrigin=false
+
+java.lang.IllegalStateException: Cannot load environment
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:339) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.getLocations(JGitEnvironmentRepository.java:278) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.getLocations(MultipleJGitEnvironmentRepository.java:145) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOneInternal(AbstractScmEnvironmentRepository.java:96) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOne(AbstractScmEnvironmentRepository.java:76) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.findOne(JGitEnvironmentRepository.java:266) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOneFromCandidate(MultipleJGitEnvironmentRepository.java:196) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOne(MultipleJGitEnvironmentRepository.java:179) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.CompositeEnvironmentRepository.findOne(CompositeEnvironmentRepository.java:83) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.lambda$findOne$3(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at io.micrometer.observation.Observation.observe(Observation.java:563) ~[micrometer-observation-1.16.1.jar:1.16.1]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.findOne(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentEncryptorEnvironmentRepository.findOne(EnvironmentEncryptorEnvironmentRepository.java:64) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.getEnvironment(EnvironmentController.java:134) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.labelled(EnvironmentController.java:121) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:480) ~[spring-cloud-context-5.0.0.jar:5.0.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.config.server.environment.EnvironmentController$$SpringCGLIB$$0.labelled(<generated>) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.eclipse.jgit.api.errors.JGitInternalException: Missing unknown 00000000000000000000000000000000000000ab
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:306) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.checkout(JGitEnvironmentRepository.java:484) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:323) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	... 68 common frames omitted
+Caused by: org.eclipse.jgit.errors.MissingObjectException: Missing unknown 00000000000000000000000000000000000000ab
+	at org.eclipse.jgit.internal.storage.file.WindowCursor.open(WindowCursor.java:149) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.lib.ObjectReader.open(ObjectReader.java:216) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.revwalk.RevWalk.parseAny(RevWalk.java:1163) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.revwalk.RevWalk.parseCommit(RevWalk.java:1074) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:232) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	... 70 common frames omitted
+
+2026-09-21T18:46:01.774Z ERROR 1 --- [io-8888-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalStateException: Cannot load environment] with root cause
+
+org.eclipse.jgit.errors.MissingObjectException: Missing unknown 00000000000000000000000000000000000000ab
+	at org.eclipse.jgit.internal.storage.file.WindowCursor.open(WindowCursor.java:149) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.lib.ObjectReader.open(ObjectReader.java:216) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.revwalk.RevWalk.parseAny(RevWalk.java:1163) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.revwalk.RevWalk.parseCommit(RevWalk.java:1074) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:232) ~[org.eclipse.jgit-7.4.0.202509020913-r.jar:7.4.0.202509020913-r]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.checkout(JGitEnvironmentRepository.java:484) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.refresh(JGitEnvironmentRepository.java:323) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.getLocations(JGitEnvironmentRepository.java:278) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.getLocations(MultipleJGitEnvironmentRepository.java:145) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOneInternal(AbstractScmEnvironmentRepository.java:96) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.AbstractScmEnvironmentRepository.findOne(AbstractScmEnvironmentRepository.java:76) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.JGitEnvironmentRepository.findOne(JGitEnvironmentRepository.java:266) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOneFromCandidate(MultipleJGitEnvironmentRepository.java:196) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository.findOne(MultipleJGitEnvironmentRepository.java:179) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.CompositeEnvironmentRepository.findOne(CompositeEnvironmentRepository.java:83) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.lambda$findOne$3(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at io.micrometer.observation.Observation.observe(Observation.java:563) ~[micrometer-observation-1.16.1.jar:1.16.1]
+	at org.springframework.cloud.config.server.environment.ObservationEnvironmentRepositoryWrapper.findOne(ObservationEnvironmentRepositoryWrapper.java:75) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentEncryptorEnvironmentRepository.findOne(EnvironmentEncryptorEnvironmentRepository.java:64) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.getEnvironment(EnvironmentController.java:134) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at org.springframework.cloud.config.server.environment.EnvironmentController.labelled(EnvironmentController.java:121) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281) ~[spring-core-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:480) ~[spring-cloud-context-5.0.0.jar:5.0.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.2.jar:7.0.2]
+	at org.springframework.cloud.config.server.environment.EnvironmentController$$SpringCGLIB$$0.labelled(<generated>) ~[spring-cloud-config-server-5.0.0.jar:5.0.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-09-21T18:46:55.832Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:46:55.832Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:46:55.832Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:46:55.832Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:46:55.832Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:46:56.551Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:46:56.551Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/vets-service.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:46:56.551Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:47:17.073Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #1)
+2026-09-21T18:47:17.073Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:47:17.073Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:47:17.073Z  INFO 1 --- [nio-8888-exec-2] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:47:17.767Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/api-gateway.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:47:17.768Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:48:04.338Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/discovery-server.yml]' via location 'file:/tmp/config-repo-10604983012312709102/'
+2026-09-21T18:48:04.338Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #2)
+2026-09-21T18:48:04.338Z  INFO 1 --- [nio-8888-exec-1] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)
+2026-09-21T18:48:05.092Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/discovery-server.yml]' via location 'file:/tmp/config-repo-10604983012312709102/'
+2026-09-21T18:48:05.092Z  INFO 1 --- [nio-8888-exec-9] o.s.c.c.s.e.NativeEnvironmentRepository  : Adding property source: Config resource 'file [/tmp/config-repo-10604983012312709102/application.yml]' via location 'file:/tmp/config-repo-10604983012312709102/' (document #0)

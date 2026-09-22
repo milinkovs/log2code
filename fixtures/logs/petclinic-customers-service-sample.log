@@ -1,0 +1,663 @@
+18:36:50,161 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [jmxConfigurator] in [ch.qos.logback.classic.LoggerContext]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.1)
+
+2026-09-21T18:36:51.102Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.s.p.c.CustomersServiceApplication    : Starting CustomersServiceApplication v4.0.1 using Java 17.0.20 with PID 1 (/application/BOOT-INF/classes started by root in /application)
+2026-09-21T18:36:51.136Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.s.p.c.CustomersServiceApplication    : The following 2 profiles are active: "docker", "chaos-monkey"
+2026-09-21T18:36:51.414Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:36:51.415Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/customers-service/default": Connection refused. Will be trying the next url if available
+2026-09-21T18:36:51.418Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@49ef32e0 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/customers-service/default": Connection refused
+2026-09-21T18:36:51.419Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-09-21T18:36:51.420Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=customers-service, profiles=[docker,chaos-monkey], label=null, version=323993ce2519c6d02df63e08bf4458d123d3b611, state=
+2026-09-21T18:36:51.420Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-09-21T18:36:51.421Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=customers-service, profiles=[default], label=null, version=323993ce2519c6d02df63e08bf4458d123d3b611, state=
+2026-09-21T18:36:51.421Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:36:51.429Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/customers-service/docker,chaos-monkey": Connection refused. Will be trying the next url if available
+2026-09-21T18:36:51.431Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@2234078 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'docker,chaos-monkey']): I/O error on GET request for "http://localhost:8888/customers-service/docker,chaos-monkey": Connection refused
+2026-09-21T18:36:51.436Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:36:51.436Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/customers-service/default": Connection refused. Will be trying the next url if available
+2026-09-21T18:36:51.437Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@5ec77191 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/customers-service/default": Connection refused
+2026-09-21T18:37:02.310Z  INFO 1 --- [customers-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-21T18:37:03.528Z  INFO 1 --- [customers-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1166 ms. Found 2 JPA repository interfaces.
+2026-09-21T18:37:07.342Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=d3004034-c86a-395d-adf1-fadbe15cfb08
+2026-09-21T18:37:08.026Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.040Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.045Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$898/0x00007edb2d5a8000] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.058Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.095Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey.watcher-de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.103Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyAdvisorConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyAdvisorConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-09-21T18:37:08.114Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey-de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.138Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey.assaults-de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.145Z  INFO 1 --- [customers-service] [           main] [                                                 ] d.c.s.b.c.m.c.ChaosMonkeyConfiguration   : 
+     _____ _                       __  __             _
+    / ____| |                     |  \/  |           | |
+   | |    | |__   __ _  ___  ___  | \  / | ___  _ __ | | _____ _   _
+   | |    | '_ \ / _` |/ _ \/ __| | |\/| |/ _ \| '_ \| |/ / _ | | | |
+   | |____| | | | (_| | (_) \__ \ | |  | | (_) | | | |   |  __| |_| |
+    \_____|_| |_|\__,_|\___/|___/ |_|  |_|\___/|_| |_|_|\_\___|\__, |
+                                                                __/ |
+    _ready to do evil!                                         |___/
+
+:: Chaos Monkey for Spring Boot                                    ::
+
+2026-09-21T18:37:08.153Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.172Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeySettings' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeySettings] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.192Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyMetricsPublisher' of type [de.codecentric.spring.boot.chaos.monkey.component.MetricEventPublisher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.196Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'latencyAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.LatencyAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.208Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'exceptionAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.222Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'exitHelper' of type [de.codecentric.spring.boot.chaos.monkey.assaults.KillAppAssault$ExitHelper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.225Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'killAppAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.KillAppAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.242Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'memoryAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.MemoryAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.328Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'cpuAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.CpuAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.353Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosToggles' of type [de.codecentric.spring.boot.chaos.monkey.configuration.toggles.DefaultChaosToggles] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.376Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosToggleNameMapper' of type [de.codecentric.spring.boot.chaos.monkey.configuration.toggles.DefaultChaosToggleNameMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.405Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRequestScope' of type [de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.973Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyBaseClassFilter' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.filter.ChaosMonkeyBaseClassFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.052Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'controllerPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.063Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'restControllerPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.079Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'servicePointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.094Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'componentPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.113Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'repositoryPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.126Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'healthIndicatorAdviceProvider' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.138Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyRestTemplateConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyRestTemplateConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-09-21T18:37:10.180Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRestTemplateInterceptor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.outgoing.ChaosMonkeyRestTemplateWatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:10.200Z  WARN 1 --- [customers-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRestTemplateCustomizer' of type [de.codecentric.spring.boot.chaos.monkey.watcher.outgoing.ChaosMonkeyRestTemplateCustomizer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:12.429Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8081 (http)
+2026-09-21T18:37:12.571Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-21T18:37:12.575Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-09-21T18:37:13.389Z  INFO 1 --- [customers-service] [           main] [                                                 ] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 21942 ms
+2026-09-21T18:37:16.788Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-21T18:37:18.078Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (feature not supported)
+2026-09-21T18:37:18.088Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.hsqldb.jdbc.JDBCConnection@33f4844b
+2026-09-21T18:37:18.092Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-21T18:37:19.613Z  INFO 1 --- [customers-service] [           main] [                                                 ] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-21T18:37:19.939Z  INFO 1 --- [customers-service] [           main] [                                                 ] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-09-21T18:37:25.315Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-21T18:37:25.916Z  INFO 1 --- [customers-service] [           main] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:hsqldb:mem:ed86c36f-ff85-4afd-a68a-d72862904291]
+	Database driver: HSQL Database Engine Driver
+	Database dialect: HSQLDialect
+	Database version: 2.7.3
+	Default catalog/schema: PUBLIC/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-21T18:37:27.467Z  WARN 1 --- [customers-service] [           main] [                                                 ] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at org.springframework.samples.petclinic.customers.model.Pet.birthDate.
+2026-09-21T18:37:31.111Z  INFO 1 --- [customers-service] [           main] [                                                 ] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-21T18:37:31.138Z  INFO 1 --- [customers-service] [           main] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-21T18:37:31.689Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-21T18:37:48.551Z  INFO 1 --- [customers-service] [           main] [                                                 ] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:37:52.839Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:52.911Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:53.050Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:53.204Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:53.312Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:53.561Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:54.029Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:56.501Z  WARN 1 --- [customers-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:38:15.987Z  INFO 1 --- [customers-service] [           main] [                                                 ] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-09-21T18:38:16.639Z  WARN 1 --- [customers-service] [           main] [                                                 ] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-09-21T18:38:16.703Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 18 endpoints beneath base path '/actuator'
+2026-09-21T18:38:17.452Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-09-21T18:38:17.657Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-09-21T18:38:17.689Z  INFO 1 --- [customers-service] [           main] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-09-21T18:38:17.748Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-09-21T18:38:17.749Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-09-21T18:38:17.750Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-09-21T18:38:17.751Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-09-21T18:38:17.752Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-09-21T18:38:17.753Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-09-21T18:38:17.754Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-09-21T18:38:20.589Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-09-21T18:38:20.605Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-09-21T18:38:20.621Z  INFO 1 --- [customers-service] [           main] [                                                 ] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-09-21T18:38:20.636Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1790015900634 with initial instances count: 1
+2026-09-21T18:38:20.697Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application CUSTOMERS-SERVICE with eureka with status UP
+2026-09-21T18:38:20.702Z  INFO 1 --- [customers-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1790015900702, current=UP, previous=STARTING]
+2026-09-21T18:38:20.713Z  INFO 1 --- [customers-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CUSTOMERS-SERVICE/05918973fc1d:customers-service:8081: registering service...
+2026-09-21T18:38:20.879Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8081 (http) with context path '/'
+2026-09-21T18:38:20.886Z  INFO 1 --- [customers-service] [           main] [                                                 ] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8081
+2026-09-21T18:38:21.043Z  INFO 1 --- [customers-service] [           main] [                                                 ] o.s.s.p.c.CustomersServiceApplication    : Started CustomersServiceApplication in 100.748 seconds (process running for 103.603)
+2026-09-21T18:38:21.103Z  INFO 1 --- [customers-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CUSTOMERS-SERVICE/05918973fc1d:customers-service:8081 - registration status: 204
+2026-09-21T18:38:23.722Z  INFO 1 --- [customers-service] [nio-8081-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-21T18:38:23.724Z  INFO 1 --- [customers-service] [nio-8081-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-21T18:38:23.741Z  INFO 1 --- [customers-service] [nio-8081-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 14 ms
+2026-09-21T18:40:03.102Z  INFO 1 --- [customers-service] [io-8081-exec-10] [6ab17a03ea93b5e3d0d025b16b6ee36c-4f0b412d48839a10] o.s.s.p.customers.web.PetResource        : Saving pet [Pet@21568bae id = [null], name = 'Rex', birthDate = Wed Jan 15 00:00:00 UTC 2020, type = 'cat', ownerFirstname = 'George', ownerLastname = 'Franklin']
+2026-09-21T18:40:03.732Z  INFO 1 --- [customers-service] [nio-8081-exec-1] [6ab17a0317ae033034328c9faf2c8bf9-27023b9c90191af8] o.s.s.p.customers.web.OwnerResource      : Saving owner [Owner@1b7d65ae id = 1, lastName = 'Franklin', firstName = 'George', address = '110 W. Liberty St.', city = 'Madison', telephone = '6085551023']
+2026-09-21T18:40:04.196Z  WARN 1 --- [customers-service] [nio-8081-exec-4] [6ab17a0478be0e92aa5694baab8bc67a-9bbb30447cac3db8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.samples.petclinic.customers.model.Owner org.springframework.samples.petclinic.customers.web.OwnerResource.createOwner(org.springframework.samples.petclinic.customers.web.OwnerRequest) with 5 errors: [Field error in object 'ownerRequest' on field 'address': rejected value []; codes [NotBlank.ownerRequest.address,NotBlank.address,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.address,address]; arguments []; default message [address]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'city': rejected value []; codes [NotBlank.ownerRequest.city,NotBlank.city,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.city,city]; arguments []; default message [city]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'lastName': rejected value []; codes [NotBlank.ownerRequest.lastName,NotBlank.lastName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.lastName,lastName]; arguments []; default message [lastName]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'firstName': rejected value []; codes [NotBlank.ownerRequest.firstName,NotBlank.firstName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.firstName,firstName]; arguments []; default message [firstName]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'telephone': rejected value [x]; codes [Digits.ownerRequest.telephone,Digits.telephone,Digits.java.lang.String,Digits]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.telephone,telephone]; arguments []; default message [telephone],0,12]; default message [numeric value out of bounds (<12 digits>.<0 digits> expected)]] ]
+2026-09-21T18:40:25.148Z  INFO 1 --- [customers-service] [nio-8081-exec-5] [6ab17a19b692d577b41cb84d7e90e0fa-b41cb84d7e90e0fa] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:40:25.258Z  INFO 1 --- [customers-service] [nio-8081-exec-6] [6ab17a19e5cc6a398be63de80ccf704b-8be63de80ccf704b] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:40:25.900Z  INFO 1 --- [customers-service] [nio-8081-exec-2] [6ab17a19a729273f0ce2829b4bfc157e-75be69d975574b9e] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:40:25.912Z ERROR 1 --- [customers-service] [nio-8081-exec-2] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:40:26.052Z  INFO 1 --- [customers-service] [nio-8081-exec-3] [6ab17a1a62e43120ee67a1a382a832c7-404035b5d43ceb0d] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:40:26.059Z  WARN 1 --- [customers-service] [nio-8081-exec-3] [6ab17a1a62e43120ee67a1a382a832c7-404035b5d43ceb0d] i.m.core.instrument.MeterRegistry        : This Gauge has been already registered (MeterId{name='chaos.monkey.assault.exception.count.gauge.', tags=[]}), the registration will be ignored. Note that subsequent logs will be logged at debug level.
+2026-09-21T18:40:26.062Z ERROR 1 --- [customers-service] [nio-8081-exec-3] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:40:27.723Z  INFO 1 --- [customers-service] [nio-8081-exec-6] [6ab17a1bf0fd20db85de0c664701b571-85de0c664701b571] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:40:27.725Z ERROR 1 --- [customers-service] [nio-8081-exec-6] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor49.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:40:27.824Z  INFO 1 --- [customers-service] [nio-8081-exec-7] [6ab17a1b23fd68bae370aea9db648975-e370aea9db648975] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:40:27.825Z ERROR 1 --- [customers-service] [nio-8081-exec-7] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor49.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:40:28.977Z  INFO 1 --- [customers-service] [nio-8081-exec-4] [6ab17a1c5b8a1eb67163b22d5943d447-7163b22d5943d447] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:40:29.065Z  INFO 1 --- [customers-service] [nio-8081-exec-5] [6ab17a1d3f56f3e3c35ffea49c398d5e-c35ffea49c398d5e] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:42:05.349Z  INFO 1 --- [customers-service] [nio-8081-exec-5] [aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1-1906a41247755fd1] o.s.s.p.customers.web.OwnerResource      : Saving owner [Owner@202ed30a id = 1, lastName = 'Franklin', firstName = 'George', address = '110 W. Liberty St.', city = 'Madison', telephone = '6085551023']
+2026-09-21T18:42:05.457Z  INFO 1 --- [customers-service] [nio-8081-exec-7] [bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb2-a5f0905b965f3125] o.s.s.p.customers.web.OwnerResource      : Saving owner [Owner@25b14cf id = 1, lastName = 'Franklin', firstName = 'George', address = '110 W. Liberty St.', city = 'Madison', telephone = '6085551023']
+2026-09-21T18:43:09.205Z  INFO 1 --- [customers-service] [nio-8081-exec-4] [6ab17abdf78ca865d4f97df100089979-3f994c643e953b3f] o.s.s.p.customers.web.PetResource        : Saving pet [Pet@6bff5a39 id = [null], name = 'Luna1', birthDate = Sun Jan 10 00:00:00 UTC 2021, type = 'dog', ownerFirstname = 'George', ownerLastname = 'Franklin']
+2026-09-21T18:43:09.408Z  WARN 1 --- [customers-service] [nio-8081-exec-5] [6ab17abd3d8539be262829c380b03ccf-ab865b3bbd44bdf4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.samples.petclinic.customers.model.Owner org.springframework.samples.petclinic.customers.web.OwnerResource.createOwner(org.springframework.samples.petclinic.customers.web.OwnerRequest) with 5 errors: [Field error in object 'ownerRequest' on field 'lastName': rejected value []; codes [NotBlank.ownerRequest.lastName,NotBlank.lastName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.lastName,lastName]; arguments []; default message [lastName]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'firstName': rejected value []; codes [NotBlank.ownerRequest.firstName,NotBlank.firstName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.firstName,firstName]; arguments []; default message [firstName]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'telephone': rejected value [x]; codes [Digits.ownerRequest.telephone,Digits.telephone,Digits.java.lang.String,Digits]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.telephone,telephone]; arguments []; default message [telephone],0,12]; default message [numeric value out of bounds (<12 digits>.<0 digits> expected)]] [Field error in object 'ownerRequest' on field 'address': rejected value []; codes [NotBlank.ownerRequest.address,NotBlank.address,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.address,address]; arguments []; default message [address]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'city': rejected value []; codes [NotBlank.ownerRequest.city,NotBlank.city,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.city,city]; arguments []; default message [city]]; default message [must not be blank]] ]
+2026-09-21T18:43:10.267Z  INFO 1 --- [customers-service] [nio-8081-exec-1] [6ab17abed62f93a59e4b692377a618c7-b2a81b58eec609e8] o.s.s.p.customers.web.PetResource        : Saving pet [Pet@440dd29 id = [null], name = 'Luna2', birthDate = Wed Feb 10 00:00:00 UTC 2021, type = 'dog', ownerFirstname = 'Betty', ownerLastname = 'Davis']
+2026-09-21T18:43:10.413Z  WARN 1 --- [customers-service] [nio-8081-exec-2] [6ab17abe460cfea33d422975482da2c6-3e5a0fa97ba113ac] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.samples.petclinic.customers.model.Owner org.springframework.samples.petclinic.customers.web.OwnerResource.createOwner(org.springframework.samples.petclinic.customers.web.OwnerRequest) with 5 errors: [Field error in object 'ownerRequest' on field 'city': rejected value []; codes [NotBlank.ownerRequest.city,NotBlank.city,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.city,city]; arguments []; default message [city]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'lastName': rejected value []; codes [NotBlank.ownerRequest.lastName,NotBlank.lastName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.lastName,lastName]; arguments []; default message [lastName]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'telephone': rejected value [x]; codes [Digits.ownerRequest.telephone,Digits.telephone,Digits.java.lang.String,Digits]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.telephone,telephone]; arguments []; default message [telephone],0,12]; default message [numeric value out of bounds (<12 digits>.<0 digits> expected)]] [Field error in object 'ownerRequest' on field 'address': rejected value []; codes [NotBlank.ownerRequest.address,NotBlank.address,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.address,address]; arguments []; default message [address]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'firstName': rejected value []; codes [NotBlank.ownerRequest.firstName,NotBlank.firstName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.firstName,firstName]; arguments []; default message [firstName]]; default message [must not be blank]] ]
+2026-09-21T18:43:11.214Z  INFO 1 --- [customers-service] [nio-8081-exec-8] [6ab17abfbffb3df3702441dd7f0e25ec-45c14c011ab25b27] o.s.s.p.customers.web.PetResource        : Saving pet [Pet@2307f190 id = [null], name = 'Luna3', birthDate = Wed Mar 10 00:00:00 UTC 2021, type = 'dog', ownerFirstname = 'Eduardo', ownerLastname = 'Rodriquez']
+2026-09-21T18:43:11.386Z  WARN 1 --- [customers-service] [nio-8081-exec-9] [6ab17abfa898354c7d9780bdecbd8a3d-f688c939df4b5228] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.samples.petclinic.customers.model.Owner org.springframework.samples.petclinic.customers.web.OwnerResource.createOwner(org.springframework.samples.petclinic.customers.web.OwnerRequest) with 5 errors: [Field error in object 'ownerRequest' on field 'address': rejected value []; codes [NotBlank.ownerRequest.address,NotBlank.address,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.address,address]; arguments []; default message [address]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'telephone': rejected value [x]; codes [Digits.ownerRequest.telephone,Digits.telephone,Digits.java.lang.String,Digits]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.telephone,telephone]; arguments []; default message [telephone],0,12]; default message [numeric value out of bounds (<12 digits>.<0 digits> expected)]] [Field error in object 'ownerRequest' on field 'city': rejected value []; codes [NotBlank.ownerRequest.city,NotBlank.city,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.city,city]; arguments []; default message [city]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'lastName': rejected value []; codes [NotBlank.ownerRequest.lastName,NotBlank.lastName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.lastName,lastName]; arguments []; default message [lastName]]; default message [must not be blank]] [Field error in object 'ownerRequest' on field 'firstName': rejected value []; codes [NotBlank.ownerRequest.firstName,NotBlank.firstName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [ownerRequest.firstName,firstName]; arguments []; default message [firstName]]; default message [must not be blank]] ]
+2026-09-21T18:43:11.650Z  INFO 1 --- [customers-service] [io-8081-exec-10] [6ab17abf8e3749f6e3a949fe9d24dea2-e3a949fe9d24dea2] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:43:11.705Z  INFO 1 --- [customers-service] [nio-8081-exec-2] [6ab17abf1efa7c7dc165bda3d6199116-c165bda3d6199116] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:43:17.735Z  INFO 1 --- [customers-service] [rap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-09-21T18:43:18.317Z  INFO 1 --- [customers-service] [nio-8081-exec-4] [6ab17ac6f3c3448c4ae03be43994032f-f06956cf0fff0c8b] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:18.319Z ERROR 1 --- [customers-service] [nio-8081-exec-4] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor49.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:18.613Z  INFO 1 --- [customers-service] [nio-8081-exec-5] [6ab17ac61006a7a0c83d0010b7080882-75f373a19473a68d] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:18.615Z ERROR 1 --- [customers-service] [nio-8081-exec-5] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor49.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:19.892Z  INFO 1 --- [customers-service] [nio-8081-exec-9] [6ab17ac704e58d2918ce7d8803320189-18ce7d8803320189] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:43:19.947Z  INFO 1 --- [customers-service] [io-8081-exec-10] [6ab17ac792754b13a0d409f7f7f1cd0d-a0d409f7f7f1cd0d] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:48:17.708Z  INFO 1 --- [customers-service] [rap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-09-21T18:48:21.312Z  INFO 1 --- [customers-service] [beatExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CUSTOMERS-SERVICE/05918973fc1d:customers-service:8081 - Re-registering apps/CUSTOMERS-SERVICE
+2026-09-21T18:48:21.314Z  INFO 1 --- [customers-service] [beatExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CUSTOMERS-SERVICE/05918973fc1d:customers-service:8081: registering service...
+2026-09-21T18:48:21.446Z  INFO 1 --- [customers-service] [beatExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_CUSTOMERS-SERVICE/05918973fc1d:customers-service:8081 - registration status: 204
+2026-09-21T18:48:51.293Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-09-21T18:48:51.296Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-09-21T18:48:51.296Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-09-21T18:48:51.298Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-09-21T18:48:51.299Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-09-21T18:48:51.300Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2026-09-21T18:48:51.301Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-09-21T18:48:51.312Z  INFO 1 --- [customers-service] [reshExecutor-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-09-21T18:49:00.501Z  INFO 1 --- [customers-service] [nio-8081-exec-3] [6ab17c1cf1a4a205716194dded3d9227-716194dded3d9227] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:49:00.580Z  INFO 1 --- [customers-service] [nio-8081-exec-4] [6ab17c1cf80ff72e507419c0c8c8b1b8-507419c0c8c8b1b8] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:49:01.330Z  INFO 1 --- [customers-service] [nio-8081-exec-2] [6ab17c1dc11b4acb7b9850dae3a6ada5-7b9850dae3a6ada5] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:49:01.341Z ERROR 1 --- [customers-service] [nio-8081-exec-2] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.customers.web.OwnerResource$$SpringCGLIB$$0.findOwner(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor49.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:49:02.208Z  INFO 1 --- [customers-service] [io-8081-exec-10] [6ab17c1e03c1eb7f7f9a4a1e03000a31-7f9a4a1e03000a31] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:49:02.260Z  INFO 1 --- [customers-service] [nio-8081-exec-2] [6ab17c1ea4c074df25efbc6ac7bb7a54-25efbc6ac7bb7a54] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)

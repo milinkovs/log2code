@@ -4,6 +4,12 @@
 #   app        : log2code-api                         (added by T32)
 name: log2code
 
+# Shared by all PetClinic services. Spans are not exported to Zipkin (it is never started, see ADR-001/ADR-004).
+# Only the Zipkin exporter is disabled: management.tracing.export.enabled must stay untouched because the Brave
+# propagation beans use that flag, and without propagation there would be no trace IDs in the log lines.
+x-petclinic-env: &petclinic-env
+  MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENABLED: "false"
+
 services:
   opensearch:
     image: opensearchproject/opensearch:2.19.0
@@ -63,6 +69,171 @@ services:
     volumes:
       - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
       - ../data/logs:/data/logs
+    networks:
+      - log2code-net
+
+  # ---------------------------------------------------------------------------------------------
+  # PetClinic (profile "petclinic"). Images are built locally by scripts/build-petclinic.sh from an
+  # unmodified checkout and tagged with the short commit SHA (PETCLINIC_TAG in .env).
+  # Only configuration is changed here (env variables and the Docker logging driver), never the code.
+  # ---------------------------------------------------------------------------------------------
+  config-server:
+    profiles: ["petclinic"]
+    image: ${PETCLINIC_IMAGE_PREFIX:-log2code}/spring-petclinic-config-server:${PETCLINIC_TAG:-latest}
+    container_name: config-server
+    mem_limit: 512M
+    environment:
+      <<: *petclinic-env
+      # Pins the (remote) config repository to one commit so that runs are reproducible; see ADR-004.
+      SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL: 323993ce2519c6d02df63e08bf4458d123d3b611
+    healthcheck:
+      test: ["CMD", "curl", "-I", "http://config-server:8888"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "8888:8888"
+    depends_on:
+      fluent-bit:
+        condition: service_started
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        fluentd-async: "true"
+        tag: "config-server.log"
+    networks:
+      - log2code-net
+
+  discovery-server:
+    profiles: ["petclinic"]
+    image: ${PETCLINIC_IMAGE_PREFIX:-log2code}/spring-petclinic-discovery-server:${PETCLINIC_TAG:-latest}
+    container_name: discovery-server
+    mem_limit: 512M
+    environment: *petclinic-env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://discovery-server:8761"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "8761:8761"
+    depends_on:
+      fluent-bit:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        fluentd-async: "true"
+        tag: "discovery-server.log"
+    networks:
+      - log2code-net
+
+  customers-service:
+    profiles: ["petclinic"]
+    image: ${PETCLINIC_IMAGE_PREFIX:-log2code}/spring-petclinic-customers-service:${PETCLINIC_TAG:-latest}
+    container_name: customers-service
+    mem_limit: 512M
+    environment:
+      <<: *petclinic-env
+      SPRING_PROFILES_ACTIVE: docker,chaos-monkey
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+    ports:
+      - "8081:8081"
+    depends_on:
+      fluent-bit:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        fluentd-async: "true"
+        tag: "customers-service.log"
+    networks:
+      - log2code-net
+
+  visits-service:
+    profiles: ["petclinic"]
+    image: ${PETCLINIC_IMAGE_PREFIX:-log2code}/spring-petclinic-visits-service:${PETCLINIC_TAG:-latest}
+    container_name: visits-service
+    mem_limit: 512M
+    environment:
+      <<: *petclinic-env
+      SPRING_PROFILES_ACTIVE: docker,chaos-monkey
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+    ports:
+      - "8082:8082"
+    depends_on:
+      fluent-bit:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        fluentd-async: "true"
+        tag: "visits-service.log"
+    networks:
+      - log2code-net
+
+  vets-service:
+    profiles: ["petclinic"]
+    image: ${PETCLINIC_IMAGE_PREFIX:-log2code}/spring-petclinic-vets-service:${PETCLINIC_TAG:-latest}
+    container_name: vets-service
+    mem_limit: 512M
+    environment:
+      <<: *petclinic-env
+      SPRING_PROFILES_ACTIVE: docker,chaos-monkey
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+    ports:
+      - "8083:8083"
+    depends_on:
+      fluent-bit:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        fluentd-async: "true"
+        tag: "vets-service.log"
+    networks:
+      - log2code-net
+
+  api-gateway:
+    profiles: ["petclinic"]
+    image: ${PETCLINIC_IMAGE_PREFIX:-log2code}/spring-petclinic-api-gateway:${PETCLINIC_TAG:-latest}
+    container_name: api-gateway
+    mem_limit: 512M
+    environment: *petclinic-env
+    ports:
+      - "8080:8080"
+    depends_on:
+      fluent-bit:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "localhost:24224"
+        fluentd-async: "true"
+        tag: "api-gateway.log"
     networks:
       - log2code-net
 

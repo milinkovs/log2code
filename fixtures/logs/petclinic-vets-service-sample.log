@@ -1,0 +1,753 @@
+18:36:51,311 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [jmxConfigurator] in [ch.qos.logback.classic.LoggerContext]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.1)
+
+2026-09-21T18:36:52.508Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.s.p.vets.VetsServiceApplication      : Starting VetsServiceApplication v4.0.1 using Java 17.0.20 with PID 1 (/application/BOOT-INF/classes started by root in /application)
+2026-09-21T18:36:52.562Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.s.p.vets.VetsServiceApplication      : The following 2 profiles are active: "docker", "chaos-monkey"
+2026-09-21T18:36:53.179Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:36:53.180Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused. Will be trying the next url if available
+2026-09-21T18:36:53.182Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@1e287667 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused
+2026-09-21T18:36:53.191Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-09-21T18:36:53.192Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=vets-service, profiles=[docker,chaos-monkey], label=null, version=323993ce2519c6d02df63e08bf4458d123d3b611, state=
+2026-09-21T18:36:53.193Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-09-21T18:36:53.193Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=vets-service, profiles=[default], label=null, version=323993ce2519c6d02df63e08bf4458d123d3b611, state=
+2026-09-21T18:36:53.194Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:36:53.202Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/vets-service/docker,chaos-monkey": Connection refused. Will be trying the next url if available
+2026-09-21T18:36:53.204Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@41e1455d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'docker,chaos-monkey']): I/O error on GET request for "http://localhost:8888/vets-service/docker,chaos-monkey": Connection refused
+2026-09-21T18:36:53.205Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:36:53.211Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused. Will be trying the next url if available
+2026-09-21T18:36:53.212Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@4e558728 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused
+2026-09-21T18:37:02.670Z  INFO 1 --- [vets-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-21T18:37:03.896Z  INFO 1 --- [vets-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1084 ms. Found 1 JPA repository interface.
+2026-09-21T18:37:07.023Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=06d3e9ff-215f-303a-8504-042a95ff6dff
+2026-09-21T18:37:07.921Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:07.933Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:07.942Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$899/0x000079a8d95a70e0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:07.952Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.038Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey.watcher-de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.054Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyAdvisorConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyAdvisorConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-09-21T18:37:08.073Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey-de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.108Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey.assaults-de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.119Z  INFO 1 --- [vets-service] [           main] [                                                 ] d.c.s.b.c.m.c.ChaosMonkeyConfiguration   : 
+     _____ _                       __  __             _
+    / ____| |                     |  \/  |           | |
+   | |    | |__   __ _  ___  ___  | \  / | ___  _ __ | | _____ _   _
+   | |    | '_ \ / _` |/ _ \/ __| | |\/| |/ _ \| '_ \| |/ / _ | | | |
+   | |____| | | | (_| | (_) \__ \ | |  | | (_) | | | |   |  __| |_| |
+    \_____|_| |_|\__,_|\___/|___/ |_|  |_|\___/|_| |_|_|\_\___|\__, |
+                                                                __/ |
+    _ready to do evil!                                         |___/
+
+:: Chaos Monkey for Spring Boot                                    ::
+
+2026-09-21T18:37:08.124Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.141Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeySettings' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeySettings] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.148Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyMetricsPublisher' of type [de.codecentric.spring.boot.chaos.monkey.component.MetricEventPublisher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.154Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'latencyAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.LatencyAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.169Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'exceptionAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.190Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'exitHelper' of type [de.codecentric.spring.boot.chaos.monkey.assaults.KillAppAssault$ExitHelper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.195Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'killAppAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.KillAppAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.224Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'memoryAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.MemoryAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.335Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'cpuAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.CpuAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.344Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosToggles' of type [de.codecentric.spring.boot.chaos.monkey.configuration.toggles.DefaultChaosToggles] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.361Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosToggleNameMapper' of type [de.codecentric.spring.boot.chaos.monkey.configuration.toggles.DefaultChaosToggleNameMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:08.387Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRequestScope' of type [de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.080Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyBaseClassFilter' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.filter.ChaosMonkeyBaseClassFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.193Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'controllerPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.218Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'restControllerPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.229Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'servicePointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.244Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'componentPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.259Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'repositoryPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.281Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'healthIndicatorAdviceProvider' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.285Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyRestTemplateConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyRestTemplateConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-09-21T18:37:09.307Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRestTemplateInterceptor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.outgoing.ChaosMonkeyRestTemplateWatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:09.312Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRestTemplateCustomizer' of type [de.codecentric.spring.boot.chaos.monkey.watcher.outgoing.ChaosMonkeyRestTemplateCustomizer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:37:11.389Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8083 (http)
+2026-09-21T18:37:11.489Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-21T18:37:11.497Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-09-21T18:37:12.056Z  INFO 1 --- [vets-service] [           main] [                                                 ] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 18834 ms
+2026-09-21T18:37:15.783Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-21T18:37:17.473Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (feature not supported)
+2026-09-21T18:37:17.486Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.hsqldb.jdbc.JDBCConnection@6fafbdac
+2026-09-21T18:37:17.494Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-21T18:37:18.884Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-21T18:37:19.505Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-09-21T18:37:25.047Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-21T18:37:25.634Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:hsqldb:mem:d834d42a-ff36-40c4-ba91-72bcd74097d4]
+	Database driver: HSQL Database Engine Driver
+	Database dialect: HSQLDialect
+	Database version: 2.7.3
+	Default catalog/schema: PUBLIC/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-21T18:37:31.046Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-21T18:37:31.088Z  INFO 1 --- [vets-service] [           main] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-21T18:37:31.485Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-21T18:37:35.083Z  INFO 1 --- [vets-service] [           main] [                                                 ] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:37:38.378Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:38.546Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:38.718Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:38.978Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:39.110Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:39.396Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:39.663Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:40.599Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:37:47.488Z  INFO 1 --- [vets-service] [           main] [                                                 ] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-09-21T18:37:48.454Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 18 endpoints beneath base path '/actuator'
+2026-09-21T18:37:50.758Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-09-21T18:37:54.754Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-09-21T18:37:54.936Z  INFO 1 --- [vets-service] [           main] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-09-21T18:37:55.235Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-09-21T18:37:55.240Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-09-21T18:37:55.242Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-09-21T18:37:55.257Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-09-21T18:37:55.270Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-09-21T18:37:55.272Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-09-21T18:37:55.286Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-09-21T18:38:04.668Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-09-21T18:38:04.700Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-09-21T18:38:04.728Z  INFO 1 --- [vets-service] [           main] [                                                 ] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-09-21T18:38:04.758Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1790015884756 with initial instances count: 1
+2026-09-21T18:38:04.842Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application VETS-SERVICE with eureka with status UP
+2026-09-21T18:38:04.847Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1790015884847, current=UP, previous=STARTING]
+2026-09-21T18:38:04.867Z  INFO 1 --- [vets-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_VETS-SERVICE/fe099e23a3e6:vets-service:8083: registering service...
+2026-09-21T18:38:05.085Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8083 (http) with context path '/'
+2026-09-21T18:38:05.114Z  INFO 1 --- [vets-service] [           main] [                                                 ] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8083
+2026-09-21T18:38:05.374Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.s.p.vets.VetsServiceApplication      : Started VetsServiceApplication in 82.883 seconds (process running for 86.675)
+2026-09-21T18:38:05.702Z  INFO 1 --- [vets-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_VETS-SERVICE/fe099e23a3e6:vets-service:8083 - registration status: 204
+2026-09-21T18:38:29.702Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-21T18:38:29.708Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-21T18:38:29.727Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 16 ms
+2026-09-21T18:42:55.282Z  INFO 1 --- [vets-service] [rap-executor-%d] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-09-21T18:43:12.880Z  INFO 1 --- [vets-service] [nio-8083-exec-9] [6ab17ac069421a0092b6a33e978ebbcd-92b6a33e978ebbcd] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:43:12.981Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [6ab17ac0cf1cbca2c4ec9e49189b155f-c4ec9e49189b155f] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:43:13.286Z  INFO 1 --- [vets-service] [nio-8083-exec-2] [6ab17ac15a22c47c02bbf56831265474-289dfdeea801dd1b] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:13.315Z ERROR 1 --- [vets-service] [nio-8083-exec-2] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.vets.web.VetResource$$SpringCGLIB$$0.showResourcesVetList(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:13.647Z  INFO 1 --- [vets-service] [nio-8083-exec-3] [6ab17ac18b60a689d4e4f691c7b86ef2-99a3ab900b6dc474] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:13.655Z  WARN 1 --- [vets-service] [nio-8083-exec-3] [6ab17ac18b60a689d4e4f691c7b86ef2-99a3ab900b6dc474] i.m.core.instrument.MeterRegistry        : This Gauge has been already registered (MeterId{name='chaos.monkey.assault.exception.count.gauge.', tags=[]}), the registration will be ignored. Note that subsequent logs will be logged at debug level.
+2026-09-21T18:43:13.661Z ERROR 1 --- [vets-service] [nio-8083-exec-3] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.vets.web.VetResource$$SpringCGLIB$$0.showResourcesVetList(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:14.641Z  INFO 1 --- [vets-service] [nio-8083-exec-7] [6ab17ac2d361572f5ac0958843539fbc-563fdb83a18ecabd] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:14.643Z ERROR 1 --- [vets-service] [nio-8083-exec-7] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.vets.web.VetResource$$SpringCGLIB$$0.showResourcesVetList(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor41.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:15.413Z  INFO 1 --- [vets-service] [nio-8083-exec-9] [6ab17ac3d98526f7450f43ca99326c58-898b8ee48de3f6b7] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:15.415Z ERROR 1 --- [vets-service] [nio-8083-exec-9] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.vets.web.VetResource$$SpringCGLIB$$0.showResourcesVetList(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor41.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:18.681Z  INFO 1 --- [vets-service] [nio-8083-exec-3] [6ab17ac6d122004023e2e50387567b51-d4f5b2efbfac4408] d.c.s.b.c.m.assaults.ExceptionAssault    : Chaos Monkey - exception
+2026-09-21T18:43:18.683Z ERROR 1 --- [vets-service] [nio-8083-exec-3] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: Chaos Monkey - RuntimeException] with root cause
+
+java.lang.RuntimeException: Chaos Monkey - RuntimeException
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException$ThrowableConstructor.create(AssaultException.java:148)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.getThrowable(AssaultException.java:77)
+	at de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException.throwExceptionInstance(AssaultException.java:69)
+	at de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault.attack(ExceptionAssault.java:52)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.chooseAndRunAttack(ChaosMonkeyRequestScope.java:81)
+	at de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope.callChaosMonkey(ChaosMonkeyRequestScope.java:72)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.ChaosMonkeyDefaultAdvice.invoke(ChaosMonkeyDefaultAdvice.java:56)
+	at de.codecentric.spring.boot.chaos.monkey.watcher.advice.AbstractChaosMonkeyAdvice.invoke(AbstractChaosMonkeyAdvice.java:31)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719)
+	at org.springframework.samples.petclinic.vets.web.VetResource$$SpringCGLIB$$0.showResourcesVetList(<generated>)
+	at jdk.internal.reflect.GeneratedMethodAccessor41.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2026-09-21T18:43:20.452Z  INFO 1 --- [vets-service] [nio-8083-exec-7] [6ab17ac8021b6673599f870843d274fd-599f870843d274fd] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:43:20.531Z  INFO 1 --- [vets-service] [nio-8083-exec-8] [6ab17ac85bf1a23c951f217702d9decc-951f217702d9decc] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:46:28.439Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application VETS-SERVICE with eureka with status DOWN
+2026-09-21T18:46:28.440Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1790016388440, current=DOWN, previous=UP]
+2026-09-21T18:46:28.441Z  INFO 1 --- [vets-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_VETS-SERVICE/fe099e23a3e6:vets-service:8083: registering service...
+2026-09-21T18:46:28.491Z  INFO 1 --- [vets-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_VETS-SERVICE/fe099e23a3e6:vets-service:8083 - registration status: 204
+2026-09-21T18:46:28.528Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-21T18:46:28.558Z  INFO 1 --- [vets-service] [tomcat-shutdown] [                                                 ] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-09-21T18:46:28.627Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-21T18:46:28.669Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-09-21T18:46:28.682Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-09-21T18:46:28.694Z  INFO 1 --- [vets-service] [ionShutdownHook] [                                                 ] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+18:46:56,775 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [jmxConfigurator] in [ch.qos.logback.classic.LoggerContext]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.1)
+
+2026-09-21T18:46:56.981Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.s.p.vets.VetsServiceApplication      : Starting VetsServiceApplication v4.0.1 using Java 17.0.20 with PID 1 (/application/BOOT-INF/classes started by root in /application)
+2026-09-21T18:46:56.984Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.s.p.vets.VetsServiceApplication      : The following 2 profiles are active: "docker", "chaos-monkey"
+2026-09-21T18:46:57.030Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:46:57.030Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused. Will be trying the next url if available
+2026-09-21T18:46:57.031Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@1e287667 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused
+2026-09-21T18:46:57.031Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-09-21T18:46:57.031Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=vets-service, profiles=[docker,chaos-monkey], label=null, version=323993ce2519c6d02df63e08bf4458d123d3b611, state=
+2026-09-21T18:46:57.031Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://config-server:8888
+2026-09-21T18:46:57.031Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=vets-service, profiles=[default], label=null, version=323993ce2519c6d02df63e08bf4458d123d3b611, state=
+2026-09-21T18:46:57.032Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:46:57.032Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/vets-service/docker,chaos-monkey": Connection refused. Will be trying the next url if available
+2026-09-21T18:46:57.032Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@41e1455d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'docker,chaos-monkey']): I/O error on GET request for "http://localhost:8888/vets-service/docker,chaos-monkey": Connection refused
+2026-09-21T18:46:57.032Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888/
+2026-09-21T18:46:57.032Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Exception on Url - http://localhost:8888/:org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused. Will be trying the next url if available
+2026-09-21T18:46:57.032Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@4e558728 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/vets-service/default": Connection refused
+2026-09-21T18:46:58.370Z  INFO 1 --- [vets-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-21T18:46:58.539Z  INFO 1 --- [vets-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 155 ms. Found 1 JPA repository interface.
+2026-09-21T18:46:59.062Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=06d3e9ff-215f-303a-8504-042a95ff6dff
+2026-09-21T18:46:59.190Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.193Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.195Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$899/0x000073cf1d5aace8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.198Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.212Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey.watcher-de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.215Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyAdvisorConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyAdvisorConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-09-21T18:46:59.220Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey-de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.232Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaos.monkey.assaults-de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties' of type [de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.237Z  INFO 1 --- [vets-service] [           main] [                                                 ] d.c.s.b.c.m.c.ChaosMonkeyConfiguration   : 
+     _____ _                       __  __             _
+    / ____| |                     |  \/  |           | |
+   | |    | |__   __ _  ___  ___  | \  / | ___  _ __ | | _____ _   _
+   | |    | '_ \ / _` |/ _ \/ __| | |\/| |/ _ \| '_ \| |/ / _ | | | |
+   | |____| | | | (_| | (_) \__ \ | |  | | (_) | | | |   |  __| |_| |
+    \_____|_| |_|\__,_|\___/|___/ |_|  |_|\___/|_| |_|_|\_\___|\__, |
+                                                                __/ |
+    _ready to do evil!                                         |___/
+
+:: Chaos Monkey for Spring Boot                                    ::
+
+2026-09-21T18:46:59.239Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.248Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeySettings' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeySettings] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.253Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyMetricsPublisher' of type [de.codecentric.spring.boot.chaos.monkey.component.MetricEventPublisher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.255Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'latencyAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.LatencyAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.259Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'exceptionAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.ExceptionAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.265Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'exitHelper' of type [de.codecentric.spring.boot.chaos.monkey.assaults.KillAppAssault$ExitHelper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.266Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'killAppAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.KillAppAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.272Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'memoryAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.MemoryAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.300Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'cpuAssault' of type [de.codecentric.spring.boot.chaos.monkey.assaults.CpuAssault] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.302Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosToggles' of type [de.codecentric.spring.boot.chaos.monkey.configuration.toggles.DefaultChaosToggles] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.306Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosToggleNameMapper' of type [de.codecentric.spring.boot.chaos.monkey.configuration.toggles.DefaultChaosToggleNameMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.310Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRequestScope' of type [de.codecentric.spring.boot.chaos.monkey.component.ChaosMonkeyRequestScope] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.406Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyBaseClassFilter' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.filter.ChaosMonkeyBaseClassFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.423Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'controllerPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.430Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'restControllerPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.435Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'servicePointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.438Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'componentPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyAnnotationPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.446Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'repositoryPointcutAdvisor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.451Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'healthIndicatorAdviceProvider' of type [de.codecentric.spring.boot.chaos.monkey.watcher.advice.advisor.ChaosMonkeyPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.452Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyRestTemplateConfiguration' of type [de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyRestTemplateConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-09-21T18:46:59.459Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRestTemplateInterceptor' of type [de.codecentric.spring.boot.chaos.monkey.watcher.outgoing.ChaosMonkeyRestTemplateWatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:46:59.462Z  WARN 1 --- [vets-service] [           main] [                                                 ] trationDelegate$BeanPostProcessorChecker : Bean 'chaosMonkeyRestTemplateCustomizer' of type [de.codecentric.spring.boot.chaos.monkey.watcher.outgoing.ChaosMonkeyRestTemplateCustomizer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [chaosMonkeyRestTemplatePostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2026-09-21T18:47:00.046Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8083 (http)
+2026-09-21T18:47:00.060Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-21T18:47:00.061Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-09-21T18:47:00.121Z  INFO 1 --- [vets-service] [           main] [                                                 ] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3087 ms
+2026-09-21T18:47:00.585Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-21T18:47:00.904Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (feature not supported)
+2026-09-21T18:47:00.906Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.hsqldb.jdbc.JDBCConnection@4af44f2a
+2026-09-21T18:47:00.910Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-21T18:47:01.200Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-21T18:47:01.290Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-09-21T18:47:02.128Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-21T18:47:02.267Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:hsqldb:mem:14696e91-1ec6-40a4-a277-00fc697aeb00]
+	Database driver: HSQL Database Engine Driver
+	Database dialect: HSQLDialect
+	Database version: 2.7.3
+	Default catalog/schema: PUBLIC/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-21T18:47:04.389Z  INFO 1 --- [vets-service] [           main] [                                                 ] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-21T18:47:04.400Z  INFO 1 --- [vets-service] [           main] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-21T18:47:04.504Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-21T18:47:05.058Z  INFO 1 --- [vets-service] [           main] [                                                 ] d.c.s.b.c.m.c.ChaosMonkeyScheduler       : Schedule 3 cron task(s)
+2026-09-21T18:47:05.182Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.190Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.198Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.211Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.217Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.238Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.253Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:05.322Z  WARN 1 --- [vets-service] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final org.springframework.boot.health.contributor.Health org.springframework.boot.health.contributor.AbstractHealthIndicator.health()] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-09-21T18:47:06.407Z  INFO 1 --- [vets-service] [           main] [                                                 ] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestClient.
+2026-09-21T18:47:06.545Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 18 endpoints beneath base path '/actuator'
+2026-09-21T18:47:06.700Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-09-21T18:47:06.735Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-09-21T18:47:06.746Z  INFO 1 --- [vets-service] [           main] [                                                 ] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-09-21T18:47:06.765Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-09-21T18:47:06.766Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-09-21T18:47:06.766Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-09-21T18:47:06.766Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-09-21T18:47:06.767Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-09-21T18:47:06.767Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-09-21T18:47:06.767Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-09-21T18:47:07.158Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-09-21T18:47:07.164Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-09-21T18:47:07.169Z  INFO 1 --- [vets-service] [           main] [                                                 ] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-09-21T18:47:07.172Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1790016427172 with initial instances count: 4
+2026-09-21T18:47:07.179Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application VETS-SERVICE with eureka with status UP
+2026-09-21T18:47:07.180Z  INFO 1 --- [vets-service] [           main] [                                                 ] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1790016427180, current=UP, previous=STARTING]
+2026-09-21T18:47:07.185Z  INFO 1 --- [vets-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_VETS-SERVICE/fe099e23a3e6:vets-service:8083: registering service...
+2026-09-21T18:47:07.277Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8083 (http) with context path '/'
+2026-09-21T18:47:07.279Z  INFO 1 --- [vets-service] [           main] [                                                 ] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8083
+2026-09-21T18:47:07.303Z  INFO 1 --- [vets-service] [           main] [                                                 ] o.s.s.p.vets.VetsServiceApplication      : Started VetsServiceApplication in 13.086 seconds (process running for 14.343)
+2026-09-21T18:47:07.320Z  INFO 1 --- [vets-service] [foReplicator-%d] [                                                 ] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_VETS-SERVICE/fe099e23a3e6:vets-service:8083 - registration status: 204
+2026-09-21T18:47:08.778Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-21T18:47:08.779Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-21T18:47:08.784Z  INFO 1 --- [vets-service] [nio-8083-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-09-21T18:48:07.223Z  INFO 1 --- [vets-service] [reshExecutor-%d] [                                                 ] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://discovery-server:8761/eureka/} exception=I/O error on GET request for "http://discovery-server:8761/eureka/apps/delta": Connect to http://discovery-server:8761 failed: Connection refused stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://discovery-server:8761/eureka/apps/delta": Connect to http://discovery-server:8761 failed: Connection refused
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:763)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:615)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:567)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:750)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:896)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toEntityInternal(DefaultRestClient.java:842)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toEntity(DefaultRestClient.java:831)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.getApplicationsInternal(RestClientEurekaHttpClient.java:201)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.getDelta(RestClientEurekaHttpClient.java:142)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$7.execute(EurekaHttpClientDecorator.java:152)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getDelta(EurekaHttpClientDecorator.java:149)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$7.execute(EurekaHttpClientDecorator.java:152)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getDelta(EurekaHttpClientDecorator.java:149)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$7.execute(EurekaHttpClientDecorator.java:152)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getDelta(EurekaHttpClientDecorator.java:149)
+	at com.netflix.discovery.DiscoveryClient.getAndUpdateDelta(DiscoveryClient.java:1080)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:963)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1474)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1442)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://discovery-server:8761 failed: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:684)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:215)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:151)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequest(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:609)
+	... 25 more
+
+2026-09-21T18:48:07.224Z  INFO 1 --- [vets-service] [beatExecutor-%d] [                                                 ] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://discovery-server:8761/eureka/} exception=I/O error on PUT request for "http://discovery-server:8761/eureka/apps/VETS-SERVICE/fe099e23a3e6:vets-service:8083": Connect to http://discovery-server:8761 failed: Connection refused stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on PUT request for "http://discovery-server:8761/eureka/apps/VETS-SERVICE/fe099e23a3e6:vets-service:8083": Connect to http://discovery-server:8761 failed: Connection refused
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:763)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:615)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:567)
+	at org.springframework.web.client.RestClient$RequestHeadersSpec.exchange(RestClient.java:750)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.executeAndExtract(DefaultRestClient.java:896)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toEntityInternal(DefaultRestClient.java:842)
+	at org.springframework.web.client.DefaultRestClient$DefaultResponseSpec.toEntity(DefaultRestClient.java:831)
+	at org.springframework.cloud.netflix.eureka.http.RestClientEurekaHttpClient.sendHeartBeat(RestClientEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1403)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://discovery-server:8761 failed: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:684)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:215)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:497)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:151)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:112)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:87)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeWithRequest(AbstractBufferingClientHttpRequest.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest$EndOfChainRequestExecution.execute(InterceptingClientHttpRequest.java:102)
+	at org.springframework.cloud.netflix.eureka.http.RestClientTransportClientFactory.lambda$newClient$2(RestClientTransportClientFactory.java:98)
+	at org.springframework.http.client.ClientHttpRequestInterceptor.lambda$apply$0(ClientHttpRequestInterceptor.java:89)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:73)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:50)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:80)
+	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:609)
+	... 22 more
+
+2026-09-21T18:48:07.232Z  WARN 1 --- [vets-service] [reshExecutor-%d] [                                                 ] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://discovery-server:8761/eureka/apps/delta": Connect to http://discovery-server:8761 failed: Connection refused
+2026-09-21T18:48:07.232Z  WARN 1 --- [vets-service] [beatExecutor-%d] [                                                 ] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://discovery-server:8761/eureka/apps/VETS-SERVICE/fe099e23a3e6:vets-service:8083": Connect to http://discovery-server:8761 failed: Connection refused
