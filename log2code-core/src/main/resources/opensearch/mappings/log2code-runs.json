@@ -1,0 +1,29 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "properties": {
+      "run_id": { "type": "keyword" },
+      "kind": { "type": "keyword" },
+      "code_unit": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "keyword" },
+          "name": { "type": "keyword" },
+          "version": { "type": "keyword" }
+        }
+      },
+      "repo_url": { "type": "keyword" },
+      "analyzer_version": { "type": "keyword" },
+      "started_at": { "type": "date" },
+      "finished_at": { "type": "date" },
+      "duration_ms": { "type": "long" },
+      "stats": { "type": "object", "enabled": false },
+      "modules": { "type": "object", "enabled": false }
+    }
+  }
+}

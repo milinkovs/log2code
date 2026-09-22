@@ -1,0 +1,18 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Testcontainers/httpclient5 wire logging at DEBUG is extremely verbose (full request/response
+         dumps for every HTTP call, including 10k-document bulk bodies) and can turn a minute-long
+         IT run into an hours-long one. Keep it at WARN; raise to DEBUG locally when debugging HTTP. -->
+    <logger name="org.apache.hc" level="WARN"/>
+    <logger name="com.github.dockerjava" level="WARN"/>
+    <logger name="org.testcontainers" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

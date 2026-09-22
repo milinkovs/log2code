@@ -1,0 +1,26 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "properties": {
+      "file_id": { "type": "keyword" },
+      "code_unit": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "keyword" },
+          "name": { "type": "keyword" },
+          "version": { "type": "keyword" }
+        }
+      },
+      "module": { "type": "keyword" },
+      "file_path": { "type": "keyword" },
+      "content": { "type": "text", "index": false },
+      "line_count": { "type": "integer" },
+      "sha256": { "type": "keyword" }
+    }
+  }
+}

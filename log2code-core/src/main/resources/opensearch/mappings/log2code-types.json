@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "properties": {
+      "type_id": { "type": "keyword" },
+      "code_unit": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "keyword" },
+          "name": { "type": "keyword" },
+          "version": { "type": "keyword" }
+        }
+      },
+      "module": { "type": "keyword" },
+      "file_path": { "type": "keyword" },
+      "class_fqn": { "type": "keyword" },
+      "class_binary": { "type": "keyword" },
+      "superclass_fqn": { "type": "keyword" },
+      "interfaces": { "type": "keyword" },
+      "kind": { "type": "keyword" }
+    }
+  }
+}

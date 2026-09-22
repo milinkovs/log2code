@@ -1,0 +1,75 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "properties": {
+      "statement_id": { "type": "keyword" },
+      "logical_id": { "type": "keyword" },
+      "code_unit": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "keyword" },
+          "name": { "type": "keyword" },
+          "version": { "type": "keyword" }
+        }
+      },
+      "module": { "type": "keyword" },
+      "service": { "type": "keyword" },
+      "file_path": { "type": "keyword" },
+      "file_id": { "type": "keyword" },
+      "package": { "type": "keyword" },
+      "class_fqn": { "type": "keyword" },
+      "class_binary": { "type": "keyword" },
+      "method_name": { "type": "keyword" },
+      "method_signature": { "type": "keyword" },
+      "method_id": { "type": "keyword" },
+      "in_lambda": { "type": "boolean" },
+      "line": { "type": "integer" },
+      "end_line": { "type": "integer" },
+      "column": { "type": "integer" },
+      "method_start_line": { "type": "integer" },
+      "method_end_line": { "type": "integer" },
+      "logging_api": { "type": "keyword" },
+      "detection": { "type": "keyword" },
+      "logger_expr": { "type": "keyword" },
+      "logger_name": { "type": "keyword" },
+      "logger_name_kind": { "type": "keyword" },
+      "level": { "type": "keyword" },
+      "level_dynamic": { "type": "boolean" },
+      "template_raw": { "type": "text", "index": false },
+      "template": {
+        "type": "text",
+        "fields": {
+          "keyword": { "type": "keyword", "ignore_above": 1024 }
+        }
+      },
+      "template_kind": { "type": "keyword" },
+      "unsupported_reason": { "type": "keyword" },
+      "regex": { "type": "keyword", "index": false },
+      "constant_tokens": { "type": "keyword" },
+      "literal_length": { "type": "integer" },
+      "placeholder_count": { "type": "integer" },
+      "has_throwable_arg": { "type": "boolean" },
+      "enclosing": {
+        "type": "object",
+        "properties": {
+          "block_kind": { "type": "keyword" },
+          "condition": { "type": "keyword" },
+          "branch": { "type": "keyword" },
+          "start_line": { "type": "integer" },
+          "end_line": { "type": "integer" }
+        }
+      },
+      "control": { "type": "object", "enabled": false },
+      "snippet": { "type": "text", "index": false },
+      "snippet_start_line": { "type": "integer" },
+      "github_url": { "type": "keyword", "index": false },
+      "analyzer_version": { "type": "keyword" },
+      "analyzed_at": { "type": "date" }
+    }
+  }
+}

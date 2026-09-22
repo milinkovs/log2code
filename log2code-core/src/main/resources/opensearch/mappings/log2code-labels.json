@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "properties": {
+      "log_id": { "type": "keyword" },
+      "dataset_id": { "type": "keyword" },
+      "verdict": { "type": "keyword" },
+      "correct_statement_id": { "type": "keyword" },
+      "predicted_statement_id": { "type": "keyword" },
+      "note": { "type": "text" },
+      "labeled_at": { "type": "date" }
+    }
+  }
+}
