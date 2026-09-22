@@ -1,0 +1,57 @@
+{
+  "log_id" : "dc37f71b0143613a6549a96547a324ad",
+  "@timestamp" : "2026-09-21T13:34:00.123Z",
+  "timestamp_raw" : "2026-09-21T13:34:00.123Z",
+  "dataset_id" : "smoke-01",
+  "source_file" : "logs/customers-service.log.gz",
+  "line_number" : 120,
+  "line_count" : 1,
+  "sequence" : 42,
+  "service" : "customers-service",
+  "module" : "spring-petclinic-customers-service",
+  "app_name" : "customers-service",
+  "pid" : "1",
+  "thread" : "nio-8081-exec-1",
+  "level" : "INFO",
+  "logger_raw" : "o.s.s.p.c.web.OwnerResource",
+  "logger" : "org.springframework.samples.petclinic.customers.web.OwnerResource",
+  "message" : "Saving owner Owner[id=1]",
+  "raw" : "2026-09-21T13:34:00.123Z  INFO 1 --- [customers-service] [nio-8081-exec-1] o.s.s.p.c.web.OwnerResource : Saving owner Owner[id=1]",
+  "code" : {
+    "name" : "spring-petclinic-microservices",
+    "version" : "3858f9c630cf989bb6809a86edf47c2be78dc9f1"
+  },
+  "match" : {
+    "status" : "matched",
+    "statement_id" : "da2bdae0c0f227916731aec370770514",
+    "confidence" : 0.92,
+    "confidence_level" : "high",
+    "candidates" : [ {
+      "statement_id" : "da2bdae0c0f227916731aec370770514",
+      "score" : 0.92
+    }, {
+      "statement_id" : "other-statement-id",
+      "score" : 0.4
+    } ],
+    "score_breakdown" : {
+      "regex_full" : 0.45,
+      "specificity" : 0.17,
+      "logger_exact" : 0.2,
+      "level_equal" : 0.1
+    },
+    "args" : [ "Owner[id=1]" ],
+    "code_unit" : "spring-petclinic-microservices",
+    "module" : "spring-petclinic-customers-service",
+    "class_fqn" : "org.springframework.samples.petclinic.customers.web.OwnerResource",
+    "method_name" : "save",
+    "file_path" : "spring-petclinic-customers-service/src/main/java/org/springframework/samples/petclinic/customers/web/OwnerResource.java",
+    "logging_api" : "slf4j",
+    "template_kind" : "placeholders",
+    "line" : 89,
+    "template" : "Saving owner {}",
+    "github_url" : "https://github.com/spring-petclinic/spring-petclinic-microservices/blob/3858f9c630cf989bb6809a86edf47c2be78dc9f1/.../OwnerResource.java#L89"
+  },
+  "parser_format" : "spring-boot-default",
+  "ingester_version" : "0.1.0-SNAPSHOT",
+  "ingested_at" : "2026-09-22T11:00:00Z"
+}
