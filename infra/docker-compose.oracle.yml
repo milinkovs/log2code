@@ -1,0 +1,44 @@
+# Oracle mode override (T16, taskovi-dip.md T16 step 1). Adds a LOGGING_PATTERN_CONSOLE override to all 6
+# PetClinic services that inserts a "@@L2C[class|method|line]@@ " marker immediately before the message (%m).
+# The rest of the pattern renders identically to the default Spring Boot console pattern documented in
+# docs/log-format.md (section 1-2), taken from spring-boot-4.0.1.jar!/.../logback/defaults.xml.
+#
+# IMPORTANT (see docs/decisions.md, ADR-016): the pattern below does NOT literally repeat defaults.xml's
+# "${LOG_DATEFORMAT_PATTERN:-...}"-style nested placeholders (other than "${PID:-}", which is unaffected -
+# see the ADR). Spring Boot resolves the *value* of the "logging.pattern.console" property (our
+# LOGGING_PATTERN_CONSOLE env var) through its own Environment placeholder resolver before Logback ever sees
+# it, and that resolver uses a single ":" as the default separator, not Logback's "${VAR:-default}" ("-"
+# included). Since LOG_DATEFORMAT_PATTERN/LOG_LEVEL_PATTERN/LOG_CORRELATION_PATTERN/LOG_EXCEPTION_CONVERSION_WORD
+# are not themselves Spring properties, each "${NAME:-default}" collapses to a literal "-default" (the
+# leading "-" is swallowed into the default text), corrupting the pattern (confirmed empirically: a stray
+# "-" before the date, before the level, in place of the whole correlation segment, and before %wEx). The
+# fix is to inline each of those four placeholders' own real default value directly (verified against the
+# running JVM's actual CONSOLE_LOG_PATTERN system property via "docker exec <svc> jcmd 1
+# VM.system_properties"), which renders byte-for-byte identically to the unmodified default. "${PID:-}" is
+# left as a placeholder because PID genuinely is a resolvable Spring/system property, so Spring's resolver
+# finds the real value and this one is not corrupted.
+# %C/%M/%L are Logback's caller class/method/line conversion words (ground truth for oracle datasets).
+#
+# Usage: docker compose -f docker-compose.yml -f docker-compose.oracle.yml --profile petclinic up -d
+# (infra/scripts/session-start.sh <id> --oracle does this.)
+x-oracle-pattern: &oracle-pattern "%clr(%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}){faint} %clr(%5p){} %clr($${PID:-}){magenta} %clr(--- %esb(){APPLICATION_NAME}%esb{APPLICATION_GROUP}[%15.15t] %correlationId){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint} @@L2C[%C|%M|%L]@@ %m%n%wEx"
+
+services:
+  config-server:
+    environment:
+      LOGGING_PATTERN_CONSOLE: *oracle-pattern
+  discovery-server:
+    environment:
+      LOGGING_PATTERN_CONSOLE: *oracle-pattern
+  customers-service:
+    environment:
+      LOGGING_PATTERN_CONSOLE: *oracle-pattern
+  visits-service:
+    environment:
+      LOGGING_PATTERN_CONSOLE: *oracle-pattern
+  vets-service:
+    environment:
+      LOGGING_PATTERN_CONSOLE: *oracle-pattern
+  api-gateway:
+    environment:
+      LOGGING_PATTERN_CONSOLE: *oracle-pattern
