@@ -24,7 +24,7 @@ final class RunWriter {
     }
 
     static Path writeToJson(Path jsonDir, AnalysisRun run) {
-        Path target = jsonDir.resolve(run.codeUnit().name()).resolve(run.codeUnit().version()).resolve(RUN_FILE_NAME);
+        Path target = JsonPaths.forCodeUnit(jsonDir, run.codeUnit()).resolve(RUN_FILE_NAME);
         try {
             Files.createDirectories(target.getParent());
             Json.mapper().writerWithDefaultPrettyPrinter().writeValue(target.toFile(), run);

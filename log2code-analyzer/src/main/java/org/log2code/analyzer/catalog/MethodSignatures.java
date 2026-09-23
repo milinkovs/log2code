@@ -1,8 +1,11 @@
 package org.log2code.analyzer.catalog;
 
+import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.CompactConstructorDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.RecordDeclaration;
 import com.github.javaparser.ast.type.ArrayType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.type.Type;
@@ -24,6 +27,19 @@ public final class MethodSignatures {
 
     public static String of(ConstructorDeclaration constructor) {
         return signature("<init>", constructor.getParameters());
+    }
+
+    /**
+     * A record's compact canonical constructor ({@code private Foo { ... }}) has no explicit parameter
+     * list in source - its parameters are implicitly the record's own components, in declaration order.
+     */
+    public static String of(CompactConstructorDeclaration constructor) {
+        NodeList<Parameter> components = constructor.getParentNode()
+            .filter(RecordDeclaration.class::isInstance)
+            .map(RecordDeclaration.class::cast)
+            .map(RecordDeclaration::getParameters)
+            .orElseGet(NodeList::new);
+        return signature("<init>", components);
     }
 
     /** {@code <clinit>()}: a static initializer block takes no parameters. */

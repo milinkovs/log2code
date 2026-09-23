@@ -173,7 +173,7 @@ public final class DepsResolveCommand implements Callable<Integer> {
             }
         }
         if (out.writesToJson()) {
-            Path runFile = parent.jsonDir().resolve(codeUnit.name()).resolve(codeUnit.version()).resolve("run.json");
+            Path runFile = JsonPaths.forCodeUnit(parent.jsonDir(), codeUnit).resolve("run.json");
             if (Files.isRegularFile(runFile)) {
                 AnalysisRun existing = Json.mapper().readValue(runFile.toFile(), AnalysisRun.class);
                 RunWriter.writeToJson(parent.jsonDir(), withModules(existing, updatedModules));

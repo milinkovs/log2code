@@ -59,6 +59,27 @@ class MethodContextResolverTest {
         assertThat(ctx.methodSignature()).isEqualTo("<init>(String)");
     }
 
+    /**
+     * A record's compact canonical constructor has no explicit parameter list in source - its
+     * signature must fall back to the record's own components (real-world case found analyzing
+     * {@code chaos-monkey-spring-boot} 3.1.0 in T14: {@code RequestAssaultAdapter}'s compact
+     * constructor logs a warning and used to crash {@code MethodContextResolver} entirely, since
+     * {@code CompactConstructorDeclaration} is not a {@code ConstructorDeclaration}).
+     */
+    @Test
+    void recordCompactConstructor() {
+        Node node = markerCall("""
+            record Fixture(String rawName) {
+                Fixture {
+                    marker();
+                }
+            }
+            """);
+        MethodContext ctx = MethodContextResolver.resolve(node);
+        assertThat(ctx.methodName()).isEqualTo("<init>");
+        assertThat(ctx.methodSignature()).isEqualTo("<init>(String)");
+    }
+
     @Test
     void staticInitializerBlock() {
         Node node = markerCall("""

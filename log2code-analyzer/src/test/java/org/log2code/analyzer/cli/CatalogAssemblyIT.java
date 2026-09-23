@@ -64,7 +64,7 @@ class CatalogAssemblyIT {
         Instant analyzedAt = Instant.parse("2026-09-23T10:00:00.000Z");
 
         ProjectCatalogBuilder.Result result = ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, 3, 10, "test-analyzer", analyzedAt);
-        CatalogWriter.writeToOpenSearch(client, names, codeUnit, result, result.catalog(), List.of());
+        CatalogWriter.writeToOpenSearch(client, names, codeUnit, result.catalog(), result.sources(), result.types(), List.of());
 
         AnalysisRun run = new AnalysisRun(
             StableIds.runId(CodeUnit.TYPE_PROJECT, codeUnit.name(), codeUnit.version(), "test-analyzer"),
@@ -100,7 +100,7 @@ class CatalogAssemblyIT {
         Instant analyzedAt = Instant.parse("2026-09-23T10:00:00.000Z");
         ProjectCatalogBuilder.Result full = ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, 3, 10, "test-analyzer", analyzedAt);
 
-        CatalogWriter.writeToOpenSearch(client, names, codeUnit, full, full.catalog(), List.of());
+        CatalogWriter.writeToOpenSearch(client, names, codeUnit, full.catalog(), full.sources(), full.types(), List.of());
         IndexManager indexManager = new IndexManager(client, names);
         // Refresh all three before the second write's delete-by-query runs: delete-by-query only finds
         // already-searchable (refreshed) documents, and this first write's documents are not yet visible
@@ -114,7 +114,7 @@ class CatalogAssemblyIT {
         // first (T10 step 4), not just add module-b's on top of the previous full write.
         List<ModuleInfo> moduleBOnly = modules.stream().filter(m -> m.module().equals("module-b")).toList();
         ProjectCatalogBuilder.Result partial = ProjectCatalogBuilder.build(projectRoot, moduleBOnly, codeUnit, 3, 10, "test-analyzer", analyzedAt);
-        CatalogWriter.writeToOpenSearch(client, names, codeUnit, partial, partial.catalog(), List.of());
+        CatalogWriter.writeToOpenSearch(client, names, codeUnit, partial.catalog(), partial.sources(), partial.types(), List.of());
         indexManager.refresh(names.catalog());
         indexManager.refresh(names.sources());
         indexManager.refresh(names.types());

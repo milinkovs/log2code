@@ -73,7 +73,8 @@ class MethodGraphAssemblyIT {
             ProjectMethodGraphBuilder.build(projectRoot, modules, codeUnit, Map.of());
         List<CatalogEntry> enrichedCatalog = CatalogGraphEnricher.enrich(catalogResult.catalog(), graphResult.methods());
 
-        CatalogWriter.writeToOpenSearch(client, names, codeUnit, catalogResult, enrichedCatalog, graphResult.methods());
+        CatalogWriter.writeToOpenSearch(client, names, codeUnit, enrichedCatalog, catalogResult.sources(),
+            catalogResult.types(), graphResult.methods());
 
         IndexManager indexManager = new IndexManager(client, names);
         indexManager.refresh(names.catalog());

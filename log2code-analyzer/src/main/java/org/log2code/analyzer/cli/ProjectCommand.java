@@ -153,7 +153,8 @@ public final class ProjectCommand implements Callable<Integer> {
             String url = parent.openSearchUrl() != null ? parent.openSearchUrl() : config.opensearch().url();
             OpenSearchClient client = OpenSearchClientFactory.create(OpenSearchConfig.of(url));
             try {
-                CatalogWriter.writeToOpenSearch(client, new IndexNames(), run.codeUnit(), catalogResult, catalog, methods);
+                CatalogWriter.writeToOpenSearch(client, new IndexNames(), run.codeUnit(), catalog,
+                    catalogResult.sources(), catalogResult.types(), methods);
                 RunWriter.writeToOpenSearch(client, new IndexNames(), run);
                 System.out.println("wrote " + catalog.size() + " catalog entries, "
                     + catalogResult.sources().size() + " source files, " + catalogResult.types().size()
@@ -163,7 +164,8 @@ public final class ProjectCommand implements Callable<Integer> {
             }
         }
         if (out.writesToJson()) {
-            Path catalogDir = CatalogWriter.writeToJson(parent.jsonDir(), run.codeUnit(), catalogResult, catalog, methods);
+            Path catalogDir = CatalogWriter.writeToJson(parent.jsonDir(), run.codeUnit(), catalog,
+                catalogResult.sources(), catalogResult.types(), methods);
             Path runFile = RunWriter.writeToJson(parent.jsonDir(), run);
             System.out.println("wrote catalog/sources/types/methods to " + catalogDir + " and run to " + runFile);
         }

@@ -1,6 +1,7 @@
 package org.log2code.analyzer.catalog;
 
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.body.CompactConstructorDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.InitializerDeclaration;
@@ -9,12 +10,13 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 
 /**
  * Resolves the enclosing method-like unit of a log statement (0.8): the nearest {@code
- * MethodDeclaration}/{@code ConstructorDeclaration}/static-or-instance {@code InitializerDeclaration},
- * or, for a log call reached only through a field initializer (typically a lambda assigned as a field's
- * default value, since there is no enclosing method there), the field's {@code VariableDeclarator}. A
- * statement inside a lambda belongs to whichever of these encloses the lambda (0.8): lambdas are
- * transparent to this walk, exactly like {@link org.log2code.analyzer.logging.LogCallDetector}'s
- * {@code in_lambda} computation.
+ * MethodDeclaration}/{@code ConstructorDeclaration}/record {@code CompactConstructorDeclaration}
+ * (0.8's {@code <init>(...)}: a record's compact canonical constructor is still a constructor)/
+ * static-or-instance {@code InitializerDeclaration}, or, for a log call reached only through a field
+ * initializer (typically a lambda assigned as a field's default value, since there is no enclosing
+ * method there), the field's {@code VariableDeclarator}. A statement inside a lambda belongs to
+ * whichever of these encloses the lambda (0.8): lambdas are transparent to this walk, exactly like
+ * {@link org.log2code.analyzer.logging.LogCallDetector}'s {@code in_lambda} computation.
  */
 public final class MethodContextResolver {
 
@@ -33,6 +35,10 @@ public final class MethodContextResolver {
             if (parent instanceof ConstructorDeclaration constructor) {
                 return new MethodContext("<init>", MethodSignatures.of(constructor),
                     AstLines.startLine(constructor), AstLines.endLine(constructor));
+            }
+            if (parent instanceof CompactConstructorDeclaration compactConstructor) {
+                return new MethodContext("<init>", MethodSignatures.of(compactConstructor),
+                    AstLines.startLine(compactConstructor), AstLines.endLine(compactConstructor));
             }
             if (parent instanceof InitializerDeclaration initializer && initializer.isStatic()) {
                 return new MethodContext("<clinit>", MethodSignatures.staticInitializer(),
@@ -58,7 +64,8 @@ public final class MethodContextResolver {
      * {@link EnclosingBlockResolver}, whose own walk is bounded by the same method-like unit.
      */
     static boolean isBoundary(Node parent, Node current) {
-        if (parent instanceof MethodDeclaration || parent instanceof ConstructorDeclaration || parent instanceof InitializerDeclaration) {
+        if (parent instanceof MethodDeclaration || parent instanceof ConstructorDeclaration
+            || parent instanceof CompactConstructorDeclaration || parent instanceof InitializerDeclaration) {
             return true;
         }
         return parent instanceof VariableDeclarator variable

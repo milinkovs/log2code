@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import org.log2code.analyzer.catalog.ProjectCatalogBuilder;
 import org.log2code.core.json.Json;
 import org.log2code.core.model.CatalogEntry;
 import org.log2code.core.model.CodeUnit;
@@ -20,12 +19,12 @@ import org.log2code.core.opensearch.IndexNames;
 import org.opensearch.client.opensearch.OpenSearchClient;
 
 /**
- * Writes a {@link ProjectCatalogBuilder.Result} idempotently (T10 step 4): deletes every existing
- * document for this exact {@code code_unit.name}+{@code code_unit.version} from {@code catalog},
- * {@code sources}, {@code types} and {@code methods}, then bulk-writes the freshly built documents.
- * {@code catalog} is the graph-enriched list (T13: {@code method_id}/{@code control.calls_before}
- * resolution), and {@code methods} is empty until {@code deps resolve} (T12) has produced a
- * {@code deps-manifest.json} for {@link org.log2code.analyzer.cli.ProjectCommand} to build the graph from.
+ * Writes one code unit's catalog documents idempotently (T10 step 4): deletes every existing document
+ * for this exact {@code code_unit.name}+{@code code_unit.version} from {@code catalog}, {@code sources},
+ * {@code types} and {@code methods}, then bulk-writes the freshly built documents. Shared by
+ * {@link ProjectCommand} (project, {@code catalog} graph-enriched by T13, real {@code methods}) and
+ * {@code DepsAnalyzeCommand} (T14: one dependency artifact, {@code methods} always empty - no level 3
+ * for dependencies).
  */
 final class CatalogWriter {
 
@@ -38,7 +37,7 @@ final class CatalogWriter {
     }
 
     static void writeToOpenSearch(OpenSearchClient client, IndexNames indexNames, CodeUnit codeUnit,
-                                   ProjectCatalogBuilder.Result result, List<CatalogEntry> catalog,
+                                   List<CatalogEntry> catalog, List<SourceFile> sources, List<TypeInfo> types,
                                    List<MethodInfo> methods) throws IOException {
         IndexManager indexManager = new IndexManager(client, indexNames);
         indexManager.ensureAll();
@@ -50,8 +49,8 @@ final class CatalogWriter {
         indexManager.deleteByQuery(indexNames.methods(), versionFilter);
 
         bulkWrite(client, indexNames.catalog(), CatalogEntry::statementId, catalog);
-        bulkWrite(client, indexNames.sources(), SourceFile::fileId, result.sources());
-        bulkWrite(client, indexNames.types(), TypeInfo::typeId, result.types());
+        bulkWrite(client, indexNames.sources(), SourceFile::fileId, sources);
+        bulkWrite(client, indexNames.types(), TypeInfo::typeId, types);
         bulkWrite(client, indexNames.methods(), MethodInfo::methodId, methods);
     }
 
@@ -70,13 +69,13 @@ final class CatalogWriter {
         }
     }
 
-    static Path writeToJson(Path jsonDir, CodeUnit codeUnit, ProjectCatalogBuilder.Result result,
-                             List<CatalogEntry> catalog, List<MethodInfo> methods) throws IOException {
-        Path dir = jsonDir.resolve(codeUnit.name()).resolve(codeUnit.version());
+    static Path writeToJson(Path jsonDir, CodeUnit codeUnit, List<CatalogEntry> catalog, List<SourceFile> sources,
+                             List<TypeInfo> types, List<MethodInfo> methods) throws IOException {
+        Path dir = JsonPaths.forCodeUnit(jsonDir, codeUnit);
         Files.createDirectories(dir);
         writeJsonl(dir.resolve(CATALOG_FILE), catalog);
-        writeJsonl(dir.resolve(SOURCES_FILE), result.sources());
-        writeJsonl(dir.resolve(TYPES_FILE), result.types());
+        writeJsonl(dir.resolve(SOURCES_FILE), sources);
+        writeJsonl(dir.resolve(TYPES_FILE), types);
         writeJsonl(dir.resolve(METHODS_FILE), methods);
         return dir;
     }

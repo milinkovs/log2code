@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.CompactConstructorDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,20 @@ class MethodSignaturesTest {
     void constructorSignatureUsesInitMarker() {
         CompilationUnit unit = parse("Fixture(int id, String name) {}");
         ConstructorDeclaration ctor = unit.findFirst(ConstructorDeclaration.class).orElseThrow();
+        assertThat(MethodSignatures.of(ctor)).isEqualTo("<init>(int,String)");
+    }
+
+    /** The compact constructor itself has no parameter list in source - it borrows the record's components. */
+    @Test
+    void compactConstructorSignatureUsesRecordComponents() {
+        CompilationUnit unit = StaticJavaParser.parse("""
+            package org.log2code.fixture.catalog;
+            record Fixture(int id, String name) {
+                Fixture {
+                }
+            }
+            """);
+        CompactConstructorDeclaration ctor = unit.findFirst(CompactConstructorDeclaration.class).orElseThrow();
         assertThat(MethodSignatures.of(ctor)).isEqualTo("<init>(int,String)");
     }
 
