@@ -18,6 +18,10 @@ import org.log2code.analyzer.git.GitRepo;
 import org.log2code.analyzer.logging.LogCall;
 import org.log2code.analyzer.logging.LogCallDetector;
 import org.log2code.analyzer.modules.ModuleScanner;
+import org.log2code.analyzer.template.ConstantIndex;
+import org.log2code.analyzer.template.ExtractedTemplate;
+import org.log2code.analyzer.template.MessageTemplateExtractor;
+import org.log2code.analyzer.template.TemplateKind;
 import org.log2code.core.ids.StableIds;
 import org.log2code.core.model.AnalysisRun;
 import org.log2code.core.model.CodeUnit;
@@ -155,18 +159,27 @@ public final class ProjectCommand implements Callable<Integer> {
         }
 
         List<List<LogCall>> perFile = LogCallDetector.detectAll(units);
+        ConstantIndex constants = ConstantIndex.build(units);
         int total = 0;
+        int unsupported = 0;
         for (int i = 0; i < perFile.size(); i++) {
             for (LogCall call : perFile.get(i)) {
                 int line = call.node().getRange().map(r -> r.begin.line).orElse(-1);
                 String throwableMarker = call.throwableArg() != null ? " +throwable" : "";
-                System.out.printf("%s:%d  api=%-20s logger=%-10s level=%-6s detection=%-10s logger_name_kind=%-14s logger_name=%s%s%n",
+                ExtractedTemplate extracted = MessageTemplateExtractor.extract(call, constants);
+                String templateInfo = TemplateKind.UNSUPPORTED.equals(extracted.templateKind())
+                    ? "kind=unsupported reason=" + extracted.unsupportedReason()
+                    : "kind=%-14s template=%s".formatted(extracted.templateKind(), extracted.template().toNormalized());
+                System.out.printf("%s:%d  api=%-20s logger=%-10s level=%-6s detection=%-10s logger_name_kind=%-14s logger_name=%s%s  %s%n",
                     fileLabels.get(i), line, call.api(), call.loggerExpr(), call.level(), call.detection(),
-                    call.loggerNameKind(), call.loggerName(), throwableMarker);
+                    call.loggerNameKind(), call.loggerName(), throwableMarker, templateInfo);
                 total++;
+                if (TemplateKind.UNSUPPORTED.equals(extracted.templateKind())) {
+                    unsupported++;
+                }
             }
         }
-        System.out.println("total: " + total + " log call(s)");
+        System.out.println("total: " + total + " log call(s), " + unsupported + " unsupported");
 
         if (!failures.isEmpty()) {
             System.err.println(failures.size() + " file(s) failed to parse:");

@@ -85,6 +85,20 @@ public final class MessageTemplate {
         return parts;
     }
 
+    /**
+     * Scans {@code text} for {@code {}} holes and the SLF4J escapes ({@code \{} for a literal brace,
+     * {@code \\} for a literal backslash), like {@link #parse(String)}, but returns the raw parts
+     * <em>without</em> {@link #of(List)}'s normalization (merging, whitespace trimming). Intended for
+     * callers that scan a text <em>fragment</em> (e.g. one term of a larger concatenation, T09) and
+     * combine several such fragments before normalizing the combined list themselves via {@link #of(List)}
+     * - normalizing each fragment in isolation would incorrectly trim whitespace at fragment boundaries
+     * that are not the true start/end of the overall template.
+     */
+    public static List<Part> scanRawParts(String text) {
+        Objects.requireNonNull(text, "text");
+        return List.copyOf(scan(text));
+    }
+
     /** The canonical normalized representation of this template (see the class javadoc). */
     public String toNormalized() {
         return normalized;

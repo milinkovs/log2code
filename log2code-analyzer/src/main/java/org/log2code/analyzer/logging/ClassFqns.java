@@ -11,14 +11,15 @@ import java.util.Optional;
  * Computes a dotted class FQN (0.8: {@code a.b.Outer.Inner}) by walking a type declaration's own
  * nesting chain, and finds the chain of enclosing named types from an arbitrary AST node (used by T08
  * pass 2 to look up "fields visible from here", including a class implicitly reachable through an
- * anonymous-class or lambda body).
+ * anonymous-class or lambda body). Public (T09 note, 0.13): message-template constant resolution
+ * (rule 3) reuses this to find a log call's enclosing class chain, without duplicating the walk.
  */
-final class ClassFqns {
+public final class ClassFqns {
 
     private ClassFqns() {
     }
 
-    static String of(TypeDeclaration<?> type) {
+    public static String of(TypeDeclaration<?> type) {
         List<String> segments = new ArrayList<>();
         segments.add(type.getNameAsString());
         Node current = type;
@@ -42,7 +43,7 @@ final class ClassFqns {
     }
 
     /** Enclosing named type declarations of {@code from}, innermost first (anonymous classes are transparent). */
-    static List<TypeDeclaration<?>> enclosingTypesInnerToOuter(Node from) {
+    public static List<TypeDeclaration<?>> enclosingTypesInnerToOuter(Node from) {
         List<TypeDeclaration<?>> result = new ArrayList<>();
         Node current = from;
         while (true) {

@@ -242,4 +242,34 @@ class MessageTemplateTest {
         Optional<List<String>> result = t.matchFull("Deleting owner Owner[id=1]");
         assertThat(result).isEmpty();
     }
+
+    // --- Group F: scanRawParts (T09: unnormalized scan of a fragment) --------------------------
+
+    @Test
+    void scanRawPartsParsesHolesAndEscapesLikeParse() {
+        assertThat(MessageTemplate.scanRawParts("head {} tail"))
+            .containsExactly(new Literal("head "), new Hole(), new Literal(" tail"));
+        assertThat(MessageTemplate.scanRawParts("\\{}")).containsExactly(new Literal("{}"));
+        assertThat(MessageTemplate.scanRawParts("\\\\{}")).containsExactly(new Literal("\\"), new Hole());
+    }
+
+    @Test
+    void scanRawPartsDoesNotTrimBoundaryWhitespaceUnlikeParse() {
+        // parse()/of() trim leading/trailing whitespace of the WHOLE template - correct for a
+        // complete message, but wrong for one fragment of a larger concatenation (T09), where a
+        // leading/trailing space is meaningful and must survive until the combined part list is
+        // itself normalized once, at the end.
+        assertThat(MessageTemplate.scanRawParts(" b")).containsExactly(new Literal(" b"));
+        assertThat(MessageTemplate.parse(" b").parts()).containsExactly(new Literal("b"));
+
+        List<Part> combined = new java.util.ArrayList<>();
+        combined.addAll(MessageTemplate.scanRawParts("a "));
+        combined.addAll(MessageTemplate.scanRawParts(" b"));
+        assertThat(MessageTemplate.of(combined).toNormalized()).isEqualTo("a  b");
+    }
+
+    @Test
+    void scanRawPartsOnEmptyTextReturnsEmptyList() {
+        assertThat(MessageTemplate.scanRawParts("")).isEmpty();
+    }
 }
