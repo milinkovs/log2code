@@ -273,8 +273,12 @@ public final class ControlContextExtractor {
      * pretty-printed {@code toString()}, using the JVM's platform line separator) into a single-line
      * preview, then truncates to {@link #TEXT_LIMIT} characters (0.9's "izvorni tekst, skraćen na 200
      * znakova"). Without this, the same source would serialize differently on Windows vs. Linux.
+     * Public (T13 note, 0.13): the call graph package reuses this exact normalization so a
+     * {@code MethodInfo.calls[]} entry's {@code text} matches a {@code control.calls_before} {@code
+     * CallSite}'s {@code text} for the same physical call, letting T13 back-fill {@code
+     * target_method_id}/{@code resolved} by looking the pair up.
      */
-    static String truncate(String text) {
+    public static String truncate(String text) {
         String normalized = text.replaceAll("\\s+", " ").trim();
         return normalized.length() <= TEXT_LIMIT ? normalized : normalized.substring(0, TEXT_LIMIT);
     }

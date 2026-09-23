@@ -2,11 +2,15 @@ package org.log2code.analyzer.cli;
 
 import com.github.javaparser.ast.CompilationUnit;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 import org.log2code.analyzer.AnalyzerCli;
 import org.log2code.analyzer.AnalyzerVersion;
@@ -15,6 +19,9 @@ import org.log2code.analyzer.catalog.ProjectCatalogBuilder;
 import org.log2code.analyzer.config.AnalyzerConfig;
 import org.log2code.analyzer.config.AnalyzerConfigLoader;
 import org.log2code.analyzer.git.GitRepo;
+import org.log2code.analyzer.graph.CatalogGraphEnricher;
+import org.log2code.analyzer.graph.ModuleJars;
+import org.log2code.analyzer.graph.ProjectMethodGraphBuilder;
 import org.log2code.analyzer.logging.LogCall;
 import org.log2code.analyzer.logging.LogCallDetector;
 import org.log2code.analyzer.modules.ModuleScanner;
@@ -24,7 +31,9 @@ import org.log2code.analyzer.template.MessageTemplateExtractor;
 import org.log2code.analyzer.template.TemplateKind;
 import org.log2code.core.ids.StableIds;
 import org.log2code.core.model.AnalysisRun;
+import org.log2code.core.model.CatalogEntry;
 import org.log2code.core.model.CodeUnit;
+import org.log2code.core.model.MethodInfo;
 import org.log2code.core.model.ModuleInfo;
 import org.log2code.core.opensearch.IndexNames;
 import org.log2code.core.opensearch.OpenSearchClientFactory;
@@ -37,7 +46,11 @@ import picocli.CommandLine.ParentCommand;
 /**
  * Analyzes the PetClinic project: git repo state, Maven modules and their services, the full catalog
  * (T10: {@code log2code-catalog}/{@code -sources}/{@code -types}, level 1 {@code enclosing} and level 2
- * {@code control} context) and an {@link AnalysisRun}. The call graph (T13) is added later.
+ * {@code control} context) and an {@link AnalysisRun}. If {@code deps resolve} (T12) has already
+ * produced {@code data/work/deps/deps-manifest.json}, this also builds the project call graph (T13:
+ * {@code log2code-methods}, {@code catalog.method_id} and {@code control.calls_before} resolution);
+ * otherwise it prints a warning and writes the catalog alone, exactly as before T13 - re-running
+ * {@code project} after {@code deps resolve} is the normal way to add the graph afterwards.
  */
 @Command(name = "project", description = "Analyze the project: git repository, Maven modules, services.")
 public final class ProjectCommand implements Callable<Integer> {
@@ -55,6 +68,8 @@ public final class ProjectCommand implements Callable<Integer> {
     @Option(names = "--list-calls",
         description = "Print every detected log call (file:line, API, logger, level) instead of analyzing/writing anything.")
     private boolean listCalls;
+
+    private static final Path DEPS_MANIFEST_FILE = Path.of("data/work/deps/deps-manifest.json");
 
     @Override
     public Integer call() throws IOException {
@@ -96,6 +111,22 @@ public final class ProjectCommand implements Callable<Integer> {
         ProjectCatalogBuilder.Result catalogResult = ProjectCatalogBuilder.build(
             projectRoot, modules, codeUnit, config.context().snippetLines(), config.context().maxPrecedingStatements(),
             AnalyzerVersion.current(), startedAt);
+
+        List<CatalogEntry> catalog = catalogResult.catalog();
+        List<MethodInfo> methods = List.of();
+        Map<String, Object> stats = new LinkedHashMap<>(catalogResult.stats());
+
+        Optional<Map<String, List<Path>>> jarsByModule = ModuleJars.load(DEPS_MANIFEST_FILE);
+        if (jarsByModule.isPresent()) {
+            ProjectMethodGraphBuilder.Result graphResult = ProjectMethodGraphBuilder.build(
+                projectRoot, modules, codeUnit, jarsByModule.get());
+            methods = graphResult.methods();
+            catalog = CatalogGraphEnricher.enrich(catalog, methods);
+            stats.putAll(graphResult.stats());
+        } else {
+            System.err.println("warning: " + DEPS_MANIFEST_FILE + " not found; skipping the call graph (T13)."
+                + " Run 'analyzer deps resolve' first, then 'analyzer project' again to add it.");
+        }
         Instant finishedAt = Instant.now();
 
         AnalysisRun run = new AnalysisRun(
@@ -107,33 +138,34 @@ public final class ProjectCommand implements Callable<Integer> {
             startedAt,
             finishedAt,
             Duration.between(startedAt, finishedAt).toMillis(),
-            catalogResult.stats(),
+            Map.copyOf(stats),
             modules
         );
 
-        writeAll(config, run, catalogResult);
+        writeAll(config, run, catalogResult, catalog, methods);
         return 0;
     }
 
-    private void writeAll(AnalyzerConfig config, AnalysisRun run, ProjectCatalogBuilder.Result catalogResult) throws IOException {
+    private void writeAll(AnalyzerConfig config, AnalysisRun run, ProjectCatalogBuilder.Result catalogResult,
+                           List<CatalogEntry> catalog, List<MethodInfo> methods) throws IOException {
         OutputMode out = parent.out();
         if (out.writesToOpenSearch()) {
             String url = parent.openSearchUrl() != null ? parent.openSearchUrl() : config.opensearch().url();
             OpenSearchClient client = OpenSearchClientFactory.create(OpenSearchConfig.of(url));
             try {
-                CatalogWriter.writeToOpenSearch(client, new IndexNames(), run.codeUnit(), catalogResult);
+                CatalogWriter.writeToOpenSearch(client, new IndexNames(), run.codeUnit(), catalogResult, catalog, methods);
                 RunWriter.writeToOpenSearch(client, new IndexNames(), run);
-                System.out.println("wrote " + catalogResult.catalog().size() + " catalog entries, "
+                System.out.println("wrote " + catalog.size() + " catalog entries, "
                     + catalogResult.sources().size() + " source files, " + catalogResult.types().size()
-                    + " types, and run " + run.runId() + " (" + url + ")");
+                    + " types, " + methods.size() + " methods, and run " + run.runId() + " (" + url + ")");
             } finally {
                 OpenSearchClientFactory.close(client);
             }
         }
         if (out.writesToJson()) {
-            Path catalogDir = CatalogWriter.writeToJson(parent.jsonDir(), run.codeUnit(), catalogResult);
+            Path catalogDir = CatalogWriter.writeToJson(parent.jsonDir(), run.codeUnit(), catalogResult, catalog, methods);
             Path runFile = RunWriter.writeToJson(parent.jsonDir(), run);
-            System.out.println("wrote catalog/sources/types to " + catalogDir + " and run to " + runFile);
+            System.out.println("wrote catalog/sources/types/methods to " + catalogDir + " and run to " + runFile);
         }
     }
 

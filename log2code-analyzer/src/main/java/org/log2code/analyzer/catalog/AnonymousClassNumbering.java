@@ -13,14 +13,16 @@ import java.util.Map;
  * classes declared directly within it - an anonymous class nested inside another anonymous class shares
  * its nearest enclosing <em>named</em> type's counter, since anonymous classes have no counter of their
  * own. {@link ClassContextResolver} appends the number to that named type's binary name (T10, ADR-010).
+ * Public (T13 note, 0.13): the call graph package recomputes this per file, on demand, for whichever
+ * compilation unit a resolved call target's declaration turns out to live in.
  */
-final class AnonymousClassNumbering {
+public final class AnonymousClassNumbering {
 
     private AnonymousClassNumbering() {
     }
 
     /** Maps every anonymous-class-bearing {@link ObjectCreationExpr} in {@code unit} to its 1-based number. */
-    static Map<Node, Integer> compute(CompilationUnit unit) {
+    public static Map<Node, Integer> compute(CompilationUnit unit) {
         Map<TypeDeclaration<?>, Integer> countersByOwner = new IdentityHashMap<>();
         Map<Node, Integer> result = new IdentityHashMap<>();
         for (ObjectCreationExpr call : unit.findAll(ObjectCreationExpr.class)) {

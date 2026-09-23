@@ -51,6 +51,12 @@ public final class CatalogEntryBuilder {
         String logicalId = StableIds.logicalId(codeUnit.name(), file.filePath(),
             classContext.classFqn(), methodContext.methodSignature(), template, ordinal);
         String fileId = StableIds.fileId(codeUnit.name(), codeUnit.version(), file.filePath());
+        // Pure function of already-known fields (0.8): no dependency on the call graph (T13) actually
+        // existing yet. Dependencies never get one (0.7: "samo projekat") - a dependency's sources are
+        // analyzed in isolation (T14), with no project-wide method graph to reference.
+        String methodId = CodeUnit.TYPE_PROJECT.equals(codeUnit.type())
+            ? StableIds.methodId(codeUnit.name(), codeUnit.version(), classContext.classFqn(), methodContext.methodSignature())
+            : null;
 
         int line = AstLines.startLine(node);
         int endLine = AstLines.endLine(node);
@@ -73,7 +79,7 @@ public final class CatalogEntryBuilder {
             classContext.classBinary(),
             methodContext.methodName(),
             methodContext.methodSignature(),
-            null, // method_id: populated by T13
+            methodId,
             call.inLambda(),
             line,
             endLine,
