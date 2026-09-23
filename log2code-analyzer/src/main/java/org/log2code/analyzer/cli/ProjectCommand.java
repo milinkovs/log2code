@@ -7,11 +7,11 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import org.log2code.analyzer.AnalyzerCli;
 import org.log2code.analyzer.AnalyzerVersion;
 import org.log2code.analyzer.ast.JavaSources;
+import org.log2code.analyzer.catalog.ProjectCatalogBuilder;
 import org.log2code.analyzer.config.AnalyzerConfig;
 import org.log2code.analyzer.config.AnalyzerConfigLoader;
 import org.log2code.analyzer.git.GitRepo;
@@ -35,9 +35,9 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.ParentCommand;
 
 /**
- * Analyzes the PetClinic project: git repo state, Maven modules and their services. Log statement
- * detection (T08), message templates (T09) and the rest of the catalog (T10-T13) are added later;
- * for now this only discovers modules and records an {@link AnalysisRun}.
+ * Analyzes the PetClinic project: git repo state, Maven modules and their services, the full catalog
+ * (T10: {@code log2code-catalog}/{@code -sources}/{@code -types}, level 1 {@code enclosing} context)
+ * and an {@link AnalysisRun}. Level 2 control context (T11) and the call graph (T13) are added later.
  */
 @Command(name = "project", description = "Analyze the project: git repository, Maven modules, services.")
 public final class ProjectCommand implements Callable<Integer> {
@@ -78,10 +78,8 @@ public final class ProjectCommand implements Callable<Integer> {
             System.err.println("warning: " + dirtyJavaFiles.size() + " uncommitted .java file(s); analyzing as " + version);
         }
 
-        Instant startedAt = Instant.now();
         List<ModuleInfo> modules = new ModuleScanner().scan(
             projectRoot, config.project().includeModules(), config.project().excludeModules());
-        Instant finishedAt = Instant.now();
 
         if (listCalls) {
             printListCalls(projectRoot, modules);
@@ -93,38 +91,48 @@ public final class ProjectCommand implements Callable<Integer> {
             return 0;
         }
 
+        Instant startedAt = Instant.now();
+        CodeUnit codeUnit = new CodeUnit(CodeUnit.TYPE_PROJECT, config.project().name(), version);
+        ProjectCatalogBuilder.Result catalogResult = ProjectCatalogBuilder.build(
+            projectRoot, modules, codeUnit, config.context().snippetLines(), AnalyzerVersion.current(), startedAt);
+        Instant finishedAt = Instant.now();
+
         AnalysisRun run = new AnalysisRun(
             StableIds.runId(CodeUnit.TYPE_PROJECT, config.project().name(), version, AnalyzerVersion.current()),
             CodeUnit.TYPE_PROJECT,
-            new CodeUnit(CodeUnit.TYPE_PROJECT, config.project().name(), version),
+            codeUnit,
             remoteUrl,
             AnalyzerVersion.current(),
             startedAt,
             finishedAt,
             Duration.between(startedAt, finishedAt).toMillis(),
-            Map.of("module_count", modules.size()),
+            catalogResult.stats(),
             modules
         );
 
-        writeRun(config, run);
+        writeAll(config, run, catalogResult);
         return 0;
     }
 
-    private void writeRun(AnalyzerConfig config, AnalysisRun run) throws IOException {
+    private void writeAll(AnalyzerConfig config, AnalysisRun run, ProjectCatalogBuilder.Result catalogResult) throws IOException {
         OutputMode out = parent.out();
         if (out.writesToOpenSearch()) {
             String url = parent.openSearchUrl() != null ? parent.openSearchUrl() : config.opensearch().url();
             OpenSearchClient client = OpenSearchClientFactory.create(OpenSearchConfig.of(url));
             try {
+                CatalogWriter.writeToOpenSearch(client, new IndexNames(), run.codeUnit(), catalogResult);
                 RunWriter.writeToOpenSearch(client, new IndexNames(), run);
-                System.out.println("wrote run " + run.runId() + " to log2code-runs (" + url + ")");
+                System.out.println("wrote " + catalogResult.catalog().size() + " catalog entries, "
+                    + catalogResult.sources().size() + " source files, " + catalogResult.types().size()
+                    + " types, and run " + run.runId() + " (" + url + ")");
             } finally {
                 OpenSearchClientFactory.close(client);
             }
         }
         if (out.writesToJson()) {
-            Path written = RunWriter.writeToJson(parent.jsonDir(), run);
-            System.out.println("wrote run " + run.runId() + " to " + written);
+            Path catalogDir = CatalogWriter.writeToJson(parent.jsonDir(), run.codeUnit(), catalogResult);
+            Path runFile = RunWriter.writeToJson(parent.jsonDir(), run);
+            System.out.println("wrote catalog/sources/types to " + catalogDir + " and run to " + runFile);
         }
     }
 

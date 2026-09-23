@@ -59,7 +59,8 @@ public final class JavaSources {
         return new Result(List.copyOf(parsed), List.copyOf(failures));
     }
 
-    private static List<Path> findJavaFiles(Path sourceRoot) {
+    /** Every {@code .java} file under {@code sourceRoot}, in a deterministic (sorted) order. */
+    public static List<Path> findJavaFiles(Path sourceRoot) {
         if (!Files.isDirectory(sourceRoot)) {
             return List.of();
         }

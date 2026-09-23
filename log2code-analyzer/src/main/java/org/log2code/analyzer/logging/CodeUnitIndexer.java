@@ -1,9 +1,12 @@
 package org.log2code.analyzer.logging;
 
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.RecordDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
@@ -20,13 +23,14 @@ import java.util.Set;
  * in two passes of its own so that a class declared in one file can resolve a superclass/logger field
  * type declared in another file of the same code unit: first every named type's FQN is collected
  * (1a), then superclass/interfaces/logger fields are resolved against that now-complete set (1b/1c).
+ * Public (T10 note, 0.13): catalog assembly reuses this to build {@code TypeInfo} documents.
  */
-final class CodeUnitIndexer {
+public final class CodeUnitIndexer {
 
     private CodeUnitIndexer() {
     }
 
-    static TypeIndex index(List<CompilationUnit> units) {
+    public static TypeIndex index(List<CompilationUnit> units) {
         Map<String, TypeDeclaration<?>> declarationsByFqn = new LinkedHashMap<>();
         Map<String, TypeNameResolver> resolverByFqn = new LinkedHashMap<>();
         for (CompilationUnit unit : units) {
@@ -48,10 +52,27 @@ final class CodeUnitIndexer {
             String superclassFqn = resolveSuperclass(type, resolver, allFqns);
             List<String> interfaceFqns = resolveInterfaces(type, resolver, allFqns);
             Map<String, LoggerFieldInfo> loggerFields = loggerFields(type, resolver);
+            String kind = kindOf(type);
 
-            classes.put(fqn, new ClassInfo(fqn, superclassFqn, interfaceFqns, loggerFields));
+            classes.put(fqn, new ClassInfo(fqn, superclassFqn, interfaceFqns, loggerFields, kind));
         }
         return new TypeIndex(Map.copyOf(classes));
+    }
+
+    private static String kindOf(TypeDeclaration<?> type) {
+        if (type instanceof ClassOrInterfaceDeclaration coid) {
+            return coid.isInterface() ? TypeKind.INTERFACE : TypeKind.CLASS;
+        }
+        if (type instanceof EnumDeclaration) {
+            return TypeKind.ENUM;
+        }
+        if (type instanceof RecordDeclaration) {
+            return TypeKind.RECORD;
+        }
+        if (type instanceof AnnotationDeclaration) {
+            return TypeKind.ANNOTATION;
+        }
+        throw new IllegalStateException("unknown type declaration kind: " + type.getClass());
     }
 
     private static String resolveSuperclass(TypeDeclaration<?> type, TypeNameResolver resolver, Set<String> allFqns) {
