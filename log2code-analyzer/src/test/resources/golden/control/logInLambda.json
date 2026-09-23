@@ -1,0 +1,11 @@
+{
+  "conditions" : [ {
+    "kind" : "lambda",
+    "text" : "owner",
+    "line" : 71,
+    "negated" : false
+  } ],
+  "early_exits" : [ ],
+  "preceding" : [ ],
+  "calls_before" : [ ]
+}

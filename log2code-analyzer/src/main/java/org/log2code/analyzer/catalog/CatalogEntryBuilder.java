@@ -9,12 +9,13 @@ import org.log2code.analyzer.template.ExtractedTemplate;
 import org.log2code.core.ids.StableIds;
 import org.log2code.core.model.CatalogEntry;
 import org.log2code.core.model.CodeUnit;
+import org.log2code.core.model.ControlContext;
 import org.log2code.core.model.EnclosingBlock;
 
 /**
  * Builds one {@link CatalogEntry} (0.7) from one {@link LogCall} plus everything T09 (message template)
- * and this package (class/method/block context) worked out for it. Pure: no I/O beyond the already-read
- * {@code fileLines} passed in for the snippet.
+ * and this package (class/method/block/control context) worked out for it. Pure: no I/O beyond the
+ * already-read {@code fileLines} passed in for the snippet.
  */
 public final class CatalogEntryBuilder {
 
@@ -30,6 +31,7 @@ public final class CatalogEntryBuilder {
         int ordinal,
         List<String> fileLines,
         int snippetLines,
+        int maxPrecedingStatements,
         String analyzerVersion,
         Instant analyzedAt
     ) {
@@ -37,6 +39,7 @@ public final class CatalogEntryBuilder {
         ClassContext classContext = ClassContextResolver.resolve(node, anonymousClassNumbers);
         MethodContext methodContext = MethodContextResolver.resolve(node);
         EnclosingBlock enclosing = EnclosingBlockResolver.resolve(node, methodContext);
+        ControlContext control = ControlContextExtractor.extract(node, methodContext, maxPrecedingStatements);
 
         String template = extracted.template() != null ? extracted.template().toNormalized() : null;
         String regex = extracted.template() != null ? extracted.template().toRegex() : null;
@@ -94,7 +97,7 @@ public final class CatalogEntryBuilder {
             extracted.placeholderCount(),
             call.throwableArg() != null,
             enclosing,
-            null, // control: populated by T11
+            control,
             snippet,
             snippetStart,
             null, // github_url: populated by T15

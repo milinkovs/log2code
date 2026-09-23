@@ -36,8 +36,8 @@ import picocli.CommandLine.ParentCommand;
 
 /**
  * Analyzes the PetClinic project: git repo state, Maven modules and their services, the full catalog
- * (T10: {@code log2code-catalog}/{@code -sources}/{@code -types}, level 1 {@code enclosing} context)
- * and an {@link AnalysisRun}. Level 2 control context (T11) and the call graph (T13) are added later.
+ * (T10: {@code log2code-catalog}/{@code -sources}/{@code -types}, level 1 {@code enclosing} and level 2
+ * {@code control} context) and an {@link AnalysisRun}. The call graph (T13) is added later.
  */
 @Command(name = "project", description = "Analyze the project: git repository, Maven modules, services.")
 public final class ProjectCommand implements Callable<Integer> {
@@ -94,7 +94,8 @@ public final class ProjectCommand implements Callable<Integer> {
         Instant startedAt = Instant.now();
         CodeUnit codeUnit = new CodeUnit(CodeUnit.TYPE_PROJECT, config.project().name(), version);
         ProjectCatalogBuilder.Result catalogResult = ProjectCatalogBuilder.build(
-            projectRoot, modules, codeUnit, config.context().snippetLines(), AnalyzerVersion.current(), startedAt);
+            projectRoot, modules, codeUnit, config.context().snippetLines(), config.context().maxPrecedingStatements(),
+            AnalyzerVersion.current(), startedAt);
         Instant finishedAt = Instant.now();
 
         AnalysisRun run = new AnalysisRun(

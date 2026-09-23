@@ -63,7 +63,7 @@ class CatalogAssemblyIT {
         CodeUnit codeUnit = new CodeUnit(CodeUnit.TYPE_PROJECT, "mini-project-it", "v1");
         Instant analyzedAt = Instant.parse("2026-09-23T10:00:00.000Z");
 
-        ProjectCatalogBuilder.Result result = ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, 3, "test-analyzer", analyzedAt);
+        ProjectCatalogBuilder.Result result = ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, 3, 10, "test-analyzer", analyzedAt);
         CatalogWriter.writeToOpenSearch(client, names, codeUnit, result);
 
         AnalysisRun run = new AnalysisRun(
@@ -98,7 +98,7 @@ class CatalogAssemblyIT {
         List<ModuleInfo> modules = new ModuleScanner().scan(projectRoot, List.of(), List.of());
         CodeUnit codeUnit = new CodeUnit(CodeUnit.TYPE_PROJECT, "mini-project-it", "v1");
         Instant analyzedAt = Instant.parse("2026-09-23T10:00:00.000Z");
-        ProjectCatalogBuilder.Result full = ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, 3, "test-analyzer", analyzedAt);
+        ProjectCatalogBuilder.Result full = ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, 3, 10, "test-analyzer", analyzedAt);
 
         CatalogWriter.writeToOpenSearch(client, names, codeUnit, full);
         IndexManager indexManager = new IndexManager(client, names);
@@ -113,7 +113,7 @@ class CatalogAssemblyIT {
         // Re-analyzing module-b only (same code_unit.version) must delete module-a's stale documents
         // first (T10 step 4), not just add module-b's on top of the previous full write.
         List<ModuleInfo> moduleBOnly = modules.stream().filter(m -> m.module().equals("module-b")).toList();
-        ProjectCatalogBuilder.Result partial = ProjectCatalogBuilder.build(projectRoot, moduleBOnly, codeUnit, 3, "test-analyzer", analyzedAt);
+        ProjectCatalogBuilder.Result partial = ProjectCatalogBuilder.build(projectRoot, moduleBOnly, codeUnit, 3, 10, "test-analyzer", analyzedAt);
         CatalogWriter.writeToOpenSearch(client, names, codeUnit, partial);
         indexManager.refresh(names.catalog());
         indexManager.refresh(names.sources());

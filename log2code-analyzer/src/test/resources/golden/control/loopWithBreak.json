@@ -1,0 +1,19 @@
+{
+  "conditions" : [ {
+    "kind" : "loop",
+    "text" : "Owner owner : owners",
+    "line" : 48,
+    "negated" : false
+  } ],
+  "early_exits" : [ {
+    "text" : "owner == null",
+    "line" : 49,
+    "exit_kind" : "break"
+  } ],
+  "preceding" : [ {
+    "kind" : "if",
+    "text" : "if (owner == null) { break; }",
+    "line" : 49
+  } ],
+  "calls_before" : [ ]
+}

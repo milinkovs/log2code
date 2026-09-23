@@ -1,0 +1,11 @@
+{
+  "conditions" : [ {
+    "kind" : "switch_case",
+    "text" : "status == 2",
+    "line" : 59,
+    "negated" : false
+  } ],
+  "early_exits" : [ ],
+  "preceding" : [ ],
+  "calls_before" : [ ]
+}

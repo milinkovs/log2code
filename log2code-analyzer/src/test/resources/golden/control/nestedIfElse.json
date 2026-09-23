@@ -1,0 +1,16 @@
+{
+  "conditions" : [ {
+    "kind" : "if",
+    "text" : "owner.isActive()",
+    "line" : 29,
+    "negated" : false
+  }, {
+    "kind" : "else",
+    "text" : "owner.getPets().isEmpty()",
+    "line" : 32,
+    "negated" : true
+  } ],
+  "early_exits" : [ ],
+  "preceding" : [ ],
+  "calls_before" : [ ]
+}

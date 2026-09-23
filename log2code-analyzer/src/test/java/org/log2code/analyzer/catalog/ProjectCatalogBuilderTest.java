@@ -26,6 +26,7 @@ import org.log2code.core.model.TypeInfo;
 class ProjectCatalogBuilderTest {
 
     private static final int SNIPPET_LINES = 3;
+    private static final int MAX_PRECEDING_STATEMENTS = 10;
     private static final String ANALYZER_VERSION = "test-analyzer";
 
     private final Path projectRoot = fixtureRoot();
@@ -33,7 +34,8 @@ class ProjectCatalogBuilderTest {
 
     private Result build(String version) {
         CodeUnit codeUnit = new CodeUnit(CodeUnit.TYPE_PROJECT, "mini-project", version);
-        return ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, SNIPPET_LINES, ANALYZER_VERSION, Instant.parse("2026-09-23T10:00:00Z"));
+        return ProjectCatalogBuilder.build(projectRoot, modules, codeUnit, SNIPPET_LINES, MAX_PRECEDING_STATEMENTS,
+            ANALYZER_VERSION, Instant.parse("2026-09-23T10:00:00Z"));
     }
 
     private static CatalogEntry byTemplateAndLine(List<CatalogEntry> catalog, String template, int minLine) {

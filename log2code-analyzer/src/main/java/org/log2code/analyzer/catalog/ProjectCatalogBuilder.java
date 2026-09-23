@@ -52,7 +52,7 @@ public final class ProjectCatalogBuilder {
     }
 
     public static Result build(Path projectRoot, List<ModuleInfo> modules, CodeUnit codeUnit,
-                                int snippetLines, String analyzerVersion, Instant analyzedAt) {
+                                int snippetLines, int maxPrecedingStatements, String analyzerVersion, Instant analyzedAt) {
         Instant start = Instant.now();
 
         List<FileUnit> fileUnits = new ArrayList<>();
@@ -117,7 +117,7 @@ public final class ProjectCatalogBuilder {
                 int ordinal = ordinals.merge(key, 0, (oldValue, ignored) -> oldValue + 1);
 
                 catalog.add(CatalogEntryBuilder.build(call, extracted, anonymousClassNumbers, fileUnit.file(),
-                    codeUnit, ordinal, lines, snippetLines, analyzerVersion, analyzedAt));
+                    codeUnit, ordinal, lines, snippetLines, maxPrecedingStatements, analyzerVersion, analyzedAt));
 
                 callsByLoggingApi.merge(call.api(), 1L, Long::sum);
                 callsByTemplateKind.merge(extracted.templateKind(), 1L, Long::sum);

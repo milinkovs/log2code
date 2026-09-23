@@ -1,0 +1,20 @@
+{
+  "conditions" : [ {
+    "kind" : "catch",
+    "text" : "IllegalStateException",
+    "line" : 41,
+    "negated" : false
+  } ],
+  "early_exits" : [ ],
+  "preceding" : [ {
+    "kind" : "call",
+    "text" : "cleanup();",
+    "line" : 42
+  } ],
+  "calls_before" : [ {
+    "line" : 42,
+    "text" : "cleanup()",
+    "target" : "cleanup",
+    "resolved" : false
+  } ]
+}

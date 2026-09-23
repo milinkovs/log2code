@@ -1,0 +1,23 @@
+{
+  "conditions" : [ ],
+  "early_exits" : [ {
+    "text" : "normalized == null",
+    "line" : 22,
+    "exit_kind" : "return"
+  } ],
+  "preceding" : [ {
+    "kind" : "if",
+    "text" : "if (normalized == null) { return; }",
+    "line" : 22
+  }, {
+    "kind" : "var_decl",
+    "text" : "Owner normalized = normalize(owner);",
+    "line" : 21
+  } ],
+  "calls_before" : [ {
+    "line" : 21,
+    "text" : "normalize(owner)",
+    "target" : "normalize",
+    "resolved" : false
+  } ]
+}

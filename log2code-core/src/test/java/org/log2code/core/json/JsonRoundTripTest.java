@@ -62,12 +62,12 @@ class JsonRoundTripTest {
 
     @Test
     void condition() throws Exception {
-        roundTrip(new Condition("owner != null", false, 85), Condition.class);
+        roundTrip(new Condition("if", "owner != null", 85, false), Condition.class);
     }
 
     @Test
     void earlyExit() throws Exception {
-        roundTrip(new EarlyExit("return", "return null", 80), EarlyExit.class);
+        roundTrip(new EarlyExit("owner == null", 80, "return"), EarlyExit.class);
     }
 
     @Test
@@ -77,16 +77,16 @@ class JsonRoundTripTest {
 
     @Test
     void callSite() throws Exception {
-        roundTrip(new CallSite("ownerRepository.save(owner)", 88), CallSite.class);
+        roundTrip(new CallSite(88, "ownerRepository.save(owner)", "ownerRepository.save", null, false), CallSite.class);
     }
 
     @Test
     void controlContext() throws Exception {
         ControlContext control = new ControlContext(
-            List.of(new Condition("owner != null", false, 85)),
-            List.of(new EarlyExit("return", "return null", 80)),
+            List.of(new Condition("if", "owner != null", 85, false)),
+            List.of(new EarlyExit("owner == null", 80, "return")),
             List.of(new org.log2code.core.model.PrecedingStatement("call", "owner.setId(id)", 86)),
-            List.of(new CallSite("ownerRepository.save(owner)", 88))
+            List.of(new CallSite(88, "ownerRepository.save(owner)", "ownerRepository.save", null, false))
         );
         roundTrip(control, ControlContext.class);
     }
