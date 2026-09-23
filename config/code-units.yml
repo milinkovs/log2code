@@ -1,0 +1,101 @@
+# GitHub link mappings (T15, 0.11). Used by GithubLinker (log2code-core) to build github_url
+# ({repo}/blob/{ref}/{path}#L{line}) for catalog entries. Templates may use {version}, {file_path}
+# and (dependencies only) {artifactId}.
+#
+# project: keyed by code_unit.name. "repo" may be omitted - GithubLinker then falls back to the
+# project's own git remote (0.3, GitRepo, T07).
+#
+# dependencies: a list, matched in order against "groupId:artifactId" by "match" (glob, "*" only).
+# The first matching entry wins. Every mapping below was verified with a real HTTP request
+# (T15 step 3 / "links --verify") against a real file from that exact artifact's already-analyzed
+# sources (log2code-sources, T14) before being added here.
+
+project:
+  spring-petclinic-microservices:
+    repo: https://github.com/spring-petclinic/spring-petclinic-microservices
+    ref: "{version}"
+    path: "{file_path}"
+
+dependencies:
+  # org.springframework:* (Spring Framework 7.x): one repo, one module per artifactId at its root.
+  - match: "org.springframework:*"
+    repo: https://github.com/spring-projects/spring-framework
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+
+  # org.springframework.boot:spring-boot (Spring Boot 4.x restructured the monorepo: the core
+  # "spring-boot" artifact now lives under core/, every other spring-boot-* module under module/).
+  - match: "org.springframework.boot:spring-boot"
+    repo: https://github.com/spring-projects/spring-boot
+    ref: "v{version}"
+    path: "core/{artifactId}/src/main/java/{file_path}"
+  - match: "org.springframework.boot:spring-boot-*"
+    repo: https://github.com/spring-projects/spring-boot
+    ref: "v{version}"
+    path: "module/{artifactId}/src/main/java/{file_path}"
+
+  # org.springframework.cloud: NOT one repo per groupId - spring-cloud-commons/-context/-loadbalancer
+  # share the spring-cloud-commons repo; config-client, gateway-server-webflux and
+  # netflix-eureka-client each have their own repo. Matched individually, not by groupId wildcard.
+  - match: "org.springframework.cloud:spring-cloud-commons"
+    repo: https://github.com/spring-cloud/spring-cloud-commons
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+  - match: "org.springframework.cloud:spring-cloud-context"
+    repo: https://github.com/spring-cloud/spring-cloud-commons
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+  - match: "org.springframework.cloud:spring-cloud-loadbalancer"
+    repo: https://github.com/spring-cloud/spring-cloud-commons
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+  - match: "org.springframework.cloud:spring-cloud-config-client"
+    repo: https://github.com/spring-cloud/spring-cloud-config
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+  - match: "org.springframework.cloud:spring-cloud-gateway-server-webflux"
+    repo: https://github.com/spring-cloud/spring-cloud-gateway
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+  - match: "org.springframework.cloud:spring-cloud-netflix-eureka-client"
+    repo: https://github.com/spring-cloud/spring-cloud-netflix
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+
+  # org.springframework.data: also not one repo per groupId - each artifactId is its own repo.
+  - match: "org.springframework.data:spring-data-commons"
+    repo: https://github.com/spring-projects/spring-data-commons
+    ref: "{version}"
+    path: "src/main/java/{file_path}"
+  - match: "org.springframework.data:spring-data-jpa"
+    repo: https://github.com/spring-projects/spring-data-jpa
+    ref: "{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+
+  - match: "com.netflix.eureka:eureka-client"
+    repo: https://github.com/Netflix/eureka
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+
+  - match: "com.zaxxer:HikariCP"
+    repo: https://github.com/brettwooldridge/HikariCP
+    ref: "HikariCP-{version}"
+    path: "src/main/java/{file_path}"
+
+  - match: "de.codecentric:chaos-monkey-spring-boot"
+    repo: https://github.com/codecentric/chaos-monkey-spring-boot
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+
+  # io.micrometer:* (micrometer-core, micrometer-observation): one repo, one module per artifactId.
+  - match: "io.micrometer:micrometer-*"
+    repo: https://github.com/micrometer-metrics/micrometer
+    ref: "v{version}"
+    path: "{artifactId}/src/main/java/{file_path}"
+
+  # tomcat-embed-core's sources are a repackaged subset of the full Apache Tomcat source tree
+  # (same package layout, plain java/ root, no per-artifact module directory or "v" tag prefix).
+  - match: "org.apache.tomcat.embed:tomcat-embed-core"
+    repo: https://github.com/apache/tomcat
+    ref: "{version}"
+    path: "java/{file_path}"

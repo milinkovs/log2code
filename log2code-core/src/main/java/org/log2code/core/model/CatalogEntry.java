@@ -49,4 +49,14 @@ public record CatalogEntry(
     String analyzerVersion,
     Instant analyzedAt
 ) {
+
+    /** A copy of this entry with {@code github_url} replaced (T15: filled in at write time). */
+    public CatalogEntry withGithubUrl(String githubUrl) {
+        return new CatalogEntry(statementId, logicalId, codeUnit, module, service, filePath, fileId, packageName,
+            classFqn, classBinary, methodName, methodSignature, methodId, inLambda, line, endLine, column,
+            methodStartLine, methodEndLine, loggingApi, detection, loggerExpr, loggerName, loggerNameKind, level,
+            levelDynamic, templateRaw, template, templateKind, unsupportedReason, regex, constantTokens,
+            literalLength, placeholderCount, hasThrowableArg, enclosing, control, snippet, snippetStartLine,
+            githubUrl, analyzerVersion, analyzedAt);
+    }
 }

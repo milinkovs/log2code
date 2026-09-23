@@ -18,6 +18,7 @@ import org.log2code.analyzer.ast.JavaSources;
 import org.log2code.analyzer.catalog.ProjectCatalogBuilder;
 import org.log2code.analyzer.config.AnalyzerConfig;
 import org.log2code.analyzer.config.AnalyzerConfigLoader;
+import org.log2code.analyzer.config.CodeUnitsConfigLoader;
 import org.log2code.analyzer.git.GitRepo;
 import org.log2code.analyzer.graph.CatalogGraphEnricher;
 import org.log2code.analyzer.graph.ModuleJars;
@@ -29,6 +30,8 @@ import org.log2code.analyzer.template.ConstantIndex;
 import org.log2code.analyzer.template.ExtractedTemplate;
 import org.log2code.analyzer.template.MessageTemplateExtractor;
 import org.log2code.analyzer.template.TemplateKind;
+import org.log2code.core.github.CodeUnitsConfig;
+import org.log2code.core.github.GithubLinker;
 import org.log2code.core.ids.StableIds;
 import org.log2code.core.model.AnalysisRun;
 import org.log2code.core.model.CatalogEntry;
@@ -70,6 +73,7 @@ public final class ProjectCommand implements Callable<Integer> {
     private boolean listCalls;
 
     private static final Path DEPS_MANIFEST_FILE = Path.of("data/work/deps/deps-manifest.json");
+    private static final Path CODE_UNITS_CONFIG_FILE = Path.of("config/code-units.yml");
 
     @Override
     public Integer call() throws IOException {
@@ -128,6 +132,12 @@ public final class ProjectCommand implements Callable<Integer> {
                 + " Run 'analyzer deps resolve' first, then 'analyzer project' again to add it.");
         }
         Instant finishedAt = Instant.now();
+
+        CodeUnitsConfig codeUnitsConfig = CodeUnitsConfigLoader.load(CODE_UNITS_CONFIG_FILE);
+        GithubLinker linker = new GithubLinker(codeUnitsConfig, remoteUrl);
+        catalog = catalog.stream()
+            .map(e -> e.withGithubUrl(linker.link(e.codeUnit(), e.filePath(), e.line(), e.endLine())))
+            .toList();
 
         AnalysisRun run = new AnalysisRun(
             StableIds.runId(CodeUnit.TYPE_PROJECT, config.project().name(), version, AnalyzerVersion.current()),

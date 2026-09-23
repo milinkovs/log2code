@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.log2code.analyzer.deps.DepsManifest;
+import org.log2code.core.github.CodeUnitsConfig;
 import org.log2code.core.opensearch.IndexManager;
 import org.log2code.core.opensearch.IndexNames;
 import org.log2code.core.opensearch.OpenSearchClientFactory;
@@ -42,6 +43,8 @@ class DepsAnalysisAssemblyIT {
     static final OpenSearchContainer<?> OPENSEARCH = new OpenSearchContainer<>("opensearchproject/opensearch:2.19.0")
         .withEnv("OPENSEARCH_JAVA_OPTS", "-Xms512m -Xmx512m");
 
+    private static final CodeUnitsConfig EMPTY_CODE_UNITS_CONFIG = new CodeUnitsConfig(Map.of(), List.of());
+
     private static OpenSearchClient client;
 
     @BeforeAll
@@ -61,7 +64,7 @@ class DepsAnalysisAssemblyIT {
         IndexNames names = freshIndexNames();
 
         DepsAnalyzeRunner.Summary summary = DepsAnalyzeRunner.run(client, names, OutputMode.OPENSEARCH, dir.resolve("json"),
-            dir.resolve("deps-report.md"), manifest, false, null, "test-analyzer", 3, 10);
+            dir.resolve("deps-report.md"), manifest, false, null, "test-analyzer", 3, 10, EMPTY_CODE_UNITS_CONFIG);
 
         assertThat(summary.outcomes()).hasSize(1);
         assertThat(summary.outcomes().get(0).skipped()).isFalse();
@@ -92,12 +95,12 @@ class DepsAnalysisAssemblyIT {
         IndexManager indexManager = new IndexManager(client, names);
 
         DepsAnalyzeRunner.run(client, names, OutputMode.OPENSEARCH, dir.resolve("json"),
-            dir.resolve("report1.md"), manifest, false, null, "test-analyzer", 3, 10);
+            dir.resolve("report1.md"), manifest, false, null, "test-analyzer", 3, 10, EMPTY_CODE_UNITS_CONFIG);
         // The idempotency check (step 5) is a GET by id, which OpenSearch serves in real time (unlike
         // search), so no refresh is needed here before the second run's existence check.
 
         DepsAnalyzeRunner.Summary secondRun = DepsAnalyzeRunner.run(client, names, OutputMode.OPENSEARCH, dir.resolve("json"),
-            dir.resolve("report2.md"), manifest, false, null, "test-analyzer", 3, 10);
+            dir.resolve("report2.md"), manifest, false, null, "test-analyzer", 3, 10, EMPTY_CODE_UNITS_CONFIG);
         assertThat(secondRun.outcomes()).hasSize(1);
         assertThat(secondRun.outcomes().get(0).skipped()).isTrue();
         // AC1's "total statements" must still reflect the whole catalog on a mostly-skipped run.
@@ -108,7 +111,7 @@ class DepsAnalysisAssemblyIT {
         assertThat(indexManager.count(names.catalog(), Map.of())).isEqualTo(1);
 
         DepsAnalyzeRunner.Summary forcedRun = DepsAnalyzeRunner.run(client, names, OutputMode.OPENSEARCH, dir.resolve("json"),
-            dir.resolve("report3.md"), manifest, true, null, "test-analyzer", 3, 10);
+            dir.resolve("report3.md"), manifest, true, null, "test-analyzer", 3, 10, EMPTY_CODE_UNITS_CONFIG);
         assertThat(forcedRun.outcomes().get(0).skipped()).isFalse();
 
         indexManager.refresh(names.catalog());
@@ -124,7 +127,7 @@ class DepsAnalysisAssemblyIT {
         IndexNames names = freshIndexNames();
 
         DepsAnalyzeRunner.Summary summary = DepsAnalyzeRunner.run(client, names, OutputMode.OPENSEARCH, dir.resolve("json"),
-            dir.resolve("deps-report.md"), manifest, false, "com.example:lib-b:2.0.0", "test-analyzer", 3, 10);
+            dir.resolve("deps-report.md"), manifest, false, "com.example:lib-b:2.0.0", "test-analyzer", 3, 10, EMPTY_CODE_UNITS_CONFIG);
 
         assertThat(summary.outcomes()).extracting(DepsAnalyzeRunner.ArtifactOutcome::gav)
             .containsExactly("com.example:lib-b:2.0.0");

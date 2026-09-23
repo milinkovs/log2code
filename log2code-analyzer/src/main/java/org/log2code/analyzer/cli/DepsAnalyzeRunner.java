@@ -16,9 +16,12 @@ import org.log2code.analyzer.CliUserException;
 import org.log2code.analyzer.catalog.DependencyCatalogBuilder;
 import org.log2code.analyzer.deps.DepsManifest;
 import org.log2code.analyzer.deps.Gav;
+import org.log2code.core.github.CodeUnitsConfig;
+import org.log2code.core.github.GithubLinker;
 import org.log2code.core.ids.StableIds;
 import org.log2code.core.json.Json;
 import org.log2code.core.model.AnalysisRun;
+import org.log2code.core.model.CatalogEntry;
 import org.log2code.core.model.CodeUnit;
 import org.log2code.core.opensearch.DocumentReader;
 import org.log2code.core.opensearch.IndexManager;
@@ -52,11 +55,13 @@ final class DepsAnalyzeRunner {
 
     static Summary run(OpenSearchClient client, IndexNames indexNames, OutputMode out, Path jsonDir,
                         Path reportTarget, DepsManifest manifest, boolean force, String artifactFilter,
-                        String analyzerVersion, int snippetLines, int maxPrecedingStatements) throws IOException {
+                        String analyzerVersion, int snippetLines, int maxPrecedingStatements,
+                        CodeUnitsConfig codeUnitsConfig) throws IOException {
         if (out.writesToOpenSearch()) {
             new IndexManager(client, indexNames).ensureAll();
         }
 
+        GithubLinker linker = new GithubLinker(codeUnitsConfig, null);
         List<DepsManifest.ManifestArtifact> selected = selectedArtifacts(manifest, artifactFilter);
 
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
@@ -99,16 +104,20 @@ final class DepsAnalyzeRunner {
             Instant finishedAt = Instant.now();
             maxHeapUsed = Math.max(maxHeapUsed, memoryBean.getHeapMemoryUsage().getUsed());
 
+            List<CatalogEntry> linkedCatalog = result.catalog().stream()
+                .map(e -> e.withGithubUrl(linker.link(e.codeUnit(), e.filePath(), e.line(), e.endLine())))
+                .toList();
+
             AnalysisRun run = new AnalysisRun(runId, CodeUnit.TYPE_DEPENDENCY, codeUnit, null, analyzerVersion,
                 startedAt, finishedAt, Duration.between(startedAt, finishedAt).toMillis(), result.stats(), null);
 
             if (out.writesToOpenSearch()) {
-                CatalogWriter.writeToOpenSearch(client, indexNames, codeUnit, result.catalog(), result.sources(),
+                CatalogWriter.writeToOpenSearch(client, indexNames, codeUnit, linkedCatalog, result.sources(),
                     result.types(), List.of());
                 RunWriter.writeToOpenSearch(client, indexNames, run);
             }
             if (out.writesToJson()) {
-                CatalogWriter.writeToJson(jsonDir, codeUnit, result.catalog(), result.sources(), result.types(), List.of());
+                CatalogWriter.writeToJson(jsonDir, codeUnit, linkedCatalog, result.sources(), result.types(), List.of());
                 RunWriter.writeToJson(jsonDir, run);
             }
 

@@ -9,7 +9,9 @@ import org.log2code.analyzer.AnalyzerVersion;
 import org.log2code.analyzer.CliUserException;
 import org.log2code.analyzer.config.AnalyzerConfig;
 import org.log2code.analyzer.config.AnalyzerConfigLoader;
+import org.log2code.analyzer.config.CodeUnitsConfigLoader;
 import org.log2code.analyzer.deps.DepsManifest;
+import org.log2code.core.github.CodeUnitsConfig;
 import org.log2code.core.json.Json;
 import org.log2code.core.opensearch.IndexNames;
 import org.log2code.core.opensearch.OpenSearchClientFactory;
@@ -30,6 +32,7 @@ public final class DepsAnalyzeCommand implements Callable<Integer> {
 
     private static final Path MANIFEST_FILE = Path.of("data/work/deps/deps-manifest.json");
     private static final Path REPORT_FILE = Path.of("docs/analysis/deps-report.md");
+    private static final Path CODE_UNITS_CONFIG_FILE = Path.of("config/code-units.yml");
 
     @ParentCommand
     private DepsCommand depsParent;
@@ -58,6 +61,7 @@ public final class DepsAnalyzeCommand implements Callable<Integer> {
 
         AnalyzerCli parent = depsParent.parent();
         AnalyzerConfig config = AnalyzerConfigLoader.load(parent.configPath());
+        CodeUnitsConfig codeUnitsConfig = CodeUnitsConfigLoader.load(CODE_UNITS_CONFIG_FILE);
         DepsManifest manifest = Json.mapper().readValue(MANIFEST_FILE.toFile(), DepsManifest.class);
         OutputMode out = parent.out();
 
@@ -70,7 +74,7 @@ public final class DepsAnalyzeCommand implements Callable<Integer> {
 
             DepsAnalyzeRunner.Summary summary = DepsAnalyzeRunner.run(client, new IndexNames(), out, parent.jsonDir(),
                 REPORT_FILE, manifest, force, artifact, AnalyzerVersion.current(),
-                config.context().snippetLines(), config.context().maxPrecedingStatements());
+                config.context().snippetLines(), config.context().maxPrecedingStatements(), codeUnitsConfig);
 
             long analyzed = summary.outcomes().stream().filter(o -> !o.skipped() && !o.sourcesMissing()).count();
             long skipped = summary.outcomes().stream().filter(DepsAnalyzeRunner.ArtifactOutcome::skipped).count();

@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.concurrent.Callable;
 import org.log2code.analyzer.cli.DepsCommand;
 import org.log2code.analyzer.cli.IndicesCommand;
+import org.log2code.analyzer.cli.LinksCommand;
 import org.log2code.analyzer.cli.OutputMode;
 import org.log2code.analyzer.cli.OutputModeConverter;
 import org.log2code.analyzer.cli.ProjectCommand;
@@ -27,7 +28,7 @@ import picocli.CommandLine.ScopeType;
     mixinStandardHelpOptions = true,
     version = "log2code-analyzer",
     description = "Static analysis of PetClinic and its dependencies: builds the log2code catalog.",
-    subcommands = {ProjectCommand.class, DepsCommand.class, IndicesCommand.class, CommandLine.HelpCommand.class}
+    subcommands = {ProjectCommand.class, DepsCommand.class, IndicesCommand.class, LinksCommand.class, CommandLine.HelpCommand.class}
 )
 public final class AnalyzerCli implements Callable<Integer> {
 
