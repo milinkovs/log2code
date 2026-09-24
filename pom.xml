@@ -38,6 +38,9 @@
     <testcontainers.version>2.0.5</testcontainers.version>
     <opensearch-testcontainers.version>4.1.0</opensearch-testcontainers.version>
 
+    <!-- perf tests (e.g. T18 AC2) are opt-in: -Dsurefire.excludedGroups= -Dgroups=perf to run them -->
+    <surefire.excludedGroups>perf</surefire.excludedGroups>
+
     <!-- plugins -->
     <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
@@ -173,6 +176,7 @@
             <excludes>
               <exclude>**/*IT.java</exclude>
             </excludes>
+            <excludedGroups>${surefire.excludedGroups}</excludedGroups>
           </configuration>
         </plugin>
 
