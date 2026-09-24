@@ -36,6 +36,11 @@ public final class DocumentReader {
         return response.found() ? response.source() : null;
     }
 
+    /** Whether a document with this id exists, without fetching its {@code _source}. */
+    public boolean exists(String index, String id) throws IOException {
+        return client.exists(e -> e.index(index).id(id)).value();
+    }
+
     /**
      * Streams every document matching {@code query} (or all documents, if {@code query} is {@code null}),
      * reading pages of {@code pageSize} documents lazily via Point in Time + {@code search_after}.

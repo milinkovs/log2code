@@ -13,6 +13,11 @@
   <artifactId>log2code-ingester</artifactId>
   <name>log2code-ingester</name>
 
+  <properties>
+    <!-- consumed by the shade plugin binding below and by the parent's shade pluginManagement -->
+    <main.class>org.log2code.ingester.IngesterCli</main.class>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.log2code</groupId>
@@ -21,6 +26,10 @@
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-yaml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
     </dependency>
 
     <dependency>
@@ -49,4 +58,40 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <finalName>log2code-ingester</finalName>
+    <resources>
+      <!-- only ingester-version.properties is filtered (bakes in ${project.version}); everything
+           else is copied as-is. -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>ingester-version.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>ingester-version.properties</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

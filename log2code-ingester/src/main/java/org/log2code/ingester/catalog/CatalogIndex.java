@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.log2code.core.model.AnalysisRun;
@@ -43,15 +44,20 @@ public final class CatalogIndex {
     private final Map<String, TokenIndex> tokenIndexByService;
     private final TypeHierarchy hierarchy;
     private final LoggerResolver loggerResolver;
+    private final String projectRepoUrl;
+    private final Map<String, Map<String, TypeInfo>> typesByKeyByService;
 
     private CatalogIndex(int totalStatementCount, Map<String, List<CatalogKey>> applicableByService,
                           Map<String, TokenIndex> tokenIndexByService, TypeHierarchy hierarchy,
-                          LoggerResolver loggerResolver) {
+                          LoggerResolver loggerResolver, String projectRepoUrl,
+                          Map<String, Map<String, TypeInfo>> typesByKeyByService) {
         this.totalStatementCount = totalStatementCount;
         this.applicableByService = applicableByService;
         this.tokenIndexByService = tokenIndexByService;
         this.hierarchy = hierarchy;
         this.loggerResolver = loggerResolver;
+        this.projectRepoUrl = projectRepoUrl;
+        this.typesByKeyByService = typesByKeyByService;
     }
 
     /**
@@ -137,6 +143,7 @@ public final class CatalogIndex {
         Map<String, List<CatalogKey>> applicableByService = new LinkedHashMap<>();
         Map<String, TokenIndex> tokenIndexByService = new LinkedHashMap<>();
         Map<String, Set<String>> namesByService = new LinkedHashMap<>();
+        Map<String, Map<String, TypeInfo>> typesByKeyByService = new LinkedHashMap<>();
         for (String service : projectModuleByService.keySet()) {
             String projectModule = projectModuleByService.get(service);
             Set<CodeUnit> selectedDeps = selectedDependenciesByService.getOrDefault(service, Set.of());
@@ -153,22 +160,26 @@ public final class CatalogIndex {
                     names.add(key.loggerName());
                 }
             }
+            Map<String, TypeInfo> typesByKey = new LinkedHashMap<>();
             for (TypeInfo type : types) {
                 if (!isTypeApplicable(type, projectModule, selectedDeps)) {
                     continue;
                 }
                 if (type.classFqn() != null) {
                     names.add(type.classFqn());
+                    typesByKey.put(type.classFqn(), type);
                 }
                 if (type.classBinary() != null) {
                     names.add(type.classBinary());
+                    typesByKey.put(type.classBinary(), type);
                 }
             }
             namesByService.put(service, names);
+            typesByKeyByService.put(service, typesByKey);
         }
 
         return new CatalogIndex(allKeys.size(), applicableByService, tokenIndexByService,
-            TypeHierarchy.build(types), new LoggerResolver(namesByService));
+            TypeHierarchy.build(types), new LoggerResolver(namesByService), run.repoUrl(), typesByKeyByService);
     }
 
     /** Total statements loaded across every service (T19 step 7). */
@@ -183,6 +194,30 @@ public final class CatalogIndex {
 
     public LoggerResolver loggerResolver() {
         return loggerResolver;
+    }
+
+    /**
+     * The project's {@code repo_url}, as recorded on the {@link AnalysisRun} this index was built from
+     * (T15's {@code GithubLinker} fallback for {@code code_unit.type = project} entries whose
+     * {@code config/code-units.yml} mapping sets no explicit {@code repo}) - {@code null} if the
+     * analyzer could not resolve a git remote at analysis time.
+     */
+    public String projectRepoUrl() {
+        return projectRepoUrl;
+    }
+
+    /**
+     * Looks up a class by name (either {@code class_fqn} dotted form or {@code class_binary} JVM form,
+     * e.g. {@code a.b.Outer$Inner}) among the types applicable to {@code service} (T21: resolving an
+     * exception stack frame's {@code class} to its {@code code_unit}/{@code file_path}, the same
+     * per-service applicable set {@link #byLogger}/{@link #byTokens} already use). Empty when the class
+     * is unknown (JDK classes, unselected dependencies, anything outside this project's own code).
+     */
+    public Optional<TypeInfo> resolveType(String className, String service) {
+        if (className == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(typesByKeyByService.getOrDefault(service, Map.of()).get(className));
     }
 
     /**

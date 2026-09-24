@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.log2code.core.model.AnalysisRun;
@@ -135,6 +136,37 @@ class CatalogIndexTest {
         LoggerResolver.Resolution resolution = index.loggerResolver().resolve(ABSTRACT_RESOURCE, "customers-service");
 
         assertThat(resolution.kind()).isEqualTo(LoggerResolver.Kind.EXACT);
+    }
+
+    @Test
+    void projectRepoUrlComesFromTheAnalysisRunItWasBuiltFrom() {
+        // T21: GithubLinker's fallback repo for code_unit.type=project entries with no explicit repo.
+        assertThat(index.projectRepoUrl()).isEqualTo("https://example.invalid/petclinic-fixture");
+    }
+
+    @Test
+    void resolveTypeFindsAProjectTypeApplicableToTheGivenService() {
+        // T21 stack frame resolution: OwnerResource is loaded for customers-service (its own module).
+        Optional<TypeInfo> resolved = index.resolveType(OWNER_RESOURCE, "customers-service");
+
+        assertThat(resolved).isPresent();
+        assertThat(resolved.get().typeId()).isEqualTo("type-owner");
+        assertThat(resolved.get().codeUnit()).isEqualTo(PROJECT);
+    }
+
+    @Test
+    void resolveTypeIsScopedPerServiceLikeByLoggerAndByTokens() {
+        // VetResource's type is only applicable to vets-service (its own module), never customers-service.
+        assertThat(index.resolveType(VET_RESOURCE, "vets-service")).isPresent();
+        assertThat(index.resolveType(VET_RESOURCE, "customers-service")).isEmpty();
+    }
+
+    @Test
+    void resolveTypeIsEmptyForAClassWithNoLoadedTypeDocument() {
+        // stmt-hikari/stmt-tomcat have catalog entries but no corresponding log2code-types fixture here
+        // (real dependency types come from T14's decompiled sources, out of scope for this synthetic test).
+        assertThat(index.resolveType(HIKARI_POOL, "customers-service")).isEmpty();
+        assertThat(index.resolveType(null, "customers-service")).isEmpty();
     }
 
     private static CatalogEntry entry(String statementId, CodeUnit codeUnit, String module, String service,

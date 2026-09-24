@@ -4,8 +4,10 @@
 # "izmena težina u konfiguraciji je dozvoljena"), za razliku od izmene samog algoritma.
 #
 # "oracle.unreliable-callers" je konačna lokacija liste iz T18 koraka 5 (dotad je živela kao
-# privremena Java konstanta, UnreliableCallers.DEFAULT u log2code-ingester) - ista 8 stavki
-# (T18 teksta + org.apache.juli.logging.*, ADR-018).
+# privremena Java konstanta, UnreliableCallers.DEFAULT u log2code-ingester) - 8 stavki iz T18 teksta
+# + org.apache.juli.logging.* (ADR-018), plus org.springframework.boot.logging.LogLevel (T21,
+# ADR-022: Boot-ov generički dispečer nivoa loga, isti obrazac kao ostale stavke na listi - T20-ovo
+# AC2 merenje je pokazalo da pogađa 6.3% pouzdanog ground truth-a u smoke-oracle-01 bez ove izmene).
 
 weights:
   regex_full: 0.45
@@ -40,3 +42,4 @@ oracle:
     - "java.util.logging.*"
     - "org.jboss.logging.*"
     - "org.apache.juli.logging.*"
+    - "org.springframework.boot.logging.LogLevel"

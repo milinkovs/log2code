@@ -46,9 +46,12 @@ class MatchingConfigLoaderTest {
     }
 
     @Test
-    void oracleUnreliableCallersMatchesT18StepFivePlusTheJuliAddition() {
+    void oracleUnreliableCallersMatchesT18StepFivePlusTheJuliAndLogLevelAdditions() {
         MatchingConfig config = MatchingConfigLoader.load(REAL_CONFIG);
 
+        // 8 entries from T18/ADR-018 (T18 step 5 + the juli.logging.* addition) plus T21/ADR-022's
+        // org.springframework.boot.logging.LogLevel (T20's AC2 found it pointed at 6.3% of smoke-oracle-01's
+        // reliable ground truth otherwise).
         assertThat(config.oracle().unreliableCallers()).containsExactlyInAnyOrder(
             "org.springframework.core.log.LogAccessor",
             "org.springframework.core.log.LogMessage",
@@ -57,7 +60,8 @@ class MatchingConfigLoaderTest {
             "org.apache.logging.slf4j.*",
             "java.util.logging.*",
             "org.jboss.logging.*",
-            "org.apache.juli.logging.*");
+            "org.apache.juli.logging.*",
+            "org.springframework.boot.logging.LogLevel");
     }
 
     @Test

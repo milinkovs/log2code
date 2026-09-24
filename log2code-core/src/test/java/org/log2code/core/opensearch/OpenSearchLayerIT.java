@@ -125,6 +125,25 @@ class OpenSearchLayerIT {
     }
 
     @Test
+    void documentReaderExistsChecksPresenceWithoutFetchingTheSource() throws IOException {
+        // T21: the dependency-source-exists check for exception.frames[].file_id does not need the
+        // (large, index:false) content field at all - just whether the id is there.
+        IndexNames names = freshIndexNames();
+        IndexManager manager = new IndexManager(client, names);
+        manager.ensureAll();
+
+        CatalogEntry entry = sampleCatalogEntry(0, "spring-petclinic-customers-service");
+        try (BulkWriter<CatalogEntry> writer = new BulkWriter<>(client, names.catalog(), CatalogEntry::statementId)) {
+            writer.add(entry);
+        }
+        manager.refresh(names.catalog());
+
+        DocumentReader reader = new DocumentReader(client);
+        assertThat(reader.exists(names.catalog(), entry.statementId())).isTrue();
+        assertThat(reader.exists(names.catalog(), "does-not-exist")).isFalse();
+    }
+
+    @Test
     void bulkWriterCloseFlushesDocumentsLeftInTheBufferBelowTheBatchThreshold() throws IOException {
         IndexNames names = freshIndexNames();
         IndexManager manager = new IndexManager(client, names);
