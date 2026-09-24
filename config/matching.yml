@@ -1,0 +1,42 @@
+# Podešavanja matcher-a (T20, 0.10). Matcher (log2code-ingester) učitava ovaj fajl preko
+# MatchingConfigLoader i primenjuje algoritam iz 0.10 koraka 2-4 doslovno: "weights" i "thresholds"
+# su početne vrednosti iz 0.10, izmena bilo koje vrednosti ovde je dozvoljena bez pitanja (0.13:
+# "izmena težina u konfiguraciji je dozvoljena"), za razliku od izmene samog algoritma.
+#
+# "oracle.unreliable-callers" je konačna lokacija liste iz T18 koraka 5 (dotad je živela kao
+# privremena Java konstanta, UnreliableCallers.DEFAULT u log2code-ingester) - ista 8 stavki
+# (T18 teksta + org.apache.juli.logging.*, ADR-018).
+
+weights:
+  regex_full: 0.45
+  regex_prefix: 0.20
+  specificity_max: 0.20
+  specificity_k: 15
+  logger_exact: 0.20
+  logger_hierarchy: 0.15
+  logger_abbrev_multi: 0.12
+  logger_conflict: -0.25
+  level_equal: 0.10
+  level_dynamic: 0.03
+  level_conflict: -0.30
+  throwable_consistent: 0.05
+  throwable_inconsistent: -0.05
+thresholds:
+  min_score: 0.35
+  ambiguity_margin: 0.05
+  ambiguous_penalty: 0.6
+  high: 0.75
+  medium: 0.50
+candidates:
+  top_k_tokens: 50
+  max_candidates: 200
+oracle:
+  unreliable-callers:
+    - "org.springframework.core.log.LogAccessor"
+    - "org.springframework.core.log.LogMessage"
+    - "org.apache.commons.logging.*"
+    - "org.slf4j.bridge.*"
+    - "org.apache.logging.slf4j.*"
+    - "java.util.logging.*"
+    - "org.jboss.logging.*"
+    - "org.apache.juli.logging.*"

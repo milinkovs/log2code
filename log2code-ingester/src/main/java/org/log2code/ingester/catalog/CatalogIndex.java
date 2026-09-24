@@ -108,8 +108,13 @@ public final class CatalogIndex {
         return index;
     }
 
-    /** The pure builder behind {@link #load}, usable directly against an already-fetched, synthetic catalog (tests). */
-    static CatalogIndex build(AnalysisRun run, List<CatalogEntry> catalogEntries, List<TypeInfo> types) {
+    /**
+     * The pure builder behind {@link #load}, usable directly against an already-fetched, synthetic
+     * catalog - {@code public} (T19 was package-private; T20 needs it to build a {@link CatalogIndex}
+     * for {@code Matcher} unit tests without OpenSearch, same as {@link CatalogIndexTest} already does
+     * from within this package).
+     */
+    public static CatalogIndex build(AnalysisRun run, List<CatalogEntry> catalogEntries, List<TypeInfo> types) {
         List<CatalogKey> allKeys = catalogEntries.stream()
             .filter(e -> !TEMPLATE_KIND_UNSUPPORTED.equals(e.templateKind()))
             .map(CatalogKey::from)
@@ -219,21 +224,44 @@ public final class CatalogIndex {
         return index.topK(messageTokens, k);
     }
 
-    private boolean matchesByLogger(CatalogKey key, Set<String> names) {
+    /** Which condition (if any) of {@link #byLogger}'s three 0.10 step 2 tests matched {@code key} against {@code names} (T20). */
+    public enum LoggerMatchReason {
+        /** {@code logger_name ∈ names} or {@code class_fqn ∈ names}. */
+        DIRECT,
+        /** {@code logger_name_kind = get_class} and {@code class_fqn} is (or is an ancestor of) some name in {@code names}. */
+        HIERARCHY,
+        NONE
+    }
+
+    /**
+     * Exposes which of {@link #byLogger}'s three matching conditions applies to one candidate, so a
+     * matcher (T20) can pick the right {@code logger_exact}/{@code logger_hierarchy}/
+     * {@code logger_abbrev_multi}/{@code logger_conflict} score component (0.10 step 3) without
+     * re-deriving this classification itself - {@code byLogger} only returns the filtered list, not the
+     * reason each entry passed (ADR-020 explicitly left this to T20).
+     */
+    public LoggerMatchReason loggerMatchReason(CatalogKey key, Set<String> names) {
+        if (names == null || names.isEmpty()) {
+            return LoggerMatchReason.NONE;
+        }
         if (key.loggerName() != null && names.contains(key.loggerName())) {
-            return true;
+            return LoggerMatchReason.DIRECT;
         }
         if (key.classFqn() != null && names.contains(key.classFqn())) {
-            return true;
+            return LoggerMatchReason.DIRECT;
         }
         if ("get_class".equals(key.loggerNameKind()) && key.classFqn() != null) {
             for (String l : names) {
                 if (key.classFqn().equals(l) || hierarchy.ancestors(l).contains(key.classFqn())) {
-                    return true;
+                    return LoggerMatchReason.HIERARCHY;
                 }
             }
         }
-        return false;
+        return LoggerMatchReason.NONE;
+    }
+
+    private boolean matchesByLogger(CatalogKey key, Set<String> names) {
+        return loggerMatchReason(key, names) != LoggerMatchReason.NONE;
     }
 
     private static boolean isCatalogKeyApplicable(CatalogKey key, String service, Set<CodeUnit> selectedDependencies) {
