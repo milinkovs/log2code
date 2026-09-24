@@ -15,6 +15,15 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.log2code</groupId>
+      <artifactId>log2code-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>

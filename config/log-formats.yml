@@ -1,0 +1,34 @@
+# Formati log linija (T17, 0.11). LogFormatRegistry (log2code-ingester) učitava ovaj fajl i
+# gradi po jedan LineParser za svaki format iz "formats". "manifest.yml" dataset-a (0.11)
+# referencira format po imenu preko polja "log_format".
+#
+# type: preset          - ugrađen, ručno napisan i proveren regex (trenutno samo "spring-boot-default").
+# type: logback-pattern - "pattern" je Logback conversion pattern; LogbackPatternCompiler ga
+#                          prevodi u regex i DateTimeFormatter. "timezone" (IANA zona, npr.
+#                          "Europe/Belgrade") se koristi samo kad "pattern" ne sadrži zonski token
+#                          (%d bez X/Z/z); podrazumevano je UTC.
+# type: json             - jedna linija je jedan JSON objekat. "fields" mapira naša kanonska imena
+#                          (timestamp, level, logger, message, thread, stack_trace, trace_id,
+#                          span_id) na imena JSON polja u toj liniji. "timestamp" i "message" su
+#                          obavezni; ostalo je opciono (izostavljeno polje => null u HeaderFields).
+
+formats:
+  spring-boot-default:
+    type: preset          # docs/log-format.md, odeljak "Parser" - regex proveren na fixtures/logs/ i datasets/
+
+  example-logback:
+    type: logback-pattern
+    pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+    timezone: Europe/Belgrade
+
+  example-json:
+    type: json
+    fields:
+      timestamp: "@timestamp"
+      level: level
+      logger: logger_name
+      message: message
+      thread: thread_name
+      stack_trace: stack_trace
+      trace_id: traceId
+      span_id: spanId
