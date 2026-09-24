@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.log2code.analyzer.modules.ModuleScanner;
+import org.log2code.core.logger.LoggerNameMatcher;
 import org.log2code.core.model.ModuleInfo;
 
 /** Against {@code src/test/resources/fixtures/mini-project/} (shared with {@code ProjectCatalogBuilderTest}, T10). */

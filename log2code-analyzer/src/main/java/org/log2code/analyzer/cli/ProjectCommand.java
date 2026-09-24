@@ -33,11 +33,14 @@ import org.log2code.analyzer.template.TemplateKind;
 import org.log2code.core.github.CodeUnitsConfig;
 import org.log2code.core.github.GithubLinker;
 import org.log2code.core.ids.StableIds;
+import org.log2code.core.json.Json;
 import org.log2code.core.model.AnalysisRun;
 import org.log2code.core.model.CatalogEntry;
 import org.log2code.core.model.CodeUnit;
 import org.log2code.core.model.MethodInfo;
 import org.log2code.core.model.ModuleInfo;
+import org.log2code.core.opensearch.DocumentReader;
+import org.log2code.core.opensearch.IndexManager;
 import org.log2code.core.opensearch.IndexNames;
 import org.log2code.core.opensearch.OpenSearchClientFactory;
 import org.log2code.core.opensearch.OpenSearchConfig;
@@ -110,8 +113,11 @@ public final class ProjectCommand implements Callable<Integer> {
             return 0;
         }
 
-        Instant startedAt = Instant.now();
         CodeUnit codeUnit = new CodeUnit(CodeUnit.TYPE_PROJECT, config.project().name(), version);
+        String runId = StableIds.runId(CodeUnit.TYPE_PROJECT, config.project().name(), version, AnalyzerVersion.current());
+        modules = ModuleDependencyMerger.merge(modules, readExistingRun(config, codeUnit, runId));
+
+        Instant startedAt = Instant.now();
         ProjectCatalogBuilder.Result catalogResult = ProjectCatalogBuilder.build(
             projectRoot, modules, codeUnit, config.context().snippetLines(), config.context().maxPrecedingStatements(),
             AnalyzerVersion.current(), startedAt);
@@ -140,7 +146,7 @@ public final class ProjectCommand implements Callable<Integer> {
             .toList();
 
         AnalysisRun run = new AnalysisRun(
-            StableIds.runId(CodeUnit.TYPE_PROJECT, config.project().name(), version, AnalyzerVersion.current()),
+            runId,
             CodeUnit.TYPE_PROJECT,
             codeUnit,
             remoteUrl,
@@ -179,6 +185,35 @@ public final class ProjectCommand implements Callable<Integer> {
             Path runFile = RunWriter.writeToJson(parent.jsonDir(), run);
             System.out.println("wrote catalog/sources/types/methods to " + catalogDir + " and run to " + runFile);
         }
+    }
+
+    /**
+     * Reads the {@link AnalysisRun} a prior {@code project}/{@code deps resolve} run left behind for
+     * this exact {@code runId}, so {@link ModuleDependencyMerger} can carry its
+     * {@code dependencies}/{@code selectedDependencies} into this run's freshly scanned modules (ADR-020).
+     * Prefers OpenSearch (the canonical destination); falls back to {@code run.json} only for a pure
+     * {@code --out json} run. Returns {@code null} if neither has one yet (first run for this version).
+     */
+    private AnalysisRun readExistingRun(AnalyzerConfig config, CodeUnit codeUnit, String runId) throws IOException {
+        OutputMode out = parent.out();
+        if (out.writesToOpenSearch()) {
+            String url = parent.openSearchUrl() != null ? parent.openSearchUrl() : config.opensearch().url();
+            OpenSearchClient client = OpenSearchClientFactory.create(OpenSearchConfig.of(url));
+            try {
+                IndexNames indexNames = new IndexNames();
+                new IndexManager(client, indexNames).ensureAll();
+                return new DocumentReader(client).get(indexNames.runs(), runId, AnalysisRun.class);
+            } finally {
+                OpenSearchClientFactory.close(client);
+            }
+        }
+        if (out.writesToJson()) {
+            Path runFile = JsonPaths.forCodeUnit(parent.jsonDir(), codeUnit).resolve("run.json");
+            if (Files.isRegularFile(runFile)) {
+                return Json.mapper().readValue(runFile.toFile(), AnalysisRun.class);
+            }
+        }
+        return null;
     }
 
     private void printDryRun(String headCommit, String remoteUrl, Path projectRoot, List<ModuleInfo> modules) {

@@ -1,13 +1,16 @@
-package org.log2code.analyzer.deps;
+package org.log2code.core.logger;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * The abbreviated/truncated logger-name matching rule from 0.10 step 1, reused here (T12 step 2) as a
- * heuristic to check whether an observed {@code logger_raw} string plausibly names a given fully-qualified
- * class. This is <b>not</b> the real matcher (T19/T20 re-implement 0.10 against the catalog); it only drives
- * automatic dependency selection, so a small number of false positives/negatives is acceptable (AC4: 90%).
+ * The abbreviated/truncated logger-name matching rule from 0.10 step 1: classifies how (if at all) an
+ * observed {@code logger_raw} string plausibly names a given fully-qualified class. In {@code log2code-core}
+ * (not {@code log2code-analyzer}, where it originated) because it is shared by two independent callers:
+ * T12's {@code DependencySelector} (analyzer module, a heuristic driving automatic dependency selection,
+ * where a small number of false positives/negatives is acceptable - AC4: 90%) and T19's {@code LoggerResolver}
+ * (ingester module, the real matcher's per-candidate classification, run against every name in a service's
+ * {@code N(s)} - ADR-020).
  *
  * <p>{@code exact}/{@code abbreviated} follow 0.10 literally. {@code truncated} is an internal interpretation
  * (0.13: implementation detail, not part of the algorithm's schema/weights): rather than reconstruct

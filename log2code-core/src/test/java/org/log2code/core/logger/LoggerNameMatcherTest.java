@@ -1,4 +1,4 @@
-package org.log2code.analyzer.deps;
+package org.log2code.core.logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

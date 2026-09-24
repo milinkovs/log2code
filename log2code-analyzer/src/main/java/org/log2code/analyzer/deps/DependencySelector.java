@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import org.log2code.core.logger.LoggerNameMatcher;
 
 /**
  * Automatic dependency selection (T12 step 2): for one module, decides which of its runtime artifacts are
