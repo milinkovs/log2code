@@ -1,0 +1,28 @@
+dataset_id: live
+description: "Uživo praćenje logova pokrenutog PetClinic stack-a (T22 follow režim)"
+created_at: 2026-09-24T00:00:00+02:00
+oracle: false
+log_format: spring-boot-default
+code:
+  name: spring-petclinic-microservices
+  version: 3858f9c630cf989bb6809a86edf47c2be78dc9f1
+files:
+  - path: data/logs/config-server.log
+    service: config-server
+    module: spring-petclinic-config-server
+  - path: data/logs/discovery-server.log
+    service: discovery-server
+    module: spring-petclinic-discovery-server
+  - path: data/logs/customers-service.log
+    service: customers-service
+    module: spring-petclinic-customers-service
+  - path: data/logs/visits-service.log
+    service: visits-service
+    module: spring-petclinic-visits-service
+  - path: data/logs/vets-service.log
+    service: vets-service
+    module: spring-petclinic-vets-service
+  - path: data/logs/api-gateway.log
+    service: api-gateway
+    module: spring-petclinic-api-gateway
+notes: "code.version prati infra/.env PETCLINIC_COMMIT (T03); ažurirati ručno posle svakog novog build-a."

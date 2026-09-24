@@ -3,6 +3,7 @@ package org.log2code.ingester;
 import java.util.concurrent.Callable;
 import org.log2code.ingester.catalog.CatalogLoadException;
 import org.log2code.ingester.cli.ExplainCommand;
+import org.log2code.ingester.cli.FollowCommand;
 import org.log2code.ingester.cli.IngestCommand;
 import org.log2code.ingester.cli.StatsCommand;
 import org.log2code.ingester.manifest.ManifestException;
@@ -29,7 +30,7 @@ import picocli.CommandLine.ScopeType;
     mixinStandardHelpOptions = true,
     version = "log2code-ingester",
     description = "Ingests a dataset's log files, matches them against the catalog and writes enriched events to log2code-logs.",
-    subcommands = {IngestCommand.class, StatsCommand.class, ExplainCommand.class, CommandLine.HelpCommand.class}
+    subcommands = {IngestCommand.class, StatsCommand.class, ExplainCommand.class, FollowCommand.class, CommandLine.HelpCommand.class}
 )
 public final class IngesterCli implements Callable<Integer> {
 

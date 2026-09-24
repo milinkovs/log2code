@@ -8,26 +8,17 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import java.util.zip.GZIPInputStream;
-import org.log2code.core.model.ExceptionInfo;
-import org.log2code.core.model.GroundTruth;
-import org.log2code.core.model.Level;
 import org.log2code.core.model.LogEvent;
-import org.log2code.ingester.parse.AnsiCodes;
-import org.log2code.ingester.parse.HeaderFields;
 import org.log2code.ingester.parse.LineParser;
 
 /**
@@ -49,6 +40,11 @@ import org.log2code.ingester.parse.LineParser;
  * enriching stack frames with {@code code_unit}/{@code file_id}/{@code github_url} — happens later
  * and is out of scope here; those fields are left {@code null}/{@code false}.
  *
+ * <p>The per-line "when is a buffered run of lines a complete event" decision and the actual
+ * line-list → {@link LogEvent} construction live in {@link EventAccumulator} (ADR-023) — shared with
+ * T22's live follow mode, which drives the same accumulator incrementally across poll cycles instead
+ * of reading a file to EOF in one pass.
+ *
  * <p><b>Memory:</b> {@link #assemble(Path, AssemblyContext)} reads the file lazily, one physical
  * line at a time (a {@link BufferedReader} over a {@link GZIPInputStream} for {@code .log.gz}) —
  * it never materializes the whole file. Peak memory is bounded by the largest single event (its
@@ -60,8 +56,6 @@ import org.log2code.ingester.parse.LineParser;
  * try-with-resources block.
  */
 public final class EventAssembler {
-
-    private static final Pattern CORRELATION = Pattern.compile("^([0-9a-fA-F]{32})-([0-9a-fA-F]{16})$");
 
     private final LineParser lineParser;
     private final Set<String> unreliableCallers;
@@ -81,6 +75,20 @@ public final class EventAssembler {
         Spliterator<LogEvent> spliterator = Spliterators.spliteratorUnknownSize(
             iterator, Spliterator.ORDERED | Spliterator.NONNULL);
         return StreamSupport.stream(spliterator, false).onClose(() -> closeQuietly(reader));
+    }
+
+    /**
+     * A fresh {@link EventAccumulator} for {@code context}, starting at line 1/sequence 0 - the same
+     * one {@link #assemble} drives internally, exposed so T22's follow mode (a different package) can
+     * build one without duplicating how {@code lineParser}/{@code unreliableCallers} feed it.
+     */
+    public EventAccumulator newAccumulator(AssemblyContext context) {
+        return new EventAccumulator(lineParser, unreliableCallers, context);
+    }
+
+    /** Like {@link #newAccumulator(AssemblyContext)}, but resuming at a non-zero line/sequence (T22 restart). */
+    public EventAccumulator newAccumulator(AssemblyContext context, int startLineIndex, long startSequence) {
+        return new EventAccumulator(lineParser, unreliableCallers, context, startLineIndex, startSequence);
     }
 
     private static BufferedReader openReader(Path file) {
@@ -103,21 +111,15 @@ public final class EventAssembler {
 
     /**
      * Pulls physical lines from {@code reader} one at a time and yields a {@link LogEvent} as soon
-     * as it is complete — either because the next header line has started (so the current buffer
-     * is done) or because the file ended. No lookahead buffering of the whole file is needed: T18's
-     * assembly rule only requires knowing that the *next* header has begun to close out the
-     * *current* event.
+     * as {@link EventAccumulator} reports one is complete — either because the next header line has
+     * started (so the current buffer is done) or because the file ended. No lookahead buffering of
+     * the whole file is needed: T18's assembly rule only requires knowing that the *next* header has
+     * begun to close out the *current* event.
      */
     private final class AssemblyIterator implements Iterator<LogEvent> {
 
         private final BufferedReader reader;
-        private final AssemblyContext context;
-
-        private List<String> buffer = new ArrayList<>();
-        private HeaderFields currentHeader;
-        private int currentStartLine = 1;
-        private int lineIndex = 0;
-        private long sequence = 0;
+        private final EventAccumulator accumulator;
 
         private LogEvent pending;
         private boolean pendingReady = false;
@@ -126,7 +128,7 @@ public final class EventAssembler {
 
         AssemblyIterator(BufferedReader reader, AssemblyContext context) {
             this.reader = reader;
-            this.context = context;
+            this.accumulator = newAccumulator(context);
         }
 
         @Override
@@ -155,32 +157,20 @@ public final class EventAssembler {
                 if (!readerAtEof) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        lineIndex++;
-                        Optional<HeaderFields> header = lineParser.parseHeader(line);
-                        if (header.isPresent()) {
-                            if (!buffer.isEmpty()) {
-                                pending = buildEvent(currentHeader, buffer, currentStartLine, sequence++, context);
-                                pendingReady = true;
-                                currentHeader = header.get();
-                                buffer = new ArrayList<>();
-                                buffer.add(line);
-                                currentStartLine = lineIndex;
-                                return;
-                            }
-                            currentHeader = header.get();
-                            buffer.add(line);
-                            currentStartLine = lineIndex;
-                        } else {
-                            buffer.add(line);
+                        Optional<LogEvent> ready = accumulator.offer(line);
+                        if (ready.isPresent()) {
+                            pending = ready.get();
+                            pendingReady = true;
+                            return;
                         }
                     }
                     readerAtEof = true;
                     closeQuietly(reader);
                 }
-                if (!buffer.isEmpty()) {
-                    pending = buildEvent(currentHeader, buffer, currentStartLine, sequence++, context);
+                Optional<LogEvent> last = accumulator.flushPending();
+                if (last.isPresent()) {
+                    pending = last.get();
                     pendingReady = true;
-                    buffer = List.of();
                 } else {
                     done = true;
                 }
@@ -190,114 +180,5 @@ public final class EventAssembler {
                 throw new UncheckedIOException(e);
             }
         }
-    }
-
-    private LogEvent buildEvent(
-        HeaderFields header, List<String> rawLines, int lineNumber, long sequence, AssemblyContext ctx
-    ) {
-        List<String> textLines = toTextLines(header, rawLines);
-
-        GroundTruth groundTruth = null;
-        if (ctx.oracle() && !textLines.isEmpty()) {
-            OracleMarker.Result marker = OracleMarker.strip(textLines.get(0), unreliableCallers);
-            if (marker != null) {
-                textLines.set(0, marker.remainder());
-                groundTruth = marker.groundTruth();
-            }
-        }
-
-        String message;
-        ExceptionInfo exception;
-        int exceptionStart = findExceptionStart(textLines);
-        if (exceptionStart < 0) {
-            message = String.join("\n", textLines).strip();
-            exception = null;
-        } else {
-            message = String.join("\n", textLines.subList(0, exceptionStart)).strip();
-            exception = StackTraceParser.parse(textLines.subList(exceptionStart, textLines.size()));
-        }
-
-        String traceId = null;
-        String spanId = null;
-        if (header != null) {
-            traceId = blankToNull(header.traceId());
-            spanId = blankToNull(header.spanId());
-            if (traceId == null && spanId == null) {
-                Matcher m = header.correlationRaw() == null
-                    ? null
-                    : CORRELATION.matcher(header.correlationRaw().trim());
-                if (m != null && m.matches()) {
-                    traceId = m.group(1);
-                    spanId = m.group(2);
-                }
-            }
-        }
-
-        return new LogEvent(
-            ctx.datasetId(),
-            ctx.sourceFile(),
-            lineNumber,
-            rawLines.size(),
-            sequence,
-            header != null ? header.instant() : null,
-            header != null ? header.timestampRaw() : null,
-            ctx.service(),
-            ctx.module(),
-            header != null ? header.appName() : null,
-            header != null ? header.pid() : null,
-            header != null ? header.thread() : null,
-            header != null ? header.level() : Level.UNKNOWN,
-            header != null ? header.loggerRaw() : null,
-            null,
-            message,
-            String.join("\n", rawLines),
-            traceId,
-            spanId,
-            exception,
-            ctx.code(),
-            groundTruth,
-            ctx.parserFormat());
-    }
-
-    /**
-     * {@code lines[0]} is the header's own message ({@code null} header ⇒ the event is an
-     * orphan, so every raw line is text); every other line is ANSI-stripped (defensively — real
-     * Docker logs never carry ANSI codes, 0.9) before message/exception splitting.
-     */
-    private static List<String> toTextLines(HeaderFields header, List<String> rawLines) {
-        List<String> result = new ArrayList<>(rawLines.size());
-        if (header != null) {
-            result.add(header.messageFirstLine());
-            for (int i = 1; i < rawLines.size(); i++) {
-                result.add(AnsiCodes.strip(rawLines.get(i)));
-            }
-        } else {
-            for (String line : rawLines) {
-                result.add(AnsiCodes.strip(line));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * The first line matching {@code StackTraceParser.CLASS_LINE} immediately followed by a
-     * frame, or — when the frames start with no class line at all (T18 step 2, see
-     * {@code docs/log-format.md} §4) — the first frame line itself. {@code -1} when the event has
-     * no stack trace.
-     */
-    private static int findExceptionStart(List<String> lines) {
-        for (int i = 0; i < lines.size(); i++) {
-            if (StackTraceParser.isFrameLine(lines.get(i))) {
-                if (i > 0 && StackTraceParser.CLASS_LINE.matcher(lines.get(i - 1)).matches()) {
-                    return i - 1;
-                }
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private static String blankToNull(String value) {
-        return (value == null || value.isBlank()) ? null : value;
     }
 }

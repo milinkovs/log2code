@@ -21,11 +21,13 @@ import org.log2code.ingester.parse.LogFormatRegistry;
 import org.opensearch.client.opensearch.OpenSearchClient;
 
 /**
- * Builds the collaborators {@code ingest} and {@code explain} both need from a dataset's
- * {@link DatasetManifest} and the fixed {@code config/} files (T21 steps 1-2): the in-memory catalog
- * (T19/T20), the matcher (T20), the event assembler (T18) and the stack frame resolver (this task).
+ * Builds the collaborators {@code ingest}, {@code explain} and (T22) {@code follow} all need from a
+ * dataset's {@link DatasetManifest} and the fixed {@code config/} files (T21 steps 1-2): the in-memory
+ * catalog (T19/T20), the matcher (T20), the event assembler (T18) and the stack frame resolver (T21).
+ * Public - T22's {@code follow} package builds its own {@link Components} the same way batch ingest
+ * does, rather than a second wiring implementation.
  */
-final class Wiring {
+public final class Wiring {
 
     private static final Path MATCHING_CONFIG_FILE = Path.of("config/matching.yml");
     private static final Path LOG_FORMATS_CONFIG_FILE = Path.of("config/log-formats.yml");
@@ -34,10 +36,10 @@ final class Wiring {
     private Wiring() {
     }
 
-    record Components(CatalogIndex catalogIndex, Matcher matcher, EventAssembler assembler, StackFrameResolver frameResolver) {
+    public record Components(CatalogIndex catalogIndex, Matcher matcher, EventAssembler assembler, StackFrameResolver frameResolver) {
     }
 
-    static Components build(OpenSearchClient client, IndexNames indexNames, DatasetManifest manifest) throws IOException {
+    public static Components build(OpenSearchClient client, IndexNames indexNames, DatasetManifest manifest) throws IOException {
         CatalogIndex catalogIndex = CatalogIndex.load(client, manifest.code().name(), manifest.code().version());
 
         MatchingConfig matchingConfig = MatchingConfigLoader.load(MATCHING_CONFIG_FILE);
