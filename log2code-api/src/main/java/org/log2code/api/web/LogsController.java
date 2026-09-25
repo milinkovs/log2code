@@ -5,9 +5,14 @@ import java.io.UncheckedIOException;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import org.log2code.api.dto.CandidateDetailDto;
 import org.log2code.api.dto.LogDetail;
 import org.log2code.api.dto.LogSearchResponse;
+import org.log2code.api.dto.NeighborsResponse;
+import org.log2code.api.dto.TraceResponse;
+import org.log2code.api.service.CandidateService;
 import org.log2code.api.service.LogMapper;
+import org.log2code.api.service.LogNeighborhoodService;
 import org.log2code.api.service.LogSearchParams;
 import org.log2code.api.service.LogSearchService;
 import org.log2code.core.model.EnrichedLog;
@@ -19,17 +24,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** {@code /api/logs}: search and detail (T23 step 3). */
+/** {@code /api/logs}: search, detail, candidates, neighbors and trace (T23 step 3, T24 step 1). */
 @RestController
 @RequestMapping("/api/logs")
 public class LogsController {
 
     private final LogSearchService searchService;
+    private final CandidateService candidateService;
+    private final LogNeighborhoodService neighborhoodService;
     private final DocumentReader documentReader;
     private final IndexNames indexNames;
 
-    public LogsController(LogSearchService searchService, DocumentReader documentReader, IndexNames indexNames) {
+    public LogsController(LogSearchService searchService, CandidateService candidateService,
+            LogNeighborhoodService neighborhoodService, DocumentReader documentReader, IndexNames indexNames) {
         this.searchService = searchService;
+        this.candidateService = candidateService;
+        this.neighborhoodService = neighborhoodService;
         this.documentReader = documentReader;
         this.indexNames = indexNames;
     }
@@ -59,6 +69,33 @@ public class LogsController {
 
     @GetMapping("/{logId}")
     public LogDetail get(@PathVariable("logId") String logId) {
+        return LogMapper.toDetail(fetchOrThrow(logId));
+    }
+
+    @GetMapping("/{logId}/candidates")
+    public List<CandidateDetailDto> candidates(@PathVariable("logId") String logId) {
+        return candidateService.candidates(fetchOrThrow(logId));
+    }
+
+    @GetMapping("/{logId}/neighbors")
+    public NeighborsResponse neighbors(
+        @PathVariable("logId") String logId,
+        @RequestParam(name = "before", defaultValue = "" + LogNeighborhoodService.DEFAULT_BEFORE) int before,
+        @RequestParam(name = "after", defaultValue = "" + LogNeighborhoodService.DEFAULT_AFTER) int after,
+        @RequestParam(name = "scope", required = false) String scope
+    ) {
+        return neighborhoodService.neighbors(fetchOrThrow(logId), before, after, scope);
+    }
+
+    @GetMapping("/{logId}/trace")
+    public TraceResponse trace(
+        @PathVariable("logId") String logId,
+        @RequestParam(name = "limit", defaultValue = "" + LogNeighborhoodService.DEFAULT_TRACE_LIMIT) int limit
+    ) {
+        return neighborhoodService.trace(fetchOrThrow(logId), limit);
+    }
+
+    private EnrichedLog fetchOrThrow(String logId) {
         EnrichedLog log;
         try {
             log = documentReader.get(indexNames.logs(), logId, EnrichedLog.class);
@@ -68,7 +105,7 @@ public class LogsController {
         if (log == null) {
             throw new LogNotFoundException(logId);
         }
-        return LogMapper.toDetail(log);
+        return log;
     }
 
     private static Instant parseInstant(String paramName, String value) {

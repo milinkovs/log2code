@@ -1,6 +1,7 @@
 package org.log2code.api.web;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,8 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.log2code.api.dto.CandidateDetailDto;
 import org.log2code.api.dto.LogSearchResponse;
 import org.log2code.api.dto.LogSummary;
+import org.log2code.api.dto.NeighborsResponse;
+import org.log2code.api.dto.TraceResponse;
+import org.log2code.api.service.CandidateService;
+import org.log2code.api.service.LogNeighborhoodService;
 import org.log2code.api.service.LogSearchParams;
 import org.log2code.api.service.LogSearchService;
 import org.log2code.core.model.CodeVersion;
@@ -26,7 +32,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-/** {@code @WebMvcTest} for {@link LogsController}: collaborators are mocked (T23 "Testovi"). */
+/** {@code @WebMvcTest} for {@link LogsController}: collaborators are mocked (T23 "Testovi", T24 step 1). */
 @WebMvcTest(LogsController.class)
 class LogsControllerTest {
 
@@ -37,6 +43,10 @@ class LogsControllerTest {
 
     @MockitoBean
     private LogSearchService searchService;
+    @MockitoBean
+    private CandidateService candidateService;
+    @MockitoBean
+    private LogNeighborhoodService neighborhoodService;
     @MockitoBean
     private DocumentReader documentReader;
     @MockitoBean
@@ -96,6 +106,97 @@ class LogsControllerTest {
             .andExpect(status().isNotFound())
             .andExpect(content().contentType("application/problem+json"))
             .andExpect(jsonPath("$.detail").value("log not found: missing"));
+    }
+
+    @Test
+    void candidatesDelegatesToServiceWithFetchedLog() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        when(candidateService.candidates(log)).thenReturn(List.of(
+            new CandidateDetailDto("stmt-1", 0.9, "OwnerResource", "updateOwner", "path", 89, "Saving owner {}")));
+
+        mockMvc.perform(get("/api/logs/log-1/candidates"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].statementId").value("stmt-1"))
+            .andExpect(jsonPath("$[0].score").value(0.9))
+            .andExpect(jsonPath("$[0].classFqn").value("OwnerResource"));
+    }
+
+    @Test
+    void candidatesReturns404WhenLogMissing() throws Exception {
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("missing"), eq(EnrichedLog.class))).thenReturn(null);
+
+        mockMvc.perform(get("/api/logs/missing/candidates"))
+            .andExpect(status().isNotFound())
+            .andExpect(content().contentType("application/problem+json"))
+            .andExpect(jsonPath("$.detail").value("log not found: missing"));
+    }
+
+    @Test
+    void neighborsPassesParsedParamsToService() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        NeighborsResponse response = new NeighborsResponse(List.of(), sampleSummary(), List.of());
+        when(neighborhoodService.neighbors(log, 5, 10, "thread")).thenReturn(response);
+
+        mockMvc.perform(get("/api/logs/log-1/neighbors")
+                .param("before", "5").param("after", "10").param("scope", "thread"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.current.logId").value("log-1"));
+    }
+
+    @Test
+    void neighborsUsesDefaultsWhenParamsOmitted() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        when(neighborhoodService.neighbors(log, LogNeighborhoodService.DEFAULT_BEFORE, LogNeighborhoodService.DEFAULT_AFTER, null))
+            .thenReturn(new NeighborsResponse(List.of(), sampleSummary(), List.of()));
+
+        mockMvc.perform(get("/api/logs/log-1/neighbors"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    void neighborsWithInvalidScopeIsBadRequest() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        when(neighborhoodService.neighbors(eq(log), anyInt(), anyInt(), eq("bogus")))
+            .thenThrow(new IllegalArgumentException("scope must be 'service', 'thread', or 'dataset': bogus"));
+
+        mockMvc.perform(get("/api/logs/log-1/neighbors").param("scope", "bogus"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType("application/problem+json"));
+    }
+
+    @Test
+    void traceWithNonPositiveLimitIsBadRequest() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        when(neighborhoodService.trace(log, 0)).thenThrow(new IllegalArgumentException("limit must be positive: 0"));
+
+        mockMvc.perform(get("/api/logs/log-1/trace").param("limit", "0"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType("application/problem+json"));
+    }
+
+    @Test
+    void traceReturnsNoTraceIdReasonUnchanged() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        when(neighborhoodService.trace(log, LogNeighborhoodService.DEFAULT_TRACE_LIMIT))
+            .thenReturn(new TraceResponse(List.of(), TraceResponse.REASON_NO_TRACE_ID));
+
+        mockMvc.perform(get("/api/logs/log-1/trace"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.items").isEmpty())
+            .andExpect(jsonPath("$.reason").value("no-trace-id"));
     }
 
     private static LogSummary sampleSummary() {

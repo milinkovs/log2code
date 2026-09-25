@@ -1,6 +1,9 @@
 package org.log2code.api.config;
 
+import org.log2code.api.service.CandidateService;
+import org.log2code.api.service.LogNeighborhoodService;
 import org.log2code.api.service.LogSearchService;
+import org.log2code.api.service.MethodGraphService;
 import org.log2code.api.service.MetaService;
 import org.log2code.core.opensearch.DocumentReader;
 import org.log2code.core.opensearch.IndexNames;
@@ -50,5 +53,20 @@ public class OpenSearchBeanConfig {
     @Bean
     public MetaService metaService(OpenSearchClient client, IndexNames indexNames) {
         return new MetaService(client, indexNames);
+    }
+
+    @Bean
+    public CandidateService candidateService(DocumentReader documentReader, IndexNames indexNames) {
+        return new CandidateService(documentReader, indexNames);
+    }
+
+    @Bean
+    public LogNeighborhoodService logNeighborhoodService(OpenSearchClient client, IndexNames indexNames) {
+        return new LogNeighborhoodService(client, indexNames);
+    }
+
+    @Bean
+    public MethodGraphService methodGraphService(DocumentReader documentReader, IndexNames indexNames) {
+        return new MethodGraphService(documentReader, indexNames);
     }
 }
