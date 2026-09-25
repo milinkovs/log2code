@@ -1,4 +1,5 @@
 import { Link, useSearchParams } from 'react-router';
+import { withoutAlternative } from '../code/alternative';
 import { LogoMark } from '../components/Logo';
 import { ActiveFilters } from '../filters/ActiveFilters';
 import { FilterBar } from '../filters/FilterBar';
@@ -11,11 +12,11 @@ import { DatasetSelect } from './DatasetSelect';
  */
 export function TopBar() {
   const [searchParams] = useSearchParams();
-  const search = searchParams.toString();
+  const search = withoutAlternative(searchParams).toString();
   return (
     <header className="topbar">
       <div className="topbar__row">
-        {/* Going "home" keeps the current filters and only drops the selected log. */}
+        {/* Going "home" keeps the current filters and only drops the selected log (and its alternative). */}
         <Link className="brand" to={{ pathname: '/', search: search ? `?${search}` : '' }}>
           <LogoMark />
           <span className="brand__name">log2code</span>

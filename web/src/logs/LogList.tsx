@@ -3,6 +3,7 @@ import { ArrowDownWideNarrow, ArrowUpNarrowWide, Rows3, SearchX, Zap } from 'luc
 import { type CSSProperties, type KeyboardEvent, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useLogSearch } from '../api/queries';
+import { withoutAlternative } from '../code/alternative';
 import type { LogSummary } from '../api/types';
 import {
   Button,
@@ -65,7 +66,8 @@ export function LogListZone({ logId }: { logId: string | undefined }) {
   const total = query.data?.pages[0]?.total;
 
   const select = (id: string, replace: boolean) => {
-    const search = searchParams.toString();
+    // An alternative statement (T28) belongs to the previously selected log.
+    const search = withoutAlternative(searchParams).toString();
     navigate(
       { pathname: `/logs/${encodeURIComponent(id)}`, search: search ? `?${search}` : '' },
       { replace },

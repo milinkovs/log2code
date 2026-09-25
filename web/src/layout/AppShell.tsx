@@ -21,7 +21,7 @@ export function AppShell() {
       <main className="workspace">
         <Group orientation="horizontal" {...layout}>
           <Panel id={CODE} defaultSize="55%" minSize="20%">
-            <CodePanel />
+            <CodePanel logId={logId} />
           </Panel>
           <Separator className="separator" />
           <Panel id={LOGS} defaultSize="45%" minSize="20%">

@@ -1,0 +1,347 @@
+/* Code zone (T28). Tokens only; rules in docs/design.md §5.2 (code header) and §6 (Monaco). */
+
+.code-zone {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
+}
+
+.code-zone__message {
+  padding: var(--space-3);
+}
+
+.code-zone__notice {
+  padding: var(--space-2) var(--space-3) 0;
+}
+
+.code-zone__editor {
+  flex: 1;
+  min-height: 0;
+  margin-top: var(--space-1);
+}
+
+/* ---- location row: code unit, version, path, Class#method ---- */
+
+/* Wraps when narrow: the alternative controls move to a second line instead of cutting the path. */
+.code-zone__location {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-2);
+  min-height: var(--control-height);
+  padding: var(--space-1) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 360px;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.code-location > .badge {
+  flex: none;
+}
+
+/* When the row is too narrow, the code unit name gives way first, then the directory (cut from
+   the left); the file name and Class#method keep their room. */
+.code-location__unit {
+  flex: 0 100 auto;
+  min-width: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-muted);
+}
+
+/* The directory is cut from the left (rtl box), so the file name next to it always stays whole. */
+.code-location__dir {
+  flex: 0 10 auto;
+  min-width: 0;
+  /* No gap between the directory and the file name: together they read as one path. */
+  margin-right: calc(-1 * var(--space-2));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  color: var(--text-muted);
+}
+
+/* Keeps the trailing slash of the directory on the right in the rtl box. */
+.code-location__dir > bdi {
+  direction: ltr;
+}
+
+.code-location__file {
+  flex: none;
+  color: var(--text);
+}
+
+.code-location__member {
+  flex: 0 1 auto;
+  min-width: 12ch;
+  max-width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-secondary);
+}
+
+.code-zone__alternative {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: none;
+}
+
+/* Narrow code panel: the code unit name goes first; it is still in the tooltip. */
+@container (max-width: 640px) {
+  .code-location__unit {
+    display: none;
+  }
+}
+
+/* ---- header actions ---- */
+
+.confidence-button {
+  display: inline-flex;
+  align-items: center;
+  height: var(--control-height-sm);
+  padding: 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: help;
+}
+
+.confidence-button:hover {
+  background: var(--bg-hover);
+}
+
+.alternatives-trigger--attention {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.alternatives-menu {
+  min-width: 280px;
+  max-width: min(560px, calc(100vw - 16px));
+}
+
+.alternatives-menu__item {
+  height: auto;
+  min-height: var(--row-height);
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+.alternatives-menu__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.alternatives-menu__member {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.alternatives-menu__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.alternatives-menu__member > .badge,
+.alternatives-menu__line {
+  flex: none;
+}
+
+.alternatives-menu__line,
+.alternatives-menu__template {
+  color: var(--text-muted);
+}
+
+.alternatives-menu__template {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-xs);
+}
+
+.alternatives-menu__score {
+  flex: none;
+  margin-left: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+
+/* ---- score breakdown (tooltip) ---- */
+
+.breakdown {
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.breakdown__caption {
+  padding-bottom: var(--space-1);
+  color: var(--text-muted);
+  text-align: left;
+}
+
+.breakdown td {
+  padding: 1px 0;
+}
+
+.breakdown__points {
+  padding-left: var(--space-4) !important;
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+.breakdown__points--negative {
+  color: var(--danger);
+}
+
+.breakdown tfoot td {
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--border-strong);
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+
+.breakdown tfoot tr + tr td {
+  padding-top: 1px;
+  border-top: 0;
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+}
+
+/* ---- ambiguous and unmatched ---- */
+
+.code-zone__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.unmatched {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-3);
+  overflow: auto;
+}
+
+.unmatched .empty-state {
+  min-height: 0;
+}
+
+.candidate-list {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.candidate-list li + li {
+  border-top: 1px solid var(--border);
+}
+
+.candidate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'member score' 'template score';
+  gap: 0 var(--space-3);
+  width: 100%;
+  padding: var(--space-1) var(--space-3);
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.candidate:hover {
+  background: var(--bg-hover);
+}
+
+.candidate__member {
+  grid-area: member;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.candidate__line {
+  color: var(--text-muted);
+}
+
+.candidate__template {
+  grid-area: template;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.candidate__score {
+  grid-area: score;
+  align-self: center;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+
+.unmatched__message {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+.unmatched__label {
+  color: var(--text-muted);
+}
+
+/* ---- Monaco ---- */
+
+.code-viewer {
+  height: 100%;
+}
+
+/* The statement that produced the log: accent background plus a bar in the line margin. */
+.monaco-editor .code-statement-line {
+  background: var(--code-statement-bg);
+}
+
+.monaco-editor .code-statement-marker {
+  width: 3px !important;
+  margin-left: 4px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+/* The enclosing method: a faint wash. */
+.monaco-editor .code-method-range {
+  background: var(--code-method-bg);
+}

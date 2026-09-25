@@ -11,6 +11,9 @@ export const queryKeys = {
   services: (datasetId: string | undefined) => ['meta', 'services', datasetId ?? null] as const,
   log: (logId: string) => ['logs', 'detail', logId] as const,
   logSearch: (params: LogSearchParams) => ['logs', 'search', params] as const,
+  logCandidates: (logId: string) => ['logs', 'candidates', logId] as const,
+  catalogEntry: (statementId: string) => ['catalog', statementId] as const,
+  source: (fileId: string) => ['sources', fileId] as const,
 };
 
 export function createQueryClient(): QueryClient {
@@ -65,5 +68,35 @@ export function useLogSearch(params: LogSearchParams) {
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) =>
       last.items.length < LOG_PAGE_SIZE || !last.nextSearchAfter ? undefined : last.nextSearchAfter,
+  });
+}
+
+/** Top candidates of a log's match, joined with the catalog (T24); for the alternatives menu. */
+export function useLogCandidates(logId: string | undefined, enabled = true) {
+  return useQuery({
+    queryKey: queryKeys.logCandidates(logId ?? ''),
+    queryFn: ({ signal }) => api.getLogCandidates(logId as string, signal),
+    enabled: !!logId && enabled,
+    staleTime: 5 * 60_000,
+  });
+}
+
+/** One catalog statement. A statement id names one version of the code, so it never changes. */
+export function useCatalogEntry(statementId: string | null | undefined) {
+  return useQuery({
+    queryKey: queryKeys.catalogEntry(statementId ?? ''),
+    queryFn: ({ signal }) => api.getCatalogEntry(statementId as string, signal),
+    enabled: !!statementId,
+    staleTime: Infinity,
+  });
+}
+
+/** A whole source file; immutable for a given file id (the API sends `Cache-Control: immutable`). */
+export function useSource(fileId: string | null | undefined) {
+  return useQuery({
+    queryKey: queryKeys.source(fileId ?? ''),
+    queryFn: ({ signal }) => api.getSource(fileId as string, signal),
+    enabled: !!fileId,
+    staleTime: Infinity,
   });
 }
