@@ -4,3 +4,16 @@ server:
 spring:
   application:
     name: log2code-api
+  mvc:
+    problemdetails:
+      enabled: true
+
+log2code:
+  opensearch:
+    url: http://localhost:9200
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

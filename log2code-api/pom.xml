@@ -37,13 +37,74 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.log2code</groupId>
+      <artifactId>log2code-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- TestRestTemplate: Boot 4 split it out of spring-boot-test into its own module -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- RestTemplateBuilder: needed by TestRestTemplateTestAutoConfiguration (@AutoConfigureTestRestTemplate) above -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-restclient</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- @WebMvcTest: likewise split out of spring-boot-starter-test in Boot 4 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Pin explicitly: JUnit 6 here (Boot BOM) vs. 5 elsewhere (parent BOM, 0.6) means the
+         surefire/failsafe JUnit Platform provider's own default launcher version can mismatch
+         jupiter-engine 6.0.3, breaking test discovery. Declaring it lets the provider pick up the
+         already-correct 6.0.3 (effective-pom-verified) from the project classpath instead. -->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opensearch</groupId>
+      <artifactId>opensearch-testcontainers</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
+      <!-- classifier (0.13): without it, repackage REPLACES the plain jar (flat class layout) as
+           this module's primary artifact with the Boot fat jar (classes nested under BOOT-INF/classes/).
+           failsafe's integration-test phase runs after package/repackage, and its classpath then picks
+           up that nested-layout artifact instead of target/classes, so top-level classes stop resolving
+           (NoClassDefFoundError for org.log2code.api.dto.* during ApiIT discovery). The classifier keeps
+           the flat jar as the primary artifact; the executable jar is still built, as *-exec.jar. -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -53,6 +114,9 @@
             <goals>
               <goal>repackage</goal>
             </goals>
+            <configuration>
+              <classifier>exec</classifier>
+            </configuration>
           </execution>
         </executions>
       </plugin>
