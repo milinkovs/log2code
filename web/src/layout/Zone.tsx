@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { cx } from '../components/ui';
 
 interface ZoneProps {
   /** Accessible name of the region; also shown as the zone header (sentence case). */
@@ -10,11 +11,13 @@ interface ZoneProps {
   meta?: ReactNode;
   /** Optional controls rendered at the right end of the header. */
   actions?: ReactNode;
+  /** No padding and no scrolling in the body: the child manages its own scroll area (lists). */
+  flush?: boolean;
   children?: ReactNode;
 }
 
 /** One of the four work areas of the layout: a titled card with an independently scrolling body. */
-export function Zone({ title, icon: Icon, meta, actions, children }: ZoneProps) {
+export function Zone({ title, icon: Icon, meta, actions, flush, children }: ZoneProps) {
   return (
     <section className="zone" aria-label={title}>
       <header className="zone__header">
@@ -23,7 +26,7 @@ export function Zone({ title, icon: Icon, meta, actions, children }: ZoneProps) 
         {meta !== undefined && <span className="zone__meta">{meta}</span>}
         {actions && <div className="zone__actions">{actions}</div>}
       </header>
-      <div className="zone__body">{children}</div>
+      <div className={cx('zone__body', flush && 'zone__body--flush')}>{children}</div>
     </section>
   );
 }

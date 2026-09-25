@@ -1,48 +1,27 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryRouter, RouterProvider } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import type { LogDetail } from './api/types';
 import { layoutKey } from './layout/layoutStorage';
 import { WORKSPACE_GROUP } from './layout/panelIds';
-import { routes } from './routes';
 import { json, mockFetch, problem } from './test/fetchMock';
+import { logDetail, logsRoute, renderApp, zone } from './test/renderApp';
 
 const DATASETS = [
   { datasetId: 'demo-01', count: 877 },
   { datasetId: 'smoke-01', count: 1045 },
 ];
 
-const LOG = {
-  logId: 'dcf3be3719357b10ac07fe9b2aed1bd4',
-  datasetId: 'smoke-01',
-  service: 'customers-service',
-  level: 'INFO',
-  message: 'Saving owner Owner[id=11]',
-} as Partial<LogDetail>;
+const LOG = logDetail();
 
 function apiMock() {
-  return mockFetch((url) => {
+  return mockFetch(logsRoute([]), (url) => {
     if (url.pathname === '/api/meta/datasets') return json(DATASETS);
+    if (url.pathname === '/api/meta/services') return json([]);
     if (url.pathname === `/api/logs/${LOG.logId}`) return json(LOG);
     if (url.pathname.startsWith('/api/logs/')) return problem(404, 'log not found');
     return undefined;
   });
 }
-
-function renderApp(path: string) {
-  const router = createMemoryRouter(routes, { initialEntries: [path] });
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>,
-  );
-  return router;
-}
-
-const zone = (name: string) => screen.getByRole('region', { name });
 
 describe('layout', () => {
   it('shows the top bar and the four zones: code and context left, logs and detail right', async () => {
@@ -94,12 +73,12 @@ describe('layout', () => {
 });
 
 describe('routes', () => {
-  it('/logs/:logId loads the log and shows its JSON in the detail zone', async () => {
+  it('/logs/:logId loads the log and shows it in the detail zone', async () => {
     const fetchSpy = apiMock();
     renderApp(`/logs/${LOG.logId}`);
 
-    const detail = await within(zone('Log detail')).findByTestId('log-detail-json');
-    expect(JSON.parse(detail.textContent ?? '')).toEqual(LOG);
+    const message = await within(zone('Log detail')).findByTestId('log-message');
+    expect(message).toHaveTextContent('Saving owner Owner[id=11]');
     expect(fetchSpy.mock.calls.map(([input]) => String(input))).toContain(`/api/logs/${LOG.logId}`);
   });
 

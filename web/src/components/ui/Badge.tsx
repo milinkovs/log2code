@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Level } from '../../api/types';
 import { cx } from './cx';
+import { asLevel } from './level';
 import type { MatchConfidence } from './matchConfidence';
 
 export type BadgeTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger';
@@ -21,8 +22,9 @@ const LEVEL_TONE: Record<Level, string> = {
 };
 
 /** Log level as a fixed-width colored pill; the text carries the meaning, color only helps. */
-export function LevelBadge({ level }: { level: Level }) {
-  return <span className={cx('level', `level--${LEVEL_TONE[level]}`)}>{level}</span>;
+export function LevelBadge({ level }: { level: string | null }) {
+  const known = asLevel(level);
+  return <span className={cx('level', `level--${LEVEL_TONE[known]}`)}>{known}</span>;
 }
 
 /** Match confidence: colored dot + word (+ optional score). Hollow dot when nothing matched. */

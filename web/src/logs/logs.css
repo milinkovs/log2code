@@ -1,0 +1,247 @@
+/* Log list and log detail (T27). Tokens only; rules in docs/design.md §5.2. */
+
+/* ---- list ---- */
+
+.log-list__wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
+}
+
+/* Narrow list: the message needs the room; the service is still shown in the detail. */
+@container (max-width: 560px) {
+  .log-row__service {
+    display: none;
+  }
+}
+
+.log-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* Rows are absolutely positioned; browser scroll anchoring would jump when a page arrives. */
+  overflow-anchor: none;
+}
+
+/* The focus ring would be clipped by the card; show it inside the list instead. */
+.log-list:focus-visible {
+  box-shadow: inset var(--focus-ring);
+}
+
+.log-list--static {
+  overflow: hidden;
+  padding: var(--space-1) 0;
+}
+
+.log-list__canvas {
+  position: relative;
+  width: 100%;
+}
+
+.log-list__canvas > .log-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.log-list__message,
+.log-list__footer {
+  padding: var(--space-3);
+}
+
+.log-list__footer {
+  border-top: 1px solid var(--border);
+}
+
+.log-list__message .btn,
+.log-list__footer .btn {
+  margin-left: var(--space-2);
+}
+
+.log-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--row-height);
+  padding: 0 var(--space-3);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease);
+}
+
+.log-row:hover {
+  background: var(--bg-hover);
+}
+
+.log-row--selected,
+.log-row--selected:hover {
+  background: var(--bg-selected);
+  box-shadow: inset 2px 0 var(--accent);
+}
+
+.log-row__time {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.log-row .level {
+  flex: none;
+}
+
+.log-row__service {
+  flex: none;
+  width: 120px;
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-row__message {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-row .confidence {
+  flex: none;
+  width: 84px;
+}
+
+.log-row__exception {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  color: var(--danger);
+}
+
+.log-row--skeleton {
+  cursor: default;
+}
+
+.log-row--skeleton:hover {
+  background: transparent;
+}
+
+.skeleton--time {
+  width: 84px;
+}
+
+.skeleton--level {
+  width: 46px;
+  height: 18px;
+}
+
+.skeleton--service {
+  width: 120px;
+}
+
+.skeleton--message {
+  flex: 1;
+}
+
+.skeleton--confidence {
+  width: 72px;
+}
+
+/* ---- detail ---- */
+
+.log-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.log-detail__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.log-detail__time {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.log-detail__message {
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.log-detail__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.log-detail__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.field-list {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 6px var(--space-4);
+  margin: 0;
+}
+
+.field-list dt {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-code);
+}
+
+.field-list dd {
+  margin: 0;
+  min-width: 0;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.field-list dd.mono {
+  font-size: var(--text-sm);
+  line-height: var(--leading-code);
+}
+
+.exception-summary {
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+}
+
+.exception-summary__icon {
+  color: var(--danger);
+}
+
+.exception-summary__title {
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  overflow-wrap: anywhere;
+}
+
+.exception-summary__message {
+  color: var(--text-secondary);
+  font-weight: var(--weight-regular);
+}
+
+.exception-summary__line {
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}

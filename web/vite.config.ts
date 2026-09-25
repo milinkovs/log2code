@@ -21,5 +21,8 @@ export default defineConfig({
     css: false,
     restoreMocks: true,
     unstubGlobals: true,
+    // Whole-app tests with Radix menus take ~1.5 s alone and can pass 5 s when all files run in
+    // parallel on a loaded machine; the default timeout made them flaky, not the logic.
+    testTimeout: 15_000,
   },
 });

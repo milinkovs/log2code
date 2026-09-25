@@ -12,11 +12,25 @@
 
 .topbar {
   display: flex;
+  flex-direction: column;
+  flex: none;
+}
+
+.topbar__row {
+  display: flex;
   align-items: center;
   gap: var(--space-3);
   height: var(--topbar-height);
   padding: 0 var(--space-3);
-  flex: none;
+}
+
+/* Second row, only while filters are active: chips + Clear (T27). */
+.topbar__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--space-3) var(--space-2);
 }
 
 .brand {
@@ -57,6 +71,54 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
+}
+
+/* Narrow windows: icon-only Time / Trace id / Exceptions buttons (text stays for screen readers). */
+@media (max-width: 1279px) {
+  .filter-trigger__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+.search-field {
+  position: relative;
+  flex: 1;
+  min-width: 120px;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+}
+
+.search-field__icon {
+  position: absolute;
+  left: 9px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-field input {
+  width: 100%;
+  height: var(--control-height);
+  padding: 0 var(--space-2) 0 28px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg-input);
+  color: var(--text);
+  font-size: var(--text-base);
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.search-field input:hover {
+  border-color: var(--text-faint);
+}
+
+.search-field input::placeholder {
+  color: var(--text-faint);
 }
 
 /* Native <select> styled as a control: icon left, chevron right. */
@@ -236,6 +298,20 @@
   min-height: 0;
   overflow: auto;
   padding: var(--space-3);
+}
+
+/* The child scrolls by itself (virtualized lists). */
+.zone__body--flush {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.zone__hint {
+  display: inline-flex;
+  gap: 2px;
+  margin-right: var(--space-1);
 }
 
 /* Preformatted technical content (raw log, JSON). */

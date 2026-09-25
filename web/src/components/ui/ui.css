@@ -320,3 +320,216 @@
     transform: rotate(360deg);
   }
 }
+
+/* ---- filter trigger (a secondary button that shows whether its filter is active) ---- */
+
+.filter-trigger[aria-expanded='true'] {
+  background: var(--bg-active);
+}
+
+.filter-trigger--active,
+.filter-trigger[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.filter-trigger__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.filter-trigger__chevron {
+  margin-right: -2px;
+  color: var(--text-muted);
+}
+
+/* ---- menu and popover (Radix, rendered in a portal) ---- */
+
+.menu,
+.popover {
+  z-index: var(--z-popover);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-popover);
+  animation: fade-in var(--duration) var(--ease);
+}
+
+.menu {
+  min-width: 180px;
+  max-height: min(360px, var(--radix-dropdown-menu-content-available-height));
+  overflow-y: auto;
+  padding: var(--space-1);
+}
+
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--row-height);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: var(--text-base);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.menu__item[data-highlighted] {
+  background: var(--bg-hover);
+}
+
+.menu__check {
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  color: var(--accent-text);
+}
+
+.menu__empty {
+  padding: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.popover {
+  width: 280px;
+  padding: var(--space-3);
+}
+
+.popover-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.popover-form__hint {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.popover-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* ---- form fields ---- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field__label {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.input {
+  width: 100%;
+  height: var(--control-height);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg-input);
+  color: var(--text);
+  font-size: var(--text-sm);
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.input:hover {
+  border-color: var(--text-faint);
+}
+
+.input::placeholder {
+  color: var(--text-faint);
+}
+
+/* ---- filter chip ---- */
+
+.chip {
+  gap: 4px;
+  padding-right: 2px;
+  font-weight: var(--weight-regular);
+}
+
+.chip__name {
+  color: var(--accent-text);
+  font-weight: var(--weight-medium);
+}
+
+.chip__value {
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.chip__remove {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--accent-text);
+  cursor: pointer;
+}
+
+.chip__remove:hover {
+  background: var(--bg-active);
+}
+
+/* ---- link-styled button (clickable values such as a trace id) ---- */
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-text);
+  text-align: left;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+/* ---- skeleton ---- */
+
+.skeleton {
+  display: block;
+  height: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-active);
+  animation: skeleton-pulse 1.2s var(--ease) infinite alternate;
+}
+
+@keyframes skeleton-pulse {
+  to {
+    opacity: 0.45;
+  }
+}
+
+.empty-state .btn {
+  margin-top: var(--space-2);
+}
+
+/* An action button inside a callout's text (e.g. "Clear filters"). */
+.callout .callout__action {
+  margin-left: var(--space-2);
+  vertical-align: middle;
+}
