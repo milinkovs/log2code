@@ -1,0 +1,194 @@
+/*
+ * Design tokens: the ONLY file with literal colors. Everything else uses these variables
+ * (enforced by designTokens.test.ts). Rules and rationale: docs/design.md.
+ *
+ * Dark is the default (no attribute, or data-theme="dark"); light is data-theme="light".
+ * The attribute is set before first paint by the inline script in index.html and kept in sync by
+ * src/theme/themeStore.ts.
+ */
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
+
+:root {
+  /* ---- typography ---- */
+  --font-sans:
+    'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-mono:
+    'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --leading: 1.45;
+  --leading-code: 1.65;
+
+  /* ---- spacing (4px grid) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* ---- shape ---- */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-full: 999px;
+
+  /* ---- sizes ---- */
+  --topbar-height: 48px;
+  --zone-header-height: 36px;
+  --control-height: 28px;
+  --control-height-sm: 24px;
+  --row-height: 28px;
+  --gutter: 8px;
+  --icon-sm: 14px;
+  --icon-md: 16px;
+  --icon-lg: 20px;
+  --icon-xl: 28px;
+
+  /* ---- motion ---- */
+  --duration-fast: 100ms;
+  --duration: 150ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layers ---- */
+  --z-popover: 50;
+  --z-tooltip: 60;
+
+  /* ================= dark theme (default) ================= */
+  color-scheme: dark;
+
+  --bg-canvas: #09090b;
+  --bg-panel: #111113;
+  --bg-elevated: #18181b;
+  --bg-input: #18181b;
+  --bg-subtle: #16161a;
+  --bg-hover: rgb(255 255 255 / 0.04);
+  --bg-active: rgb(255 255 255 / 0.07);
+  --bg-selected: #1c1a2e;
+
+  --border: #1f1f23;
+  --border-strong: #2e2e33;
+
+  --text: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-faint: #52525b;
+
+  --accent: #8b7cf6;
+  --accent-hover: #9d90f8;
+  --accent-contrast: #0b0b0f;
+  --accent-soft: #1c1a2e;
+  --accent-text: #b4a9ff;
+
+  --danger: #f87171;
+  --danger-soft: #2e1215;
+  --warning: #fbbf24;
+  --warning-soft: #2b2410;
+  --success: #4ade80;
+  --success-soft: #0f2a1c;
+
+  /* log levels: fg = text/icon, bg = pill background */
+  --level-trace-fg: #a1a1aa;
+  --level-trace-bg: #1f1f23;
+  --level-debug-fg: #60a5fa;
+  --level-debug-bg: #0f1d33;
+  --level-info-fg: #4ade80;
+  --level-info-bg: #0f2a1c;
+  --level-warn-fg: #fbbf24;
+  --level-warn-bg: #2b2410;
+  --level-error-fg: #f87171;
+  --level-error-bg: #2e1215;
+
+  /* match confidence: a dot plus text, never a filled pill */
+  --confidence-high: #4ade80;
+  --confidence-medium: #fbbf24;
+  --confidence-low: #fb923c;
+  --confidence-ambiguous: #f472b6;
+  --confidence-unmatched: #71717a;
+
+  /* code viewer (T28 builds the Monaco theme from these) */
+  --code-bg: var(--bg-panel);
+  --code-line-number: #3f3f46;
+  --code-statement-bg: var(--accent-soft);
+  --code-method-bg: rgb(139 124 246 / 0.05);
+
+  --focus-ring: 0 0 0 2px var(--accent);
+  --shadow-panel: none;
+  --shadow-popover: 0 0 0 1px var(--border-strong), 0 8px 24px rgb(0 0 0 / 0.5);
+
+  --scrollbar-thumb: #2e2e33;
+  --scrollbar-thumb-hover: #3f3f46;
+  --selection-bg: rgb(139 124 246 / 0.35);
+}
+
+/* ================= light theme ================= */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg-canvas: #f4f4f5;
+  --bg-panel: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-input: #ffffff;
+  --bg-subtle: #fafafa;
+  --bg-hover: rgb(0 0 0 / 0.04);
+  --bg-active: rgb(0 0 0 / 0.07);
+  --bg-selected: #efedff;
+
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+
+  --text: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-faint: #a1a1aa;
+
+  --accent: #6d5ce7;
+  --accent-hover: #5b4ad6;
+  --accent-contrast: #ffffff;
+  --accent-soft: #efedff;
+  --accent-text: #5b4ad6;
+
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+  --warning: #b45309;
+  --warning-soft: #fef3c7;
+  --success: #15803d;
+  --success-soft: #dcfce7;
+
+  --level-trace-fg: #52525b;
+  --level-trace-bg: #f4f4f5;
+  --level-debug-fg: #1d4ed8;
+  --level-debug-bg: #e0ecff;
+  --level-info-fg: #15803d;
+  --level-info-bg: #dcfce7;
+  --level-warn-fg: #a16207;
+  --level-warn-bg: #fef3c7;
+  --level-error-fg: #b91c1c;
+  --level-error-bg: #fee2e2;
+
+  --confidence-high: #16a34a;
+  --confidence-medium: #d97706;
+  --confidence-low: #ea580c;
+  --confidence-ambiguous: #db2777;
+  --confidence-unmatched: #a1a1aa;
+
+  --code-line-number: #a1a1aa;
+  --code-method-bg: rgb(109 92 231 / 0.05);
+
+  --shadow-panel: 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-popover: 0 0 0 1px var(--border), 0 8px 24px rgb(0 0 0 / 0.12);
+
+  --scrollbar-thumb: #d4d4d8;
+  --scrollbar-thumb-hover: #a1a1aa;
+  --selection-bg: rgb(109 92 231 / 0.2);
+}

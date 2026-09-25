@@ -1,0 +1,322 @@
+/* UI primitives. Tokens only (tokens.css); rules in docs/design.md. */
+
+.lucide {
+  flex: none;
+  stroke-width: 1.75;
+}
+
+/* ---- button ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--control-height);
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+}
+
+.btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.btn--sm {
+  height: var(--control-height-sm);
+  padding: 0 8px;
+  font-size: var(--text-sm);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn--secondary {
+  background: var(--bg-input);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--bg-active);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.btn--icon {
+  width: var(--control-height);
+  padding: 0;
+}
+
+.btn--icon.btn--sm {
+  width: var(--control-height-sm);
+}
+
+/* ---- badges ---- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.badge--neutral {
+  background: var(--bg-active);
+  color: var(--text-secondary);
+}
+
+.badge--accent {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.badge--success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge--warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.badge--danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.3px;
+}
+
+.level--trace {
+  background: var(--level-trace-bg);
+  color: var(--level-trace-fg);
+}
+
+.level--debug {
+  background: var(--level-debug-bg);
+  color: var(--level-debug-fg);
+}
+
+.level--info {
+  background: var(--level-info-bg);
+  color: var(--level-info-fg);
+}
+
+.level--warn {
+  background: var(--level-warn-bg);
+  color: var(--level-warn-fg);
+}
+
+.level--error {
+  background: var(--level-error-bg);
+  color: var(--level-error-fg);
+}
+
+.confidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.confidence__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--confidence-color);
+}
+
+.confidence__score {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.confidence--high {
+  --confidence-color: var(--confidence-high);
+}
+
+.confidence--medium {
+  --confidence-color: var(--confidence-medium);
+}
+
+.confidence--low {
+  --confidence-color: var(--confidence-low);
+}
+
+.confidence--ambiguous {
+  --confidence-color: var(--confidence-ambiguous);
+}
+
+.confidence--unmatched .confidence__dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--confidence-unmatched);
+}
+
+/* ---- kbd ---- */
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  line-height: 1;
+}
+
+/* ---- tooltip ---- */
+
+.tooltip {
+  z-index: var(--z-tooltip);
+  max-width: 320px;
+  padding: 5px 8px;
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-popover);
+  color: var(--text);
+  font-size: var(--text-sm);
+  line-height: var(--leading);
+  animation: fade-in var(--duration) var(--ease);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+}
+
+/* ---- empty state ---- */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 100%;
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.empty-state__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+.empty-state__title {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+
+.empty-state__description {
+  max-width: 320px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- callout ---- */
+
+.callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--text-base);
+}
+
+.callout > .lucide {
+  margin-top: 1px;
+}
+
+.callout--info {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.callout--warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+.callout--danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* ---- spinner ---- */
+
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+}
+
+.spinner__icon {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
