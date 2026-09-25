@@ -1,10 +1,13 @@
 package org.log2code.api.config;
 
 import org.log2code.api.service.CandidateService;
+import org.log2code.api.service.ContextBundleService;
+import org.log2code.api.service.LabelService;
 import org.log2code.api.service.LogNeighborhoodService;
 import org.log2code.api.service.LogSearchService;
 import org.log2code.api.service.MethodGraphService;
 import org.log2code.api.service.MetaService;
+import org.log2code.api.service.ReviewQueueService;
 import org.log2code.core.opensearch.DocumentReader;
 import org.log2code.core.opensearch.IndexNames;
 import org.log2code.core.opensearch.OpenSearchClientFactory;
@@ -68,5 +71,21 @@ public class OpenSearchBeanConfig {
     @Bean
     public MethodGraphService methodGraphService(DocumentReader documentReader, IndexNames indexNames) {
         return new MethodGraphService(documentReader, indexNames);
+    }
+
+    @Bean
+    public ContextBundleService contextBundleService(DocumentReader documentReader, IndexNames indexNames,
+            LogNeighborhoodService logNeighborhoodService) {
+        return new ContextBundleService(documentReader, indexNames, logNeighborhoodService);
+    }
+
+    @Bean
+    public LabelService labelService(OpenSearchClient client, DocumentReader documentReader, IndexNames indexNames) {
+        return new LabelService(client, documentReader, indexNames);
+    }
+
+    @Bean
+    public ReviewQueueService reviewQueueService(DocumentReader documentReader, IndexNames indexNames) {
+        return new ReviewQueueService(documentReader, indexNames);
     }
 }

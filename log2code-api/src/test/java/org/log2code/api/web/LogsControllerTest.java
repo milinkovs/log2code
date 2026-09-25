@@ -13,11 +13,16 @@ import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.log2code.api.dto.CandidateDetailDto;
+import org.log2code.api.dto.ContextBundleDto;
+import org.log2code.api.dto.ContextMatchDto;
+import org.log2code.api.dto.ContextNeighborsDto;
 import org.log2code.api.dto.LogSearchResponse;
 import org.log2code.api.dto.LogSummary;
 import org.log2code.api.dto.NeighborsResponse;
 import org.log2code.api.dto.TraceResponse;
 import org.log2code.api.service.CandidateService;
+import org.log2code.api.service.ContextBundleService;
+import org.log2code.api.service.LogMapper;
 import org.log2code.api.service.LogNeighborhoodService;
 import org.log2code.api.service.LogSearchParams;
 import org.log2code.api.service.LogSearchService;
@@ -47,6 +52,8 @@ class LogsControllerTest {
     private CandidateService candidateService;
     @MockitoBean
     private LogNeighborhoodService neighborhoodService;
+    @MockitoBean
+    private ContextBundleService contextBundleService;
     @MockitoBean
     private DocumentReader documentReader;
     @MockitoBean
@@ -197,6 +204,47 @@ class LogsControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.items").isEmpty())
             .andExpect(jsonPath("$.reason").value("no-trace-id"));
+    }
+
+    @Test
+    void contextDelegatesToServiceWithFetchedLogAndParsedNeighbors() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        ContextBundleDto bundle = new ContextBundleDto(1, LogMapper.toDetail(log),
+            new ContextMatchDto("matched", 0.9, "high", List.of()), null, null, null, List.of(), null,
+            new ContextNeighborsDto(List.of(), List.of()), new TraceResponse(List.of(), TraceResponse.REASON_NO_TRACE_ID));
+        when(contextBundleService.build(log, 5)).thenReturn(bundle);
+
+        mockMvc.perform(get("/api/logs/log-1/context").param("neighbors", "5"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.schemaVersion").value(1))
+            .andExpect(jsonPath("$.log.logId").value("log-1"))
+            .andExpect(jsonPath("$.match.status").value("matched"));
+    }
+
+    @Test
+    void contextUsesDefaultNeighborsWhenParamOmitted() throws Exception {
+        EnrichedLog log = sampleLog();
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("log-1"), eq(EnrichedLog.class))).thenReturn(log);
+        ContextBundleDto bundle = new ContextBundleDto(1, LogMapper.toDetail(log), null, null, null, null, List.of(),
+            null, new ContextNeighborsDto(List.of(), List.of()), new TraceResponse(List.of(), TraceResponse.REASON_NO_TRACE_ID));
+        when(contextBundleService.build(log, ContextBundleService.DEFAULT_NEIGHBORS)).thenReturn(bundle);
+
+        mockMvc.perform(get("/api/logs/log-1/context"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    void contextReturns404WhenLogMissing() throws Exception {
+        when(indexNames.logs()).thenReturn(LOGS_INDEX);
+        when(documentReader.get(eq(LOGS_INDEX), eq("missing"), eq(EnrichedLog.class))).thenReturn(null);
+
+        mockMvc.perform(get("/api/logs/missing/context"))
+            .andExpect(status().isNotFound())
+            .andExpect(content().contentType("application/problem+json"))
+            .andExpect(jsonPath("$.detail").value("log not found: missing"));
     }
 
     private static LogSummary sampleSummary() {

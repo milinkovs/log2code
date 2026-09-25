@@ -6,11 +6,13 @@ import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import org.log2code.api.dto.CandidateDetailDto;
+import org.log2code.api.dto.ContextBundleDto;
 import org.log2code.api.dto.LogDetail;
 import org.log2code.api.dto.LogSearchResponse;
 import org.log2code.api.dto.NeighborsResponse;
 import org.log2code.api.dto.TraceResponse;
 import org.log2code.api.service.CandidateService;
+import org.log2code.api.service.ContextBundleService;
 import org.log2code.api.service.LogMapper;
 import org.log2code.api.service.LogNeighborhoodService;
 import org.log2code.api.service.LogSearchParams;
@@ -32,14 +34,17 @@ public class LogsController {
     private final LogSearchService searchService;
     private final CandidateService candidateService;
     private final LogNeighborhoodService neighborhoodService;
+    private final ContextBundleService contextBundleService;
     private final DocumentReader documentReader;
     private final IndexNames indexNames;
 
     public LogsController(LogSearchService searchService, CandidateService candidateService,
-            LogNeighborhoodService neighborhoodService, DocumentReader documentReader, IndexNames indexNames) {
+            LogNeighborhoodService neighborhoodService, ContextBundleService contextBundleService,
+            DocumentReader documentReader, IndexNames indexNames) {
         this.searchService = searchService;
         this.candidateService = candidateService;
         this.neighborhoodService = neighborhoodService;
+        this.contextBundleService = contextBundleService;
         this.documentReader = documentReader;
         this.indexNames = indexNames;
     }
@@ -93,6 +98,14 @@ public class LogsController {
         @RequestParam(name = "limit", defaultValue = "" + LogNeighborhoodService.DEFAULT_TRACE_LIMIT) int limit
     ) {
         return neighborhoodService.trace(fetchOrThrow(logId), limit);
+    }
+
+    @GetMapping("/{logId}/context")
+    public ContextBundleDto context(
+        @PathVariable("logId") String logId,
+        @RequestParam(name = "neighbors", defaultValue = "" + ContextBundleService.DEFAULT_NEIGHBORS) int neighbors
+    ) {
+        return contextBundleService.build(fetchOrThrow(logId), neighbors);
     }
 
     private EnrichedLog fetchOrThrow(String logId) {
