@@ -1,7 +1,7 @@
 # log2code infrastructure (taskovi-dip.md, sections 0.4 and 0.15).
 #   no profile : opensearch, dashboards, fluent-bit   (always started)
 #   petclinic  : PetClinic services                   (added by T03)
-#   app        : log2code-api                         (added by T32)
+#   app        : log2code-api (UI + REST, :8090)      (added by T32)
 name: log2code
 
 # Shared by all PetClinic services. Spans are not exported to Zipkin (it is never started, see ADR-001/ADR-004).
@@ -234,6 +234,34 @@ services:
         fluentd-address: "localhost:24224"
         fluentd-async: "true"
         tag: "api-gateway.log"
+    networks:
+      - log2code-net
+
+  # ---------------------------------------------------------------------------------------------
+  # log2code-api with the web build (profile "app", T32). Built from this repository
+  # (context log2code/, log2code-api/Dockerfile); UI and REST API on http://localhost:8090.
+  # ---------------------------------------------------------------------------------------------
+  log2code-api:
+    profiles: ["app"]
+    image: log2code/log2code-api:latest
+    build:
+      context: ..
+      dockerfile: log2code-api/Dockerfile
+    mem_limit: 384M
+    environment:
+      LOG2CODE_OPENSEARCH_URL: http://opensearch:9200
+      JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=70
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8090/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    depends_on:
+      opensearch:
+        condition: service_healthy
     networks:
       - log2code-net
 

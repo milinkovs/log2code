@@ -1,0 +1,10 @@
+# Build context for log2code-api/Dockerfile is the repository root (T32).
+data/
+datasets/
+**/node_modules/
+**/target/
+web/dist/
+.git/
+docs/
+.idea/
+.vscode/

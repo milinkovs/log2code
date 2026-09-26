@@ -7,6 +7,10 @@ spring:
   mvc:
     problemdetails:
       enabled: true
+  web:
+    resources:
+      # /** is mapped by WebConfig (web build + SPA fallback, T32); it reads static-locations
+      add-mappings: false
 
 log2code:
   opensearch:
