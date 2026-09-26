@@ -1,35 +1,62 @@
 import { Check, ChevronDown, ExternalLink } from 'lucide-react';
 import { DropdownMenu } from 'radix-ui';
-import type { CandidateDetailDto, CatalogEntryDto, MatchResultDto } from '../api/types';
+import type {
+  CandidateDetailDto,
+  CatalogEntryDto,
+  CodeUnitDto,
+  MatchResultDto,
+} from '../api/types';
 import { Badge, Button, ConfidenceBadge, Tooltip, cx, matchConfidence } from '../components/ui';
 import { memberLabel, shortVersion } from './labels';
 import { breakdownRows, formatPoints } from './scoreBreakdown';
 
 /** Code unit, file path, version and `Class#method` of the statement shown (design.md §5.2). */
 export function CodeLocation({ entry }: { entry: CatalogEntryDto }) {
-  const slash = entry.filePath.lastIndexOf('/');
-  const dir = slash >= 0 ? entry.filePath.slice(0, slash + 1) : '';
-  const file = entry.filePath.slice(slash + 1);
-  const library = entry.codeUnit.type !== 'project';
+  return (
+    <FileLocation
+      codeUnit={entry.codeUnit}
+      filePath={entry.filePath}
+      member={memberLabel(entry.classFqn, entry.methodName, entry.packageName ?? undefined)}
+      memberTitle={`${entry.classFqn}#${entry.methodSignature}`}
+    />
+  );
+}
+
+/** The same row for any stored file, e.g. one opened from the context tabs (T29). */
+export function FileLocation({
+  codeUnit,
+  filePath,
+  member,
+  memberTitle,
+}: {
+  codeUnit: CodeUnitDto;
+  filePath: string;
+  member: string;
+  memberTitle?: string;
+}) {
+  const slash = filePath.lastIndexOf('/');
+  const dir = slash >= 0 ? filePath.slice(0, slash + 1) : '';
+  const file = filePath.slice(slash + 1);
+  const library = codeUnit.type !== 'project';
   return (
     <div className="code-location">
       <Badge>{library ? 'library' : 'project'}</Badge>
-      <span className="code-location__unit mono" title={entry.codeUnit.name}>
-        {entry.codeUnit.name}
+      <span className="code-location__unit mono" title={codeUnit.name}>
+        {codeUnit.name}
       </span>
       <Badge>
-        <span className="mono" title={entry.codeUnit.version}>
-          {shortVersion(entry)}
+        <span className="mono" title={codeUnit.version}>
+          {shortVersion({ codeUnit })}
         </span>
       </Badge>
-      <span className="code-location__dir mono" title={entry.filePath}>
+      <span className="code-location__dir mono" title={filePath}>
         <bdi>{dir}</bdi>
       </span>
-      <span className="code-location__file mono" title={entry.filePath}>
+      <span className="code-location__file mono" title={filePath}>
         {file}
       </span>
-      <span className="code-location__member" title={`${entry.classFqn}#${entry.methodSignature}`}>
-        {memberLabel(entry.classFqn, entry.methodName, entry.packageName ?? undefined)}
+      <span className="code-location__member" title={memberTitle}>
+        {member}
       </span>
     </div>
   );

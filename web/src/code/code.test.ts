@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ALT_PARAM, withoutAlternative } from './alternative';
+import { AT_PARAM, formatLocation, parseLocation } from './codeLocation';
 import { memberLabel, shortVersion } from './labels';
 import { buildMonacoTheme, themeName, toHexColor } from './monacoTheme';
 import { breakdownRows, formatPoints } from './scoreBreakdown';
@@ -130,5 +131,36 @@ describe('alternative in the URL', () => {
     const params = new URLSearchParams(`datasetId=smoke-01&level=INFO&${ALT_PARAM}=stmt-9`);
     expect(withoutAlternative(params).toString()).toBe('datasetId=smoke-01&level=INFO');
     expect(params.get(ALT_PARAM)).toBe('stmt-9');
+  });
+});
+
+describe('code location (?at=, T29)', () => {
+  it('parses fileId:line and rejects malformed values', () => {
+    expect(parseLocation('8f6318c0ec6d7fb45e24182a52b53c9c:65')).toEqual({
+      fileId: '8f6318c0ec6d7fb45e24182a52b53c9c',
+      line: 65,
+    });
+    expect(parseLocation(' file-pet:7 ')).toEqual({ fileId: 'file-pet', line: 7 });
+    for (const bad of [
+      null,
+      '',
+      'file-pet',
+      'file-pet:',
+      ':12',
+      'file-pet:0',
+      'file-pet:-3',
+      'a b:1',
+    ]) {
+      expect(parseLocation(bad)).toBeNull();
+    }
+    expect(parseLocation(formatLocation({ fileId: 'f', line: 12 }))).toEqual({
+      fileId: 'f',
+      line: 12,
+    });
+  });
+
+  it('selecting another log drops the opened location with the alternative', () => {
+    const params = new URLSearchParams(`datasetId=smoke-01&${ALT_PARAM}=stmt-9&${AT_PARAM}=f:12`);
+    expect(withoutAlternative(params).toString()).toBe('datasetId=smoke-01');
   });
 });

@@ -6,10 +6,13 @@ import type { CandidateDetailDto, CatalogEntryDto, LogDetail } from '../api/type
 import { Badge, Button, Callout, EmptyState, Spinner } from '../components/ui';
 import { Zone } from '../layout/Zone';
 import { useAlternative } from './alternative';
+import { useCodeFocus } from './codeFocus';
+import { useCodeLocation, type CodeLocationRef } from './codeLocation';
 import {
   AlternativeScore,
   AlternativesMenu,
   CodeLocation,
+  FileLocation,
   GithubLink,
   MatchConfidence,
 } from './CodeHeader';
@@ -43,6 +46,7 @@ export function CodeZone({ logId }: { logId: string | undefined }) {
 function SelectedLogCode({ logId }: { logId: string }) {
   const log = useLog(logId);
   const [alternative, setAlternative] = useAlternative();
+  const [location, setLocation] = useCodeLocation();
 
   const match = log.data?.match ?? null;
   const primaryId = match?.statementId ?? null;
@@ -70,7 +74,7 @@ function SelectedLogCode({ logId }: { logId: string }) {
         onSelect={select}
         attention={match?.status === 'ambiguous'}
       />
-      {shownId && entry.data?.githubUrl && <GithubLink url={entry.data.githubUrl} />}
+      {shownId && !location && entry.data?.githubUrl && <GithubLink url={entry.data.githubUrl} />}
     </>
   );
 
@@ -89,6 +93,8 @@ function SelectedLogCode({ logId }: { logId: string }) {
                 : `Could not load the log: ${errorText(log.error)}`}
             </Callout>
           </div>
+        ) : location ? (
+          <LocationCode location={location} onBack={() => setLocation(null)} />
         ) : !shownId ? (
           <UnmatchedView
             log={log.data}
@@ -139,6 +145,7 @@ type EntryQuery = ReturnType<typeof useCatalogEntry>;
 /** The source file of the statement, or its catalog snippet when the file is not indexed. */
 function StatementCode({ statementId, entry }: { statementId: string; entry: EntryQuery }) {
   const source = useSource(entry.data?.fileId);
+  const focus = useCodeFocus();
 
   if (entry.isPending) {
     return (
@@ -195,6 +202,8 @@ function StatementCode({ statementId, entry }: { statementId: string; entry: Ent
           path={`${source.data.fileId}/${source.data.filePath}`}
           statement={range}
           method={method}
+          focus={focus.request}
+          onFocusDone={focus.done}
         />
       </Suspense>
     </div>
@@ -203,6 +212,7 @@ function StatementCode({ statementId, entry }: { statementId: string; entry: Ent
 
 /** The file is not in `log2code-sources`: show the catalog snippet with the real line numbers. */
 function SnippetFallback({ statement }: { statement: CatalogEntryDto }) {
+  const focus = useCodeFocus();
   if (!statement.snippet) {
     return (
       <EmptyState
@@ -234,9 +244,76 @@ function SnippetFallback({ statement }: { statement: CatalogEntryDto }) {
             path={`snippet/${statement.statementId}/${statement.filePath}`}
             firstLine={statement.snippetStartLine}
             statement={{ start: statement.line, end: statement.endLine }}
+            focus={focus.request}
+            onFocusDone={focus.done}
           />
         </Suspense>
       </div>
+    </>
+  );
+}
+
+/**
+ * A line in another file, opened from the context tabs (`?at=`, T29): a caller at its call, or
+ * the method a call goes to. The log's statement is one click away ("Back to log").
+ */
+function LocationCode({ location, onBack }: { location: CodeLocationRef; onBack: () => void }) {
+  const source = useSource(location.fileId);
+  const line = { start: location.line, end: location.line };
+  return (
+    <>
+      <div className="code-zone__location">
+        {source.data ? (
+          <FileLocation
+            codeUnit={source.data.codeUnit}
+            filePath={source.data.filePath}
+            member={`line ${location.line}`}
+          />
+        ) : (
+          <span className="code-location" />
+        )}
+        <div className="code-zone__alternative">
+          <Badge tone="accent">Opened from context</Badge>
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<ArrowLeft size={14} aria-hidden="true" />}
+            onClick={onBack}
+          >
+            Back to log
+          </Button>
+        </div>
+      </div>
+      {source.isPending ? (
+        <div className="code-zone__message">
+          <Spinner label="Loading source…" />
+        </div>
+      ) : source.isError ? (
+        <div className="code-zone__message">
+          {isNotFound(source.error) ? (
+            <Callout tone="warning">
+              This source file is not stored: <span className="mono">{location.fileId}</span>.
+            </Callout>
+          ) : (
+            <Callout tone="danger">
+              Could not load the source file: {errorText(source.error)}
+              <Button size="sm" className="callout__action" onClick={() => void source.refetch()}>
+                Retry
+              </Button>
+            </Callout>
+          )}
+        </div>
+      ) : (
+        <div className="code-zone__editor">
+          <Suspense fallback={<EditorLoading />}>
+            <CodeViewer
+              value={source.data.content}
+              path={`${source.data.fileId}/${source.data.filePath}`}
+              statement={line}
+            />
+          </Suspense>
+        </div>
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { QueryClient, useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { QueryClient, queryOptions, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { ApiError, api } from './client';
 import type { LogSearchParams } from './types';
 
@@ -14,6 +14,8 @@ export const queryKeys = {
   logCandidates: (logId: string) => ['logs', 'candidates', logId] as const,
   catalogEntry: (statementId: string) => ['catalog', statementId] as const,
   source: (fileId: string) => ['sources', fileId] as const,
+  method: (methodId: string) => ['methods', 'detail', methodId] as const,
+  methodCallers: (methodId: string) => ['methods', 'callers', methodId] as const,
 };
 
 export function createQueryClient(): QueryClient {
@@ -97,6 +99,33 @@ export function useSource(fileId: string | null | undefined) {
     queryKey: queryKeys.source(fileId ?? ''),
     queryFn: ({ signal }) => api.getSource(fileId as string, signal),
     enabled: !!fileId,
+    staleTime: Infinity,
+  });
+}
+
+/** One project method of the call graph (T13); fixed for a code version, like the catalog. */
+export function useMethod(methodId: string | null | undefined) {
+  return useQuery({ ...methodQuery(methodId ?? ''), enabled: !!methodId });
+}
+
+/** Options of `useMethod`, also for `queryClient.fetchQuery` when a click needs the method first. */
+export function methodQuery(methodId: string) {
+  return queryOptions({
+    queryKey: queryKeys.method(methodId),
+    queryFn: ({ signal }) => api.getMethod(methodId, signal),
+    staleTime: Infinity,
+  });
+}
+
+/**
+ * Callers of a method, one level (`callerCount`/`annotations` belong to each caller, ADR-025).
+ * Only fetched when `enabled`, i.e. once its node in the callers tree is expanded.
+ */
+export function useMethodCallers(methodId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: queryKeys.methodCallers(methodId),
+    queryFn: ({ signal }) => api.getMethodCallers(methodId, signal),
+    enabled: enabled && !!methodId,
     staleTime: Infinity,
   });
 }

@@ -11,13 +11,16 @@ type Editor = editor.IStandaloneCodeEditor;
 
 const FONT_SIZE = 12;
 const LINE_HEIGHT = Math.round(FONT_SIZE * 1.65);
+/** How long a line jumped to from the context tabs stays flashed (T29). */
+const FLASH_MS = 1200;
 /** Below this the editor is still being laid out and cannot center a line. */
 const MIN_REVEAL_HEIGHT = 3 * LINE_HEIGHT;
 
 /**
  * Read-only Java viewer (Monaco) for one file or snippet. Highlights the log statement
  * (`statement`, background plus a marker in the margin) and, faintly, the enclosing method, and
- * scrolls the statement to the middle. Loaded lazily: this module pulls in the whole editor.
+ * scrolls the statement to the middle. A `focus` request (T29) centers another line and flashes it.
+ * Loaded lazily: this module pulls in the whole editor.
  */
 export default function CodeViewer({
   value,
@@ -25,10 +28,14 @@ export default function CodeViewer({
   firstLine = 1,
   statement,
   method,
+  focus,
+  onFocusDone,
 }: CodeViewerProps) {
   const scheme = useColorScheme();
   const [editorInstance, setEditorInstance] = useState<Editor | null>(null);
   const decorations = useRef<editor.IEditorDecorationsCollection | null>(null);
+  const flash = useRef<editor.IEditorDecorationsCollection | null>(null);
+  const flashTimer = useRef<number | undefined>(undefined);
   // A reveal asked for before the editor had its size; it runs on the first layout that has it.
   const pendingReveal = useRef<(() => void) | null>(null);
 
@@ -38,6 +45,7 @@ export default function CodeViewer({
 
   const onMount: OnMount = (instance) => {
     decorations.current = instance.createDecorationsCollection();
+    flash.current = instance.createDecorationsCollection();
     // @monaco-editor/react keeps the container hidden until the editor is ready, so the first
     // layout is only a few pixels high and centering then would leave the statement at the top.
     instance.onDidLayoutChange((layout) => {
@@ -102,6 +110,36 @@ export default function CodeViewer({
       pendingReveal.current = reveal;
     }
   }, [editorInstance, value, path, statementStart, statementEnd, methodStart, methodEnd]);
+
+  // A jump from the context tabs: center the line and flash it. Declared after the effect above,
+  // so on the first render it wins the pending reveal over the statement.
+  useEffect(() => {
+    if (!editorInstance || !flash.current || !focus) return;
+    const model = editorInstance.getModel();
+    if (!model) return;
+    const line = Math.min(Math.max(focus.line - firstLine + 1, 1), model.getLineCount());
+    const collection = flash.current;
+    collection.set([
+      {
+        range: new monaco.Range(line, 1, line, 1),
+        options: { isWholeLine: true, className: 'code-focus-line' },
+      },
+    ]);
+    const reveal = () =>
+      editorInstance.revealLineInCenter(line, monaco.editor.ScrollType.Immediate);
+    if (editorInstance.getLayoutInfo().height >= MIN_REVEAL_HEIGHT) {
+      pendingReveal.current = null;
+      reveal();
+    } else {
+      pendingReveal.current = reveal;
+    }
+    // Not a cleanup of this effect: done() clears the request right away, which re-runs the effect.
+    window.clearTimeout(flashTimer.current);
+    flashTimer.current = window.setTimeout(() => collection.clear(), FLASH_MS);
+    onFocusDone?.(focus.nonce);
+  }, [editorInstance, focus, firstLine, onFocusDone]);
+
+  useEffect(() => () => window.clearTimeout(flashTimer.current), []);
 
   const lineNumbers = firstLine === 1 ? ('on' as const) : (n: number) => String(n + firstLine - 1);
 

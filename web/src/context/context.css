@@ -1,0 +1,254 @@
+/* Context zone (T29). Tokens only; rules in docs/design.md §5.2 (tabs, trees). */
+
+/* Radix Tabs.Root wraps the whole zone, so the list (in the header) and the panels share it. */
+.context-zone {
+  height: 100%;
+  min-height: 0;
+}
+
+.context-zone__tab {
+  outline: none;
+}
+
+.context-zone__tab:focus-visible {
+  border-radius: var(--radius);
+  box-shadow: var(--focus-ring);
+}
+
+/* ---- tabs in the zone header ---- */
+
+.tabs {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
+  align-self: stretch;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 0 2px;
+  border: 0;
+  /* The active line sits on the header's bottom border. */
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.tabs__trigger:hover {
+  color: var(--text-secondary);
+}
+
+.tabs__trigger[aria-selected='true'] {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+}
+
+.tabs__trigger:focus-visible {
+  outline: none;
+  border-radius: var(--radius-sm);
+  box-shadow: inset var(--focus-ring);
+}
+
+/* ---- conditions and flow ---- */
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.flow-section__title {
+  margin: 0 0 2px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.flow-section__hint {
+  font-weight: var(--weight-regular);
+}
+
+.flow-section__empty {
+  margin: 0;
+  padding-left: calc(4ch + var(--space-3));
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+}
+
+.flow-section__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--row-height);
+  padding: 0 var(--space-2) 0 calc(var(--space-2) + var(--depth, 0) * 16px);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.flow-row:hover {
+  background: var(--bg-hover);
+}
+
+.flow-row > .badge {
+  flex: none;
+}
+
+.flow-row__line {
+  flex: none;
+  width: 4ch;
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  text-align: right;
+}
+
+.flow-row__text {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+}
+
+.flow-row__text--link,
+.flow-row__open {
+  color: var(--accent-text);
+}
+
+.flow-row__open {
+  flex: none;
+}
+
+.flow-row__not {
+  color: var(--text-secondary);
+  font-weight: var(--weight-medium);
+}
+
+/* ---- callers tree ---- */
+
+.tree,
+.tree__children {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--row-height);
+  padding-left: calc(var(--depth, 0) * 16px);
+  border-radius: var(--radius-sm);
+}
+
+.tree-row:hover {
+  background: var(--bg-hover);
+}
+
+.tree-row--current {
+  background: var(--bg-selected);
+  box-shadow: inset 2px 0 var(--accent);
+}
+
+.tree-row--status:hover {
+  background: none;
+}
+
+.tree-row--status {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+  padding-left: calc(var(--depth, 0) * 16px + 20px);
+}
+
+.tree-row__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+button.tree-row__toggle:hover {
+  background: var(--bg-active);
+  color: var(--text);
+}
+
+.tree-row__toggle > svg {
+  transition: transform var(--duration) var(--ease);
+}
+
+.tree-row__toggle[aria-expanded='true'] > svg {
+  transform: rotate(90deg);
+}
+
+.tree-row__main {
+  display: inline-flex;
+  align-items: baseline;
+  min-width: 0;
+  padding: 2px var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.tree-row__main:hover .tree-row__name {
+  color: var(--accent-text);
+}
+
+.tree-row__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-row__line {
+  flex: none;
+  color: var(--text-muted);
+}
+
+.tree-row > .badge {
+  flex: none;
+}
+
+.tree-row__note {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}

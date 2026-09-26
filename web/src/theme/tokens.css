@@ -121,6 +121,8 @@
   --code-line-number: #3f3f46;
   --code-statement-bg: var(--accent-soft);
   --code-method-bg: rgb(139 124 246 / 0.05);
+  /* a line jumped to from the context tabs, flashed for a moment (T29) */
+  --code-focus-bg: rgb(139 124 246 / 0.28);
   /* syntax colors are muted on purpose: the highlighted statement must stand out (design.md §6) */
   --code-text: #c4c4cc;
   --code-comment: #5c5c66;
@@ -192,6 +194,7 @@
 
   --code-line-number: #a1a1aa;
   --code-method-bg: rgb(109 92 231 / 0.05);
+  --code-focus-bg: rgb(109 92 231 / 0.2);
   --code-text: #3f3f46;
   --code-comment: #a1a1aa;
   --code-keyword: #445b82;

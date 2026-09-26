@@ -1,3 +1,5 @@
+import type { FocusRequest } from './codeFocus';
+
 /** An inclusive range of file lines (1-based). */
 export interface LineRange {
   start: number;
@@ -16,4 +18,8 @@ export interface CodeViewerProps {
   statement: LineRange;
   /** The enclosing method, highlighted faintly. */
   method?: LineRange;
+  /** A line to center and flash briefly (a click in the context tabs, T29). */
+  focus?: FocusRequest | null;
+  /** Called once `focus` has been shown. */
+  onFocusDone?: (nonce: number) => void;
 }

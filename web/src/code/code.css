@@ -345,3 +345,8 @@
 .monaco-editor .code-method-range {
   background: var(--code-method-bg);
 }
+
+/* A line jumped to from the context tabs (T29): flashed, then cleared by the viewer. */
+.monaco-editor .code-focus-line {
+  background: var(--code-focus-bg);
+}
