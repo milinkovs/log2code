@@ -475,7 +475,7 @@ describe('context zone', () => {
 
 describe('context tab storage', () => {
   it('falls back to the first tab for unknown values and unusable storage', () => {
-    window.localStorage.setItem(CONTEXT_TAB_KEY, 'stack');
+    window.localStorage.setItem(CONTEXT_TAB_KEY, 'unknown-tab');
     expect(readContextTab()).toBe('flow');
     const spy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
       throw new Error('blocked');

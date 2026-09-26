@@ -1,9 +1,8 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ArrowDownWideNarrow, ArrowUpNarrowWide, Rows3, SearchX, Zap } from 'lucide-react';
 import { type CSSProperties, type KeyboardEvent, useEffect, useMemo, useRef } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { useLogSearch } from '../api/queries';
-import { withoutAlternative } from '../code/alternative';
 import type { LogSummary } from '../api/types';
 import {
   Button,
@@ -25,6 +24,7 @@ import {
 } from '../filters/filters';
 import { formatDateTime, formatTime } from '../filters/time';
 import { Zone } from '../layout/Zone';
+import { useSelectLog } from './useSelectLog';
 
 /** Must equal `--row-height` in tokens.css; rows have a fixed height, so nothing is measured. */
 export const ROW_HEIGHT = 28;
@@ -58,21 +58,14 @@ function uniqueItems(pages: { items: LogSummary[] }[] | undefined): LogSummary[]
  */
 export function LogListZone({ logId }: { logId: string | undefined }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const selectLog = useSelectLog();
   const params = useMemo(() => toSearchParams(searchParams), [searchParams]);
   const filtered = hasActiveFilters(parseFilters(searchParams));
   const query = useLogSearch(params);
   const items = useMemo(() => uniqueItems(query.data?.pages), [query.data]);
   const total = query.data?.pages[0]?.total;
 
-  const select = (id: string, replace: boolean) => {
-    // An alternative statement (T28) belongs to the previously selected log.
-    const search = withoutAlternative(searchParams).toString();
-    navigate(
-      { pathname: `/logs/${encodeURIComponent(id)}`, search: search ? `?${search}` : '' },
-      { replace },
-    );
-  };
+  const select = (id: string, replace: boolean) => selectLog(id, { replace });
 
   const toggleOrder = () =>
     setSearchParams((previous) => {

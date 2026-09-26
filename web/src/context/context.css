@@ -252,3 +252,299 @@ button.tree-row__toggle:hover {
   color: var(--text-muted);
   font-size: var(--text-sm);
 }
+
+/* ---- stack trace (T30) ---- */
+
+.stack,
+.neighbors,
+.same-request {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stack__toolbar,
+.neighbors__toolbar,
+.same-request__toolbar {
+  /* Stays on top while the list scrolls (the current neighbor is scrolled into view). */
+  position: sticky;
+  top: calc(-1 * var(--space-3));
+  z-index: 1;
+  margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) 0;
+  padding: var(--space-3);
+  background: var(--bg-panel);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.stack__summary,
+.same-request__summary {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.stack__block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stack__heading {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+.stack__heading--cause {
+  margin-top: var(--space-2);
+  font-weight: var(--weight-medium);
+}
+
+.stack__message {
+  color: var(--text-secondary);
+}
+
+.stack__empty {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+}
+
+.stack__frames {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack-frame {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+  padding: 0 var(--space-2) 0 var(--space-4);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.stack-frame--project {
+  color: var(--text);
+}
+
+.stack-frame--current {
+  background: var(--bg-selected);
+  box-shadow: inset 2px 0 var(--accent);
+}
+
+.stack-frame__at {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.stack-frame__text,
+.stack-frame__open,
+.stack-frame__github {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stack-frame__open {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.stack-frame--project .stack-frame__open {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.stack-frame__open:hover,
+.stack-frame__github:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+}
+
+.stack-frame__github {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.stack-frame__github > svg {
+  flex: none;
+}
+
+.stack-frame__unit {
+  flex: none;
+  margin-left: auto;
+  color: var(--text-faint);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+}
+
+.stack-frame > .badge {
+  flex: none;
+  margin-left: auto;
+}
+
+.stack-fold {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 22px;
+  margin: 1px 0 1px var(--space-4);
+  padding: 0 var(--space-2) 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.stack-fold:hover {
+  background: var(--bg-active);
+  color: var(--text);
+}
+
+/* ---- neighbors and same request (T30) ---- */
+
+.segmented__item--text {
+  width: auto;
+  padding: 0 var(--space-2);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.neighbors__hint {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.context-logs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  container-type: inline-size;
+}
+
+.context-logs__edge {
+  padding: 0 var(--space-3);
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  line-height: var(--row-height);
+}
+
+.context-log {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  height: var(--row-height);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.context-log:hover {
+  background: var(--bg-hover);
+}
+
+.context-log--current,
+.context-log--current:hover {
+  background: var(--bg-selected);
+  box-shadow: inset 2px 0 var(--accent);
+  cursor: default;
+}
+
+.context-log__time,
+.context-log__offset {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.context-log__offset {
+  width: 10ch;
+  text-align: right;
+}
+
+.context-log__service {
+  flex: 0 0 auto;
+  width: 132px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.context-log__message {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.context-log__exception {
+  display: inline-flex;
+  flex: none;
+  width: 14px;
+  color: var(--danger);
+}
+
+/* A narrow zone needs the room for the message; the service is in the log detail. */
+@container (max-width: 480px) {
+  .context-log__service {
+    display: none;
+  }
+}
+
+.service-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--service-color);
+}
+
+/* Five tabs (T30) do not fit a narrow zone: below 640px only the icons show, with a tooltip;
+   the label stays for screen readers, like the filter buttons of a narrow top bar (T27). */
+.context-zone .zone__header {
+  container-type: inline-size;
+}
+
+@container (max-width: 640px) {
+  .tabs__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}

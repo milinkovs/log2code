@@ -1,6 +1,12 @@
-import { QueryClient, queryOptions, useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  QueryClient,
+  keepPreviousData,
+  queryOptions,
+  useInfiniteQuery,
+  useQuery,
+} from '@tanstack/react-query';
 import { ApiError, api } from './client';
-import type { LogSearchParams } from './types';
+import type { LogSearchParams, NeighborScope } from './types';
 
 /** Page size of the log list; a short page means there is nothing more to load. */
 export const LOG_PAGE_SIZE = 100;
@@ -12,6 +18,9 @@ export const queryKeys = {
   log: (logId: string) => ['logs', 'detail', logId] as const,
   logSearch: (params: LogSearchParams) => ['logs', 'search', params] as const,
   logCandidates: (logId: string) => ['logs', 'candidates', logId] as const,
+  logNeighbors: (logId: string, scope: NeighborScope, count: number) =>
+    ['logs', 'neighbors', logId, scope, count] as const,
+  logTrace: (logId: string) => ['logs', 'trace', logId] as const,
   catalogEntry: (statementId: string) => ['catalog', statementId] as const,
   source: (fileId: string) => ['sources', fileId] as const,
   method: (methodId: string) => ['methods', 'detail', methodId] as const,
@@ -79,6 +88,29 @@ export function useLogCandidates(logId: string | undefined, enabled = true) {
     queryKey: queryKeys.logCandidates(logId ?? ''),
     queryFn: ({ signal }) => api.getLogCandidates(logId as string, signal),
     enabled: !!logId && enabled,
+    staleTime: 5 * 60_000,
+  });
+}
+
+/**
+ * Logs around a log (T24): `count` before and `count` after it, in the given scope. The previous
+ * answer stays on screen while another log's neighbors load, so the list does not flash (T30).
+ */
+export function useLogNeighbors(logId: string, scope: NeighborScope, count: number) {
+  return useQuery({
+    queryKey: queryKeys.logNeighbors(logId, scope, count),
+    queryFn: ({ signal }) =>
+      api.getLogNeighbors(logId, { before: count, after: count, scope }, signal),
+    placeholderData: keepPreviousData,
+    staleTime: 5 * 60_000,
+  });
+}
+
+/** Logs sharing the log's trace id, in its dataset, by time (T24); `reason` says when there is none. */
+export function useLogTrace(logId: string) {
+  return useQuery({
+    queryKey: queryKeys.logTrace(logId),
+    queryFn: ({ signal }) => api.getLogTrace(logId, {}, signal),
     staleTime: 5 * 60_000,
   });
 }

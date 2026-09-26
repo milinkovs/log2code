@@ -116,6 +116,16 @@
   --confidence-ambiguous: #f472b6;
   --confidence-unmatched: #71717a;
 
+  /* services in "Same request" (T30): categorical, never the accent; picked by a hash of the name */
+  --service-1: #38bdf8;
+  --service-2: #fb923c;
+  --service-3: #2dd4bf;
+  --service-4: #f472b6;
+  --service-5: #a3e635;
+  --service-6: #facc15;
+  --service-7: #94a3b8;
+  --service-8: #d4a373;
+
   /* code viewer (T28 builds the Monaco theme from these) */
   --code-bg: var(--bg-panel);
   --code-line-number: #3f3f46;
@@ -191,6 +201,15 @@
   --confidence-low: #ea580c;
   --confidence-ambiguous: #db2777;
   --confidence-unmatched: #a1a1aa;
+
+  --service-1: #0284c7;
+  --service-2: #ea580c;
+  --service-3: #0d9488;
+  --service-4: #db2777;
+  --service-5: #65a30d;
+  --service-6: #ca8a04;
+  --service-7: #64748b;
+  --service-8: #92400e;
 
   --code-line-number: #a1a1aa;
   --code-method-bg: rgb(109 92 231 / 0.05);

@@ -3,8 +3,8 @@ import { useCallback, useState } from 'react';
 // The open context tab is a per-viewer convenience: kept in localStorage, never required. Every
 // access is guarded, because storage can be missing or throw (private windows, blocked storage).
 
-/** Tabs of the context zone; T30 adds stack trace, neighbors and same request. */
-export const CONTEXT_TABS = ['flow', 'callers'] as const;
+/** Tabs of the context zone: T29 (flow, callers) and T30 (stack trace, neighbors, same request). */
+export const CONTEXT_TABS = ['flow', 'callers', 'stack', 'neighbors', 'request'] as const;
 export type ContextTab = (typeof CONTEXT_TABS)[number];
 
 export const CONTEXT_TAB_KEY = 'log2code:context-tab';
