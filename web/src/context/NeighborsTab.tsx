@@ -82,7 +82,7 @@ export function NeighborsTab({
             </ToggleGroup.Item>
           ))}
         </ToggleGroup.Root>
-        <span className="neighbors__hint">before and after · UTC</span>
+        <span className="neighbors__hint">before and after</span>
         {query.isFetching && !query.isPending && <Spinner label="Updating…" />}
       </div>
       {query.isPending ? (

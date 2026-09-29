@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { Link, isRouteErrorResponse, useRouteError } from 'react-router';
-import { LogoMark } from './components/Logo';
+import { Logo } from './components/Logo';
 
 /** Shown for unknown URLs and for errors thrown while rendering a route. */
 export function RouteError() {
@@ -13,7 +13,7 @@ export function RouteError() {
       : 'Unexpected error';
   return (
     <main className="error-page">
-      <LogoMark size={36} />
+      <Logo height={32} />
       <h1 className="error-page__title">{notFound ? 'Page not found' : 'Something went wrong'}</h1>
       <p className="error-page__message mono" role="alert">
         {message}

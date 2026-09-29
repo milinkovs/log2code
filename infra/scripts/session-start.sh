@@ -34,19 +34,8 @@ fi
 
 cd "$INFRA_DIR"
 
-echo "Stopping any PetClinic services from a previous session..."
-docker compose --profile petclinic stop \
-  config-server discovery-server customers-service visits-service vets-service api-gateway 2>/dev/null || true
-docker compose --profile petclinic rm -f \
-  config-server discovery-server customers-service visits-service vets-service api-gateway >/dev/null 2>&1 || true
-
-mkdir -p "$ROOT_DIR/data/logs"
-if compgen -G "$ROOT_DIR/data/logs/*.log" >/dev/null; then
-  ARCHIVE_DIR="$ROOT_DIR/data/logs-archive/$(date -u +%Y%m%dT%H%M%SZ)"
-  mkdir -p "$ARCHIVE_DIR"
-  mv "$ROOT_DIR"/data/logs/*.log "$ARCHIVE_DIR"/
-  echo "Archived previous logs to $ARCHIVE_DIR"
-fi
+# Stops PetClinic, archives data/logs/*.log and starts the live dataset over (as petclinic-up.sh does).
+"$SCRIPT_DIR/live-reset.sh"
 rm -f "$ROOT_DIR/data/logs/.session.json"
 
 COMPOSE_FILES=(-f docker-compose.yml)

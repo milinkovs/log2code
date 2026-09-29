@@ -3,6 +3,7 @@
 /* ---- list ---- */
 
 .log-list__wrap {
+  position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -15,6 +16,53 @@
   .log-row__service {
     display: none;
   }
+}
+
+/* "N new logs" over a scrolled live list (floating, so it may have the popover shadow). */
+.log-list__new {
+  position: absolute;
+  top: var(--space-2);
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--shadow-popover);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease);
+}
+
+.log-list__new:hover {
+  background: var(--accent-hover);
+}
+
+/* The "Live" switch in the zone header: a hollow dot when paused, a filled accent dot when on. */
+.live-toggle[aria-pressed='true'] {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.live-toggle__dot {
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-full);
+}
+
+.live-toggle[aria-pressed='true'] .live-toggle__dot {
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .log-list {

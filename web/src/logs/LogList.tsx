@@ -1,8 +1,16 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { ArrowDownWideNarrow, ArrowUpNarrowWide, Rows3, SearchX, Zap } from 'lucide-react';
-import { type CSSProperties, type KeyboardEvent, useEffect, useMemo, useRef } from 'react';
+import { ArrowDownWideNarrow, ArrowUp, ArrowUpNarrowWide, Rows3, SearchX, Zap } from 'lucide-react';
+import {
+  type CSSProperties,
+  type KeyboardEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useSearchParams } from 'react-router';
-import { useLogSearch } from '../api/queries';
+import { LOG_PAGE_SIZE, useLogSearch } from '../api/queries';
 import type { LogSummary } from '../api/types';
 import {
   Button,
@@ -24,6 +32,7 @@ import {
 } from '../filters/filters';
 import { formatDateTime, formatTime } from '../filters/time';
 import { Zone } from '../layout/Zone';
+import { useLiveLogs, useLivePreference } from './useLiveLogs';
 import { useSelectLog } from './useSelectLog';
 
 /** Must equal `--row-height` in tokens.css; rows have a fixed height, so nothing is measured. */
@@ -37,6 +46,10 @@ export const LIST_PADDING = 4;
 const rowId = (logId: string) => `log-row-${logId}`;
 
 const countLabel = (n: number) => `${n.toLocaleString('en-US')} ${n === 1 ? 'log' : 'logs'}`;
+
+/** "3 new logs"; a full polled page means there may be more than it holds. */
+const newLogsLabel = (n: number) =>
+  n >= LOG_PAGE_SIZE ? `${LOG_PAGE_SIZE}+ new logs` : `${n} new ${n === 1 ? 'log' : 'logs'}`;
 
 /** Removes duplicates across pages (a page boundary can never repeat a log, but be defensive). */
 function uniqueItems(pages: { items: LogSummary[] }[] | undefined): LogSummary[] {
@@ -54,7 +67,7 @@ function uniqueItems(pages: { items: LogSummary[] }[] | undefined): LogSummary[]
 
 /**
  * The "Logs" zone: the filtered list (virtualized, infinite scrolling via `searchAfter`), the
- * total count and the sort order switch. Selecting a row navigates to `/logs/:id?<filters>`.
+ * total count, the "Live" switch (useLiveLogs) and the sort order switch. Selecting a row navigates to `/logs/:id?<filters>`.
  */
 export function LogListZone({ logId }: { logId: string | undefined }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -64,6 +77,24 @@ export function LogListZone({ logId }: { logId: string | undefined }) {
   const query = useLogSearch(params);
   const items = useMemo(() => uniqueItems(query.data?.pages), [query.data]);
   const total = query.data?.pages[0]?.total;
+
+  const [live, setLive] = useLivePreference();
+  // A new search starts at the top; the list reports scrolling away from it.
+  const [atTop, setAtTop] = useState(true);
+  const searchKey = JSON.stringify(params);
+  const [atTopFor, setAtTopFor] = useState(searchKey);
+  if (atTopFor !== searchKey) {
+    setAtTopFor(searchKey);
+    setAtTop(true);
+  }
+  const { newCount, showNew } = useLiveLogs({
+    params,
+    items,
+    firstPage: query.data?.pages[0],
+    updatedAt: query.dataUpdatedAt,
+    atTop,
+    live,
+  });
 
   const select = (id: string, replace: boolean) => selectLog(id, { replace });
 
@@ -76,12 +107,34 @@ export function LogListZone({ logId }: { logId: string | undefined }) {
     });
 
   const newestFirst = params.order === 'desc';
+  const liveOn = live && newestFirst;
+  // Live follows the newest logs, so turning it on while oldest first also switches the order.
+  const toggleLive = () => {
+    if (liveOn) {
+      setLive(false);
+      return;
+    }
+    setLive(true);
+    if (!newestFirst) toggleOrder();
+  };
   const actions = (
     <>
       <span className="zone__hint" aria-hidden="true">
         <Kbd>↑</Kbd>
         <Kbd>↓</Kbd>
       </span>
+      <Tooltip content={liveOn ? 'Pause live updates' : 'Show new logs as they arrive'}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="live-toggle"
+          aria-pressed={liveOn}
+          icon={<span className="live-toggle__dot" aria-hidden="true" />}
+          onClick={toggleLive}
+        >
+          Live
+        </Button>
+      </Tooltip>
       <Tooltip content="Change the sort order">
         <Button
           variant="ghost"
@@ -144,6 +197,9 @@ export function LogListZone({ logId }: { logId: string | undefined }) {
         isFetchingNextPage={query.isFetchingNextPage}
         nextPageFailed={query.isFetchNextPageError}
         fetchNextPage={query.fetchNextPage}
+        onAtTopChange={setAtTop}
+        newCount={atTop ? 0 : newCount}
+        onShowNew={showNew}
       />
     );
   }
@@ -152,7 +208,7 @@ export function LogListZone({ logId }: { logId: string | undefined }) {
     <Zone
       title="Logs"
       icon={Rows3}
-      meta={total === undefined ? undefined : `${countLabel(total)} · UTC`}
+      meta={total === undefined ? undefined : countLabel(total)}
       actions={actions}
       flush
     >
@@ -170,6 +226,11 @@ interface VirtualLogListProps {
   nextPageFailed: boolean;
   /** Stable function from useInfiniteQuery. */
   fetchNextPage: (options?: { cancelRefetch?: boolean }) => unknown;
+  /** Called when the list scrolls to or away from its first row. */
+  onAtTopChange: (atTop: boolean) => void;
+  /** Live logs waiting above the scrolled list; 0 hides the "new logs" button. */
+  newCount: number;
+  onShowNew: () => void;
 }
 
 /**
@@ -184,6 +245,9 @@ function VirtualLogList({
   isFetchingNextPage,
   nextPageFailed,
   fetchNextPage,
+  onAtTopChange,
+  newCount,
+  onShowNew,
 }: VirtualLogListProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const showLoaderRow = hasNextPage && !nextPageFailed;
@@ -211,10 +275,28 @@ function VirtualLogList({
 
   const selectedIndex = selectedId ? items.findIndex((i) => i.logId === selectedId) : -1;
 
-  // Bring the selected row into view (deep link, keyboard); no-op when it is already visible.
+  // Bring the selected row into view (deep link, keyboard); no-op when it is already visible. Only
+  // when the selection changes or first loads: live logs arriving above it must not scroll the list.
+  const scrolledTo = useRef<string | undefined>(undefined);
   useEffect(() => {
-    if (selectedIndex >= 0) virtualizer.scrollToIndex(selectedIndex, { align: 'auto' });
-  }, [selectedIndex, virtualizer]);
+    if (selectedIndex < 0 || scrolledTo.current === selectedId) return;
+    scrolledTo.current = selectedId;
+    virtualizer.scrollToIndex(selectedIndex, { align: 'auto' });
+  }, [selectedIndex, selectedId, virtualizer]);
+
+  const atTop = useRef(true);
+  const onScroll = useCallback(() => {
+    const next = (scrollRef.current?.scrollTop ?? 0) < ROW_HEIGHT / 2;
+    if (next === atTop.current) return;
+    atTop.current = next;
+    onAtTopChange(next);
+  }, [onAtTopChange]);
+
+  const showNew = () => {
+    scrollRef.current?.scrollTo({ top: 0 });
+    onShowNew();
+    scrollRef.current?.focus();
+  };
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
@@ -227,6 +309,12 @@ function VirtualLogList({
 
   return (
     <div className="log-list__wrap">
+      {newCount > 0 && (
+        <button type="button" className="log-list__new" onClick={showNew}>
+          <ArrowUp size={14} aria-hidden="true" />
+          {newLogsLabel(newCount)}
+        </button>
+      )}
       <div
         ref={scrollRef}
         className="log-list"
@@ -235,6 +323,7 @@ function VirtualLogList({
         tabIndex={0}
         aria-activedescendant={selectedIndex >= 0 ? rowId(items[selectedIndex].logId) : undefined}
         onKeyDown={onKeyDown}
+        onScroll={onScroll}
       >
         <div className="log-list__canvas" style={{ height: virtualizer.getTotalSize() }}>
           {virtualRows.map((row) => {
@@ -289,7 +378,7 @@ function LogRow({ item, selected, style, onClick }: LogRowProps) {
     >
       <span
         className="log-row__time mono"
-        title={item.timestamp ? `${formatDateTime(item.timestamp)} UTC` : undefined}
+        title={item.timestamp ? formatDateTime(item.timestamp) : undefined}
       >
         {formatTime(item.timestamp)}
       </span>

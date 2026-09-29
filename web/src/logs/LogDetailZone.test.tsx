@@ -26,7 +26,7 @@ describe('log detail', () => {
 
     const message = await within(detail()).findByTestId('log-message');
     expect(message.textContent).toBe('Saving owner Owner[id=11]\nsecond line');
-    expect(within(detail()).getByText('2026-09-23 20:05:44.739 UTC')).toBeInTheDocument();
+    expect(within(detail()).getByText('2026-09-23 22:05:44.739')).toBeInTheDocument();
     expect(within(detail()).getByText('INFO')).toHaveClass('level');
     expect(within(detail()).getByText('high')).toBeInTheDocument();
     expect(within(detail()).getByText('0.94')).toBeInTheDocument();

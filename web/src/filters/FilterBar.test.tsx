@@ -85,25 +85,24 @@ describe('filter bar', () => {
     );
   });
 
-  it('the time range is entered and sent as UTC', async () => {
+  it('the time range is entered in local time and sent as UTC', async () => {
     apiMock();
     const router = renderApp('/');
 
     await userEvent.click(within(filters()).getByRole('button', { name: 'Time' }));
     const dialog = await screen.findByRole('dialog', { name: 'Time range' });
-    const [from, to] = [
-      within(dialog).getByLabelText('From (UTC)'),
-      within(dialog).getByLabelText('To (UTC)'),
-    ];
+    const [from, to] = [within(dialog).getByLabelText('From'), within(dialog).getByLabelText('To')];
     await userEvent.clear(from);
     await userEvent.type(from, '2026-09-23T20:05:00');
     await userEvent.clear(to);
     await userEvent.type(to, '2026-09-23T20:06:00');
     await userEvent.click(within(dialog).getByRole('button', { name: 'Apply' }));
 
-    expect(searchOf(router).get('from')).toBe('2026-09-23T20:05:00.000Z');
-    expect(searchOf(router).get('to')).toBe('2026-09-23T20:06:00.999Z');
-    expect(chips()).toHaveTextContent('from:2026-09-23 20:05:00.000 UTC');
+    // Europe/Belgrade (the test zone) is UTC+2 in September.
+    expect(searchOf(router).get('from')).toBe('2026-09-23T18:05:00.000Z');
+    expect(searchOf(router).get('to')).toBe('2026-09-23T18:06:00.999Z');
+    expect(chips()).toHaveTextContent('from:2026-09-23 20:05:00.000');
+    expect(chips()).not.toHaveTextContent('UTC');
   });
 
   it('text search is debounced by 300 ms and replaces the history entry', async () => {

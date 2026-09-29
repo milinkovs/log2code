@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Starts the PetClinic services (compose profile "petclinic") on top of the core stack and waits until
 # every service reports UP and the gateway can route to customers, vets and visits.
+# Every start is a new live session: live-reset.sh first stops PetClinic, archives data/logs/*.log and
+# deletes the "live" dataset, so log2code and Dashboards show only this run's logs.
 # Requires images built by infra/scripts/build-petclinic.sh (PETCLINIC_TAG in infra/.env).
 # Usage: infra/scripts/petclinic-up.sh
 set -euo pipefail
@@ -16,6 +18,8 @@ fi
 
 # Bind-mounted by the fluent-bit service; /data/ is git-ignored, so it may not exist yet.
 mkdir -p "$ROOT_DIR/data/logs"
+
+"$SCRIPT_DIR/live-reset.sh"
 
 cd "$INFRA_DIR"
 # The core services (opensearch, dashboards, fluent-bit) have no profile, so they are started too if they are not running.

@@ -6,7 +6,7 @@ import {
   useQuery,
 } from '@tanstack/react-query';
 import { ApiError, api } from './client';
-import type { LogSearchParams, NeighborScope } from './types';
+import type { LogSearchParams, LogSearchResponse, NeighborScope } from './types';
 
 /** Page size of the log list; a short page means there is nothing more to load. */
 export const LOG_PAGE_SIZE = 100;
@@ -17,6 +17,7 @@ export const queryKeys = {
   services: (datasetId: string | undefined) => ['meta', 'services', datasetId ?? null] as const,
   log: (logId: string) => ['logs', 'detail', logId] as const,
   logSearch: (params: LogSearchParams) => ['logs', 'search', params] as const,
+  logHead: (params: LogSearchParams) => ['logs', 'head', params] as const,
   logCandidates: (logId: string) => ['logs', 'candidates', logId] as const,
   logNeighbors: (logId: string, scope: NeighborScope, count: number) =>
     ['logs', 'neighbors', logId, scope, count] as const,
@@ -79,6 +80,30 @@ export function useLogSearch(params: LogSearchParams) {
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) =>
       last.items.length < LOG_PAGE_SIZE || !last.nextSearchAfter ? undefined : last.nextSearchAfter,
+  });
+}
+
+/** How often the list checks for new logs while "Live" is on. */
+export const LIVE_POLL_MS = 3_000;
+
+/**
+ * The newest page of the filtered list, polled every {@link LIVE_POLL_MS} while `enabled` (live
+ * list, newest first). Not polled while the tab is hidden (React Query's default).
+ */
+export function useLogHead(
+  params: LogSearchParams,
+  enabled: boolean,
+  seed?: { page: LogSearchResponse; updatedAt: number },
+) {
+  return useQuery({
+    queryKey: queryKeys.logHead(params),
+    queryFn: ({ signal }) => api.searchLogs({ ...params, size: LOG_PAGE_SIZE }, signal),
+    enabled,
+    refetchInterval: enabled ? LIVE_POLL_MS : false,
+    // Starts from the list's own first page, so turning live on does not fetch the same page twice.
+    initialData: seed?.page,
+    initialDataUpdatedAt: seed?.updatedAt,
+    staleTime: LIVE_POLL_MS,
   });
 }
 

@@ -161,7 +161,7 @@ function TimeRangeFilter({
     >
       <form className="popover-form" onSubmit={submit}>
         <label className="field">
-          <span className="field__label">From (UTC)</span>
+          <span className="field__label">From</span>
           <input
             className="input mono"
             type="datetime-local"
@@ -171,7 +171,7 @@ function TimeRangeFilter({
           />
         </label>
         <label className="field">
-          <span className="field__label">To (UTC)</span>
+          <span className="field__label">To</span>
           <input
             className="input mono"
             type="datetime-local"

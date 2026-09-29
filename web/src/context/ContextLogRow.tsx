@@ -31,7 +31,7 @@ export function ContextLogRow({
         {lead ?? (
           <span
             className="context-log__time mono"
-            title={item.timestamp ? `${formatDateTime(item.timestamp)} UTC` : undefined}
+            title={item.timestamp ? formatDateTime(item.timestamp) : undefined}
           >
             {formatTime(item.timestamp)}
           </span>

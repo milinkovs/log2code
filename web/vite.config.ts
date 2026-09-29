@@ -52,5 +52,8 @@ export default defineConfig({
     // Whole-app tests with Radix menus take ~1.5 s alone and can pass 5 s when all files run in
     // parallel on a loaded machine; the default timeout made them flaky, not the logic.
     testTimeout: 15_000,
+    // The UI shows local time; a fixed zone with a UTC offset (+02:00 in September) keeps the
+    // expected times the same on every machine and proves that times are converted.
+    env: { TZ: 'Europe/Belgrade' },
   },
 });

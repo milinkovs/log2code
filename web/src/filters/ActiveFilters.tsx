@@ -44,12 +44,12 @@ export function ActiveFilters() {
       )}
       {f.from && (
         <FilterChip name="from" onRemove={() => update({ from: '' })}>
-          <span className="mono">{formatDateTime(f.from)} UTC</span>
+          <span className="mono">{formatDateTime(f.from)}</span>
         </FilterChip>
       )}
       {f.to && (
         <FilterChip name="to" onRemove={() => update({ to: '' })}>
-          <span className="mono">{formatDateTime(f.to)} UTC</span>
+          <span className="mono">{formatDateTime(f.to)}</span>
         </FilterChip>
       )}
       {f.traceId && (

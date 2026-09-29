@@ -44,7 +44,7 @@ function scrollListTo(top: number) {
 }
 
 describe('log list', () => {
-  it('shows one row per log: time (UTC), level, service, message, confidence, exception', async () => {
+  it('shows one row per log: time (local), level, service, message, confidence, exception', async () => {
     const logs = [
       logSummary(1, {
         timestamp: '2026-09-23T20:05:44.739Z',
@@ -61,7 +61,7 @@ describe('log list', () => {
     renderApp('/');
 
     const [first, second] = await within(zone('Logs')).findAllByRole('option');
-    expect(first).toHaveTextContent('20:05:44.739');
+    expect(first).toHaveTextContent('22:05:44.739');
     expect(within(first).getByText('ERROR')).toHaveClass('level--error');
     expect(first).toHaveTextContent('vets-service');
     expect(first).toHaveTextContent('Failed to process request');
@@ -69,18 +69,19 @@ describe('log list', () => {
     expect(within(first).getByRole('img', { name: 'Has exception' })).toBeInTheDocument();
     expect(second).toHaveTextContent('unmatched');
     expect(within(second).queryByRole('img', { name: 'Has exception' })).toBeNull();
-    expect(within(zone('Logs')).getByText('2 logs · UTC')).toBeInTheDocument();
-    // The row shows only the time; the full UTC date and time is in the tooltip.
-    expect(within(first).getByText('20:05:44.739')).toHaveAttribute(
+    expect(within(zone('Logs')).getByText('2 logs')).toBeInTheDocument();
+    // Local time (the tests run in Europe/Belgrade, UTC+2), without a zone label; the row shows
+    // only the time, the full date and time is in the tooltip.
+    expect(within(first).getByText('22:05:44.739')).toHaveAttribute(
       'title',
-      '2026-09-23 20:05:44.739 UTC',
+      '2026-09-23 22:05:44.739',
     );
   });
 
-  it('counts a single result as "1 log" and labels the times as UTC', async () => {
+  it('counts a single result as "1 log"', async () => {
     mockFetch(logsRoute(range(1)), metaRoutes);
     renderApp('/');
-    expect(await within(zone('Logs')).findByText('1 log · UTC')).toBeInTheDocument();
+    expect(await within(zone('Logs')).findByText('1 log')).toBeInTheDocument();
   });
 
   it('only renders the visible rows (virtualized)', async () => {

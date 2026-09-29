@@ -79,7 +79,7 @@ export function SameRequestTab({
             </span>
           )}
           {` · ${items.length} ${items.length === 1 ? 'log' : 'logs'} · ${colors.size} ${colors.size === 1 ? 'service' : 'services'}`}
-          {first && ` · from ${formatDateTime(first)} UTC`}
+          {first && ` · from ${formatDateTime(first)}`}
         </p>
         {traceId && (
           <Button
@@ -106,7 +106,7 @@ export function SameRequestTab({
                 <>
                   <span
                     className="context-log__offset mono"
-                    title={item.timestamp ? `${formatDateTime(item.timestamp)} UTC` : undefined}
+                    title={item.timestamp ? formatDateTime(item.timestamp) : undefined}
                   >
                     {formatOffset(first, item.timestamp)}
                   </span>

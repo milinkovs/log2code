@@ -37,7 +37,7 @@ export interface LogFilters {
   status: MatchStatus[];
   confidence: ConfidenceLevel[];
   q: string;
-  /** ISO-8601 instants (UTC), inclusive; empty when not set. */
+  /** ISO-8601 instants (UTC; shown and entered in local time), inclusive; empty when not set. */
   from: string;
   to: string;
   traceId: string;

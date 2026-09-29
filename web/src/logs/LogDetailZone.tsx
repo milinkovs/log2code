@@ -74,7 +74,7 @@ function LogDetailView({ log }: { log: LogDetail }) {
         </Callout>
       )}
       <div className="log-detail__head">
-        <span className="mono log-detail__time">{formatDateTime(log.timestamp)} UTC</span>
+        <span className="mono log-detail__time">{formatDateTime(log.timestamp)}</span>
         <LevelBadge level={log.level} />
         <ConfidenceBadge value={confidence} score={match?.confidence ?? undefined} />
       </div>
