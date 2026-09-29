@@ -26,7 +26,7 @@ import org.log2code.ingester.parse.support.GzipLines;
 class EventAssemblerTest {
 
     private static final Path FIXTURES_DIR = Path.of("..", "fixtures", "logs");
-    private static final Path DATASETS_DIR = Path.of("..", "datasets");
+    private static final Path DATASETS_DIR = Path.of("..", "fixtures", "datasets");
     private static final CodeVersion CODE = new CodeVersion(
         "spring-petclinic-microservices", "3858f9c630cf989bb6809a86edf47c2be78dc9f1");
 

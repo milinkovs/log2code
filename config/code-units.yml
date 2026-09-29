@@ -12,7 +12,9 @@
 
 project:
   spring-petclinic-microservices:
-    repo: https://github.com/spring-petclinic/spring-petclinic-microservices
+    # Since T38/T39 the analyzed commit lives only in the fork (branch log2code-bug-demo),
+    # not in the upstream spring-petclinic repo.
+    repo: https://github.com/milinkovs/spring-petclinic-microservices
     ref: "{version}"
     path: "{file_path}"
 

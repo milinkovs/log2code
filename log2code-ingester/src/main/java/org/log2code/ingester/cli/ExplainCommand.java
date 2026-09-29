@@ -23,7 +23,7 @@ public final class ExplainCommand implements Callable<Integer> {
     @ParentCommand
     private IngesterCli parent;
 
-    @Option(names = "--dataset", required = true, description = "Dataset folder (e.g. datasets/smoke-01) or bare dataset id.")
+    @Option(names = "--dataset", required = true, description = "Dataset folder (e.g. datasets/demo-02) or bare dataset id.")
     private String dataset;
 
     @Option(names = "--at", required = true, description = "<file>:<line>, e.g. logs/customers-service.log.gz:42 (or a service name in place of the file path).")

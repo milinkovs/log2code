@@ -13,7 +13,7 @@ class ManifestLoaderTest {
 
     @Test
     void loadsTheRealSmokeDatasetManifest() {
-        DatasetManifest manifest = ManifestLoader.load(Path.of("..", "datasets", "smoke-01", "manifest.yml"));
+        DatasetManifest manifest = ManifestLoader.load(Path.of("..", "fixtures", "datasets", "smoke-01", "manifest.yml"));
 
         assertThat(manifest.datasetId()).isEqualTo("smoke-01");
         assertThat(manifest.oracle()).isFalse();
@@ -30,7 +30,7 @@ class ManifestLoaderTest {
 
     @Test
     void loadsTheRealOracleDatasetManifestWithOracleTrue() {
-        DatasetManifest manifest = ManifestLoader.load(Path.of("..", "datasets", "smoke-oracle-01", "manifest.yml"));
+        DatasetManifest manifest = ManifestLoader.load(Path.of("..", "fixtures", "datasets", "smoke-oracle-01", "manifest.yml"));
 
         assertThat(manifest.oracle()).isTrue();
     }

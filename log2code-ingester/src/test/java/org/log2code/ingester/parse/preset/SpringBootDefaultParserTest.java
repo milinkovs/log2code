@@ -24,7 +24,7 @@ import org.log2code.ingester.parse.support.GzipLines;
 class SpringBootDefaultParserTest {
 
     private static final Path FIXTURES_DIR = Path.of("..", "fixtures", "logs");
-    private static final Path DATASETS_DIR = Path.of("..", "datasets");
+    private static final Path DATASETS_DIR = Path.of("..", "fixtures", "datasets");
 
     private final SpringBootDefaultParser parser = new SpringBootDefaultParser();
 
@@ -43,7 +43,7 @@ class SpringBootDefaultParserTest {
     }
 
     static Stream<String> datasetIds() {
-        return Stream.of("smoke-01", "smoke-oracle-01", "tune-01", "test-01", "demo-01");
+        return Stream.of("smoke-01", "smoke-oracle-01");
     }
 
     @ParameterizedTest

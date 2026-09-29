@@ -29,7 +29,7 @@ public final class IngestCommand implements Callable<Integer> {
     @ParentCommand
     private IngesterCli parent;
 
-    @Option(names = "--dataset", required = true, description = "Dataset folder (e.g. datasets/smoke-01) or bare dataset id.")
+    @Option(names = "--dataset", required = true, description = "Dataset folder (e.g. datasets/demo-02) or bare dataset id.")
     private String dataset;
 
     @Option(names = "--recreate-dataset", description = "Delete existing log2code-logs documents for this dataset_id before ingesting.")

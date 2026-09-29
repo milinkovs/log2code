@@ -6,7 +6,7 @@ import org.log2code.ingester.IngesterUserException;
 
 /**
  * Resolves a {@code --dataset} argument to a dataset folder: either a path to the folder directly (T21's
- * own example, {@code ingest --dataset datasets/smoke-01}), or a bare {@code dataset_id} looked up under
+ * own example, {@code ingest --dataset datasets/demo-02}), or a bare {@code dataset_id} looked up under
  * {@code datasets/}.
  */
 final class DatasetPaths {

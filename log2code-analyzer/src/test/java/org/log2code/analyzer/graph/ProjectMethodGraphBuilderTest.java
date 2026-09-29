@@ -123,6 +123,33 @@ class ProjectMethodGraphBuilderTest {
         assertThat(utilCtor.calledBy()).isEmpty(); // GraphUtil's private constructor is never called
     }
 
+    /** ADR-036: implicit record accessors resolve (the type solvers need a symbol resolver of their own). */
+    @Test
+    void callWithRecordAccessorArgumentsResolves() {
+        MethodInfo store = find(PKG + "RecordSink", "store(String,int)");
+        MethodInfo caller = find(PKG + "RecordCaller", "viaRecord(RecordRequest)");
+
+        CallEdge storeCall = caller.calls().stream().filter(c -> c.text().startsWith("sink.store")).findFirst().orElseThrow();
+        assertThat(storeCall.resolved()).isTrue();
+        assertThat(storeCall.targetMethodId()).isEqualTo(store.methodId());
+        assertThat(store.calledBy()).extracting(CallerRef::methodId).containsExactly(caller.methodId());
+
+        assertThat(caller.calls().stream().filter(c -> c.text().startsWith("request.")))
+            .hasSize(2)
+            .allMatch(CallEdge::resolved);
+    }
+
+    @Test
+    void overloadWithRecordAccessorArgumentResolvesToTheMatchingOverload() {
+        MethodInfo pickString = find(PKG + "RecordSink", "pick(String)");
+        MethodInfo pickInt = find(PKG + "RecordSink", "pick(int)");
+        MethodInfo caller = find(PKG + "RecordCaller", "ambiguousViaRecord(RecordRequest)");
+
+        CallEdge pickCall = caller.calls().stream().filter(c -> c.text().startsWith("sink.pick")).findFirst().orElseThrow();
+        assertThat(pickCall.resolved()).isTrue();
+        assertThat(pickCall.targetMethodId()).isEqualTo(pickString.methodId()).isNotEqualTo(pickInt.methodId());
+    }
+
     private MethodInfo find(String classFqn, String methodSignature) {
         return methods.stream()
             .filter(m -> m.classFqn().equals(classFqn) && m.methodSignature().equals(methodSignature))

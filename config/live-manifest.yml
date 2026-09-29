@@ -5,7 +5,7 @@ oracle: false
 log_format: spring-boot-default
 code:
   name: spring-petclinic-microservices
-  version: 3858f9c630cf989bb6809a86edf47c2be78dc9f1
+  version: da4784072d5f7e5ea268dc62fd0237ba31da5094
 files:
   - path: data/logs/config-server.log
     service: config-server

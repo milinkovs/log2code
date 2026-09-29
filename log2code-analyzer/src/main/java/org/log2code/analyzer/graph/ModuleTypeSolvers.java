@@ -1,6 +1,7 @@
 package org.log2code.analyzer.graph;
 
 import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JarTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
@@ -20,13 +21,17 @@ import org.log2code.core.model.ModuleInfo;
  * already belongs to an earlier module's combined solver - a plain jar/source-root cache across
  * modules is therefore not an option here (found by an {@code -Pit} run failing on the second module,
  * not by inspection - ADR-013).
+ *
+ * <p>The {@link ParserConfiguration} handed to each {@link JavaParserTypeSolver} carries a {@link
+ * JavaSymbolSolver} over the same combined solver: those solvers parse project files lazily on their
+ * own, and without a resolver on that configuration resolving anything that touches such a file (e.g.
+ * the implicit accessors of a {@code record}) fails with {@code IllegalStateException: Symbol
+ * resolution not configured} (ADR-036, which corrects ADR-013).
  */
 final class ModuleTypeSolvers {
 
     private final Path projectRoot;
     private final List<ModuleInfo> modules;
-    private final ParserConfiguration parserConfiguration =
-        new ParserConfiguration().setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_21);
     private int jarLoadFailures;
 
     ModuleTypeSolvers(Path projectRoot, List<ModuleInfo> modules) {
@@ -35,6 +40,8 @@ final class ModuleTypeSolvers {
     }
 
     CombinedTypeSolver forModule(List<Path> jarPaths) {
+        ParserConfiguration parserConfiguration =
+            new ParserConfiguration().setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_21);
         CombinedTypeSolver combined = new CombinedTypeSolver();
         combined.add(new ReflectionTypeSolver(true));
         for (ModuleInfo module : modules) {
@@ -49,6 +56,7 @@ final class ModuleTypeSolvers {
                 jarLoadFailures++;
             }
         }
+        parserConfiguration.setSymbolResolver(new JavaSymbolSolver(combined));
         return combined;
     }
 
