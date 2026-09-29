@@ -1,0 +1,6 @@
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"razmisljam","thought":true}]},"index":0}]}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"OK"}]},"index":0}]}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":""}]},"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":9,"candidatesTokenCount":1,"thoughtsTokenCount":40}}
+

@@ -248,6 +248,10 @@ services:
       context: ..
       dockerfile: log2code-api/Dockerfile
     mem_limit: 384M
+    # T40: LOG2CODE_GEMINI_API_KEY comes from infra/.env.local (not in git); optional, without it Explain is "not configured"
+    env_file:
+      - path: .env.local
+        required: false
     environment:
       LOG2CODE_OPENSEARCH_URL: http://opensearch:9200
       JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=70

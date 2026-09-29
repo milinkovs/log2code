@@ -1,0 +1,6 @@
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"OK"}]},"index":0}]}
+
+data: {"usageMetadata":{"promptTokenCount":7}}
+
+data: {"candidates":[{"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":7,"candidatesTokenCount":1,"totalTokenCount":8}}
+

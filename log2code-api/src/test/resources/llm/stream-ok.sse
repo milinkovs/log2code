@@ -1,0 +1,6 @@
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"Zdravo"}]},"index":0}],"usageMetadata":{"promptTokenCount":12},"modelVersion":"test"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":", svete"}]},"index":0}],"usageMetadata":{"promptTokenCount":12,"candidatesTokenCount":3},"modelVersion":"test"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"!"}]},"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":12,"candidatesTokenCount":5,"totalTokenCount":17},"modelVersion":"test"}
+
