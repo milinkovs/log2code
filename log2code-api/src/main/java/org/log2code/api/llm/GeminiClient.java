@@ -1,6 +1,5 @@
 package org.log2code.api.llm;
 
-import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -11,6 +10,11 @@ import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -29,6 +33,9 @@ public class GeminiClient implements LlmClient {
 
     private static final Set<String> BLOCKING_FINISH_REASONS =
         Set.of("SAFETY", "PROHIBITED_CONTENT", "BLOCKLIST", "SPII");
+
+    /** How often the cancel watcher looks at the flag; the worst-case delay of a cancel. */
+    private static final long CANCEL_POLL_MS = 50;
 
     private final LlmProperties properties;
     private final JsonMapper mapper;
@@ -53,23 +60,62 @@ public class GeminiClient implements LlmClient {
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(body(request), StandardCharsets.UTF_8))
             .build();
+        CompletableFuture<HttpResponse<Stream<String>>> pending =
+            http.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofLines());
+        AtomicReference<Stream<String>> open = new AtomicReference<>();
+        AtomicBoolean finished = new AtomicBoolean();
+        Thread watcher = Thread.ofVirtual().name("gemini-cancel-watcher").start(
+            () -> watchForCancel(cancelled, pending, open, finished));
         try {
-            HttpResponse<Stream<String>> response = http.send(httpRequest, HttpResponse.BodyHandlers.ofLines());
+            HttpResponse<Stream<String>> response = pending.get();
             try (Stream<String> lines = response.body()) {
+                open.set(lines);
                 if (response.statusCode() != 200) {
                     throw httpError(response.statusCode(), lines.collect(Collectors.joining("\n")));
                 }
                 return read(lines.iterator(), onDelta, cancelled, started);
             }
-        } catch (HttpTimeoutException e) {
-            throw new LlmException(LlmException.Kind.TIMEOUT, "Gemini request timed out", e);
-        } catch (UncheckedIOException e) {
+        } catch (CancellationException e) {
+            return result("CANCELLED", null, null, started);
+        } catch (ExecutionException e) {
+            if (cancelled.getAsBoolean()) {
+                return result("CANCELLED", null, null, started);
+            }
             throw ioFailure(e.getCause());
-        } catch (IOException e) {
-            throw ioFailure(e);
+        } catch (UncheckedIOException e) {
+            if (cancelled.getAsBoolean()) {
+                return result("CANCELLED", null, null, started);
+            }
+            throw ioFailure(e.getCause());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new LlmException(LlmException.Kind.UPSTREAM, "Gemini request was interrupted", e);
+        } finally {
+            finished.set(true);
+            watcher.interrupt();
+        }
+    }
+
+    /**
+     * A blocked read cannot see {@code cancelled}, and a "thinking" model can stay silent for seconds, so a
+     * watcher thread polls the flag and, once it is set, cancels the pending request or closes the open
+     * stream, which makes the blocked read return (T42, step 4).
+     */
+    private static void watchForCancel(BooleanSupplier cancelled, CompletableFuture<?> pending,
+            AtomicReference<Stream<String>> open, AtomicBoolean finished) {
+        while (!finished.get()) {
+            if (cancelled.getAsBoolean()) {
+                pending.cancel(true);
+                Stream<String> stream = open.get();
+                if (stream != null) {
+                    stream.close();
+                }
+            }
+            try {
+                Thread.sleep(CANCEL_POLL_MS);
+            } catch (InterruptedException e) {
+                return;
+            }
         }
     }
 
@@ -85,7 +131,12 @@ public class GeminiClient implements LlmClient {
             if (!line.startsWith("data:")) {
                 continue;
             }
-            JsonNode chunk = parse(line.substring("data:".length()).strip());
+            String json = line.substring("data:".length()).strip();
+            JsonNode chunk = parse(json);
+            if (chunk.has("error")) {
+                // Gemini reports overload and quota problems inside a stream that already answered HTTP 200
+                throw httpError(chunk.path("error").path("code").asInt(500), json);
+            }
             String blockReason = chunk.path("promptFeedback").path("blockReason").asString(null);
             if (blockReason != null) {
                 throw new LlmException(LlmException.Kind.BLOCKED, "Gemini blocked the prompt: " + blockReason);
@@ -114,6 +165,10 @@ public class GeminiClient implements LlmClient {
             if (usage.has("candidatesTokenCount")) {
                 outputTokens = usage.path("candidatesTokenCount").asInt();
             }
+        }
+        // the watcher closing the stream also ends the loop, so a cancel is reported as such
+        if (cancelled.getAsBoolean()) {
+            return result("CANCELLED", promptTokens, outputTokens, started);
         }
         return result(finishReason == null ? "UNKNOWN" : finishReason, promptTokens, outputTokens, started);
     }

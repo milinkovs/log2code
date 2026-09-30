@@ -1,0 +1,4 @@
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"Pocetak"}]},"index":0}]}
+
+data: {"error":{"code":429,"message":"Quota exceeded for this model.","status":"RESOURCE_EXHAUSTED"}}
+

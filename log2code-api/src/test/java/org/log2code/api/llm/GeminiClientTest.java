@@ -131,6 +131,28 @@ class GeminiClientTest {
     }
 
     @Test
+    void anErrorEventInsideAnOkStreamIsAnErrorNotADone() throws Exception {
+        responseBody = resource("stream-error-midstream-503.sse");
+        List<String> deltas = new ArrayList<>();
+
+        assertThatThrownBy(() -> client(KEY).stream(request(), deltas::add, () -> false))
+            .isInstanceOfSatisfying(LlmException.class, e -> {
+                assertThat(e.kind()).isEqualTo(LlmException.Kind.UPSTREAM);
+                assertThat(e.getMessage()).contains("503").contains("high demand");
+            });
+        assertThat(deltas).containsExactly("Pocetak");
+    }
+
+    @Test
+    void aQuotaErrorInsideAnOkStreamIsRateLimited() throws Exception {
+        responseBody = resource("stream-error-midstream-429.sse");
+
+        assertThatThrownBy(() -> client(KEY).stream(request(), d -> { }, () -> false))
+            .isInstanceOfSatisfying(LlmException.class,
+                e -> assertThat(e.kind()).isEqualTo(LlmException.Kind.RATE_LIMITED));
+    }
+
+    @Test
     void mapsInvalidKeyWithoutLeakingTheKey() throws Exception {
         status = 400;
         responseBody = resource("error-invalid-key.json");
@@ -160,6 +182,76 @@ class GeminiClientTest {
 
         assertThat(result.finishReason()).isEqualTo("CANCELLED");
         assertThat(deltas.get()).isEqualTo(1);
+    }
+
+    /** A server that answers like a "thinking" model: after {@code headerDelayMs} it sends the headers, then (optionally) one delta, then goes silent. */
+    private HttpServer silentServer(long headerDelayMs, boolean sendDelta, long silenceMs) throws IOException {
+        HttpServer silent = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+        silent.createContext("/", exchange -> {
+            try (InputStream in = exchange.getRequestBody()) {
+                in.readAllBytes();
+            }
+            try {
+                Thread.sleep(headerDelayMs);
+                exchange.getResponseHeaders().add("Content-Type", "text/event-stream");
+                exchange.sendResponseHeaders(200, 0);
+                if (sendDelta) {
+                    exchange.getResponseBody().write(
+                        ("data: {\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Prvi\"}]}}]}\n\n")
+                            .getBytes(StandardCharsets.UTF_8));
+                }
+                exchange.getResponseBody().flush();
+                Thread.sleep(silenceMs);
+            } catch (InterruptedException | IOException e) {
+                // the client hung up: that is what the test wants
+            } finally {
+                exchange.close();
+            }
+        });
+        silent.setExecutor(java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor());
+        silent.start();
+        return silent;
+    }
+
+    private GeminiClient clientFor(HttpServer target) {
+        LlmProperties props = new LlmProperties("gemini", "http://127.0.0.1:" + target.getAddress().getPort() + "/v1beta",
+            KEY, "m1", List.of(new LlmProperties.Model("m1", "Model 1")), 0.2, 8192,
+            Duration.ofSeconds(2), Duration.ofSeconds(30));
+        return new GeminiClient(props, mapper);
+    }
+
+    @Test
+    void cancelWhileTheModelIsSilentAfterTheHeadersDoesNotWaitForTheNextLine() throws Exception {
+        HttpServer silent = silentServer(0, false, 5000);
+        try {
+            AtomicInteger deltas = new AtomicInteger();
+            long started = System.nanoTime();
+
+            LlmResult result = clientFor(silent).stream(request(), d -> deltas.incrementAndGet(),
+                () -> (System.nanoTime() - started) / 1_000_000 > 300);
+
+            assertThat(result.finishReason()).isEqualTo("CANCELLED");
+            assertThat(deltas.get()).isZero();
+            assertThat((System.nanoTime() - started) / 1_000_000).isLessThan(2000);
+        } finally {
+            silent.stop(0);
+        }
+    }
+
+    @Test
+    void cancelBeforeTheFirstByteDoesNotWaitForTheResponse() throws Exception {
+        HttpServer silent = silentServer(5000, false, 0);
+        try {
+            long started = System.nanoTime();
+
+            LlmResult result = clientFor(silent).stream(request(), d -> { },
+                () -> (System.nanoTime() - started) / 1_000_000 > 300);
+
+            assertThat(result.finishReason()).isEqualTo("CANCELLED");
+            assertThat((System.nanoTime() - started) / 1_000_000).isLessThan(2000);
+        } finally {
+            silent.stop(0);
+        }
     }
 
     @Test

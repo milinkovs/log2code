@@ -1,6 +1,7 @@
 package org.log2code.api.web;
 
 import java.io.UncheckedIOException;
+import org.log2code.api.llm.explain.ExplainNotConfiguredException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,14 @@ public class ApiExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ProblemDetail handleNotFound(NotFoundException e) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    /** T42: no Gemini key; {@code code} lets the UI tell this 503 apart from any other. */
+    @ExceptionHandler(ExplainNotConfiguredException.class)
+    public ProblemDetail handleLlmNotConfigured(ExplainNotConfiguredException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage());
+        problem.setProperty("code", ExplainNotConfiguredException.CODE);
+        return problem;
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
