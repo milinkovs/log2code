@@ -178,29 +178,12 @@ public final class ContextBundleService {
         }
     }
 
+    // The implementations moved to SourceText (T41); these delegates keep the existing unit tests unchanged.
     static String extractRange(String content, int startLine, int endLine) {
-        if (content == null || startLine <= 0 || endLine < startLine) {
-            return null;
-        }
-        List<String> lines = content.lines().toList();
-        int from = Math.max(1, startLine);
-        int to = Math.min(lines.size(), endLine);
-        if (from > to) {
-            return null;
-        }
-        return String.join("\n", lines.subList(from - 1, to));
+        return SourceText.extractRange(content, startLine, endLine);
     }
 
     static String extractSnippet(String content, int line, int radius) {
-        if (content == null || line <= 0) {
-            return null;
-        }
-        List<String> lines = content.lines().toList();
-        if (line > lines.size()) {
-            return null;
-        }
-        int from = Math.max(1, line - radius);
-        int to = Math.min(lines.size(), line + radius);
-        return String.join("\n", lines.subList(from - 1, to));
+        return SourceText.extractSnippet(content, line, radius);
     }
 }
