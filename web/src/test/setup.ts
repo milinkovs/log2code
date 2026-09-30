@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import { afterEach } from 'vitest';
+
+// findBy*/waitFor wait 1 s by default, which a busy machine (or a slower laptop) can exceed while
+// lazy chunks load; 3 s removes those random timeouts without relaxing any assertion.
+configure({ asyncUtilTimeout: 3000 });
 
 // jsdom has no layout engine: provide the browser APIs react-resizable-panels relies on.
 class ResizeObserverStub {

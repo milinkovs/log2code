@@ -3,13 +3,14 @@ import {
   GitBranch,
   Layers,
   ListTree,
+  Sparkles,
   Unlink,
   Waypoints,
   Zap,
   type LucideIcon,
 } from 'lucide-react';
 import { Tabs } from 'radix-ui';
-import type { ReactNode } from 'react';
+import { Suspense, lazy, useState, type ReactNode } from 'react';
 import { isNotFound } from '../api/client';
 import { useLog } from '../api/queries';
 import type { CatalogEntryDto, LogDetail } from '../api/types';
@@ -30,7 +31,13 @@ const TABS: { value: ContextTab; label: string; icon: LucideIcon }[] = [
   { value: 'stack', label: 'Stack trace', icon: Zap },
   { value: 'neighbors', label: 'Neighbors', icon: AlignVerticalSpaceAround },
   { value: 'request', label: 'Same request', icon: Waypoints },
+  { value: 'explain', label: 'Explain', icon: Sparkles },
 ];
+
+// Loaded on first use: the markdown renderer (react-markdown) is only needed once a log is explained.
+const ExplainTab = lazy(() =>
+  import('./explain/ExplainTab').then((module) => ({ default: module.ExplainTab })),
+);
 
 const errorText = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
@@ -48,6 +55,10 @@ export function ContextZone({ logId }: { logId: string | undefined }) {
   // While the log loads, keep a remembered "Stack trace" tab instead of flashing the first one.
   const hasStack = !!logId && (log.isPending ? tab === 'stack' : !!log.data?.exception);
   const shown: ContextTab = tab === 'stack' && !hasStack ? 'flow' : tab;
+  // The log whose "Explain" tab has been opened (T43); set while rendering, React's pattern for
+  // state derived from props, so the tab mounts in the same pass that shows it.
+  const [explainLog, setExplainLog] = useState<string | undefined>();
+  if (shown === 'explain' && logId !== explainLog) setExplainLog(logId);
   const tabs = (
     <Tabs.List className="tabs" aria-label="Context">
       {TABS.filter(({ value }) => value !== 'stack' || hasStack).map(
@@ -104,6 +115,23 @@ export function ContextZone({ logId }: { logId: string | undefined }) {
           <LogIdGate logId={logId}>
             {(id) => <SameRequestTab logId={id} onShowThreadNeighbors={showThreadNeighbors} />}
           </LogIdGate>
+        </Tabs.Content>
+        {/* Mounted when first opened for a log and then kept (hidden) while the log stays, so the
+            conversation survives a look at another tab (D9). Keyed by log: another log starts an
+            empty conversation and aborts the old stream. */}
+        <Tabs.Content
+          value="explain"
+          className="context-zone__tab"
+          forceMount
+          hidden={shown !== 'explain'}
+        >
+          {logId && explainLog === logId ? (
+            <Suspense fallback={<Spinner label="Loading explain tab…" />}>
+              <ExplainTab key={logId} logId={logId} />
+            </Suspense>
+          ) : (
+            shown === 'explain' && <NoLogSelected />
+          )}
         </Tabs.Content>
       </Zone>
     </Tabs.Root>

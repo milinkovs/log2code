@@ -1,6 +1,6 @@
 import { act, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
   ExceptionInfoDto,
   LogDetail,
@@ -193,6 +193,21 @@ function show(path: string, overrides: { neighbors?: () => Response } = {}) {
     if (file) return json(file);
     if (p.startsWith('/api/methods/')) return problem(404, 'method not found');
     if (p.startsWith('/api/meta')) return json([]);
+    if (p.endsWith('/explain')) {
+      const event = (name: string, data: unknown) =>
+        `event:${name}\ndata:${JSON.stringify(data)}\n\n`;
+      const meta = { level: 'L2', model: 'm', promptVersion: 1, promptChars: 1, sections: [] };
+      const done = { finishReason: 'STOP', promptTokens: 1, outputTokens: 1, durationMs: 1 };
+      return new Response(
+        event('meta', meta) +
+          event('delta', { text: `answer for ${p.split('/')[3]}` }) +
+          event('done', done),
+        { headers: { 'Content-Type': 'text/event-stream' } },
+      );
+    }
+    if (p === '/api/llm/models') {
+      return json({ configured: true, defaultModel: 'm', models: [{ id: 'm', label: 'M' }] });
+    }
     return undefined;
   });
   const router = renderApp(path);
@@ -205,6 +220,10 @@ const requests = (spy: ReturnType<typeof mockFetch>, suffix: string) =>
   spy.mock.calls
     .map(([input]) => new URL(String(input), 'http://localhost'))
     .filter((url) => url.pathname.endsWith(suffix));
+
+// The explain tab is lazy (react-markdown); load it once here, so the first test that opens it
+// waits for the UI and not for the module to be transformed.
+beforeAll(() => import('./explain/ExplainTab'));
 
 beforeEach(() => {
   window.localStorage.clear();
@@ -469,6 +488,56 @@ describe('log tabs without a log', () => {
     show('/?datasetId=smoke-01');
     expect(await context().findByText('No log selected')).toBeInTheDocument();
     expect(screen.queryByRole('list', { name: 'Neighbor logs' })).toBeNull();
+  });
+
+  it('lists six tabs for a log with an exception, "Explain" last (T43)', async () => {
+    show('/logs/log-0001?datasetId=smoke-01');
+    await context().findByRole('tab', { name: 'Stack trace' });
+    expect(
+      context()
+        .getAllByRole('tab')
+        .map((tab) => tab.textContent),
+    ).toEqual([
+      'Conditions and flow',
+      'Callers',
+      'Stack trace',
+      'Neighbors',
+      'Same request',
+      'Explain',
+    ]);
+  });
+
+  it('"Explain" works for an unmatched log and sends nothing until clicked', async () => {
+    window.localStorage.setItem(CONTEXT_TAB_KEY, 'explain');
+    const { fetchSpy } = show('/logs/log-0020?datasetId=smoke-01');
+    expect(await context().findByText('Explain this log')).toBeInTheDocument();
+    expect(context().getAllByRole('tab')).toHaveLength(5);
+    expect(context().getByRole('tab', { name: 'Explain' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    expect(context().getByRole('button', { name: 'Explain' })).toBeEnabled();
+    expect(fetchSpy.mock.calls.filter(([, init]) => init?.method === 'POST')).toHaveLength(0);
+  });
+
+  it('the "Explain" conversation survives other tabs and ends with another log', async () => {
+    window.localStorage.setItem(CONTEXT_TAB_KEY, 'explain');
+    const { router } = show('/logs/log-0020?datasetId=smoke-01');
+    await userEvent.click(await context().findByRole('button', { name: 'Explain' }));
+    expect(await context().findByText('answer for log-0020')).toBeInTheDocument();
+
+    await userEvent.click(context().getByRole('tab', { name: 'Neighbors' }));
+    await context().findByRole('list', { name: 'Neighbor logs' });
+    // Kept, only hidden: coming back shows the same conversation.
+    expect(context().getByText('answer for log-0020')).not.toBeVisible();
+    await userEvent.click(context().getByRole('tab', { name: 'Explain' }));
+    expect(context().getByText('answer for log-0020')).toBeVisible();
+
+    await userEvent.click(context().getByRole('tab', { name: 'Neighbors' }));
+    await act(() => router.navigate('/logs/log-0021?datasetId=smoke-01'));
+    await userEvent.click(context().getByRole('tab', { name: 'Explain' }));
+    expect(await context().findByText('Explain this log')).toBeInTheDocument();
+    expect(context().queryByText('answer for log-0020')).toBeNull();
   });
 
   it('neighbors work for an unmatched log (no statement needed)', async () => {

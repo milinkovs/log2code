@@ -5,10 +5,15 @@ import type {
   CodeUnitSummary,
   ContextBundleDto,
   DatasetSummary,
+  ExplainEvent,
+  ExplainLevel,
+  ExplainPrompt,
+  ExplainRequest,
   LabelDto,
   LabelListParams,
   LabelRequest,
   LabelSearchResponse,
+  LlmModels,
   LogDetail,
   LogSearchParams,
   LogSearchResponse,
@@ -22,6 +27,7 @@ import type {
   SourceLookupResponse,
   TraceResponse,
 } from './types';
+import { readSse } from './sse';
 
 /** Every API route lives under /api; Vite proxies it in dev, log2code-api serves it in prod. */
 export const API_BASE = '/api';
@@ -33,12 +39,15 @@ export type Query = Record<string, QueryValue | null>;
 export class ApiError extends Error {
   readonly status: number;
   readonly problem: ProblemDetail | undefined;
+  /** `problem.code`, when the API names the reason (e.g. `llm_not_configured`, T42). */
+  readonly code: string | undefined;
 
   constructor(status: number, message: string, problem?: ProblemDetail) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.problem = problem;
+    this.code = problem?.code;
   }
 }
 
@@ -168,4 +177,48 @@ export const api = {
 
   getReviewQueue: (params: ReviewQueueParams = {}, signal?: AbortSignal) =>
     request<LogSummary[]>('/review-queue', { query: { ...params }, signal }),
+
+  getLlmModels: (signal?: AbortSignal) => request<LlmModels>('/llm/models', { signal }),
+
+  getExplainPrompt: (logId: string, level: ExplainLevel, signal?: AbortSignal) =>
+    request<ExplainPrompt>(`/logs/${seg(logId)}/explain/prompt`, { query: { level }, signal }),
 };
+
+const EXPLAIN_EVENTS: readonly string[] = ['meta', 'delta', 'done', 'error'];
+
+/**
+ * `POST /api/logs/{logId}/explain` (T42) as a stream of events. `fetch`, because `EventSource`
+ * cannot POST. A request the API rejects before streaming (400, 404, 503 with `code`) throws an
+ * `ApiError`; so do network failures and an abort (an `AbortError`, from `fetch` or the read).
+ * Resolves when the stream ends, whether or not a `done` or `error` event came: telling a cut
+ * connection apart is the caller's job (docs/llm-explain.md, "Protokol (SSE)").
+ */
+export async function streamExplain(
+  logId: string,
+  body: ExplainRequest,
+  { signal, onEvent }: { signal?: AbortSignal; onEvent: (event: ExplainEvent) => void },
+): Promise<void> {
+  const path = `/logs/${seg(logId)}/explain`;
+  const response = await fetch(buildUrl(path), {
+    method: 'POST',
+    headers: { Accept: 'text/event-stream', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+    signal,
+  });
+  if (!response.ok) {
+    const problem = await readProblem(response);
+    const message = problem?.detail ?? `POST ${path} failed with HTTP ${response.status}`;
+    throw new ApiError(response.status, message, problem);
+  }
+  if (!response.body) return;
+  await readSse(response.body, ({ event, data }) => {
+    if (!EXPLAIN_EVENTS.includes(event)) return;
+    let payload: unknown;
+    try {
+      payload = JSON.parse(data);
+    } catch {
+      return;
+    }
+    onEvent({ ...(payload as object), type: event } as ExplainEvent);
+  });
+}

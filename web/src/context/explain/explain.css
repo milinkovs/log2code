@@ -1,0 +1,307 @@
+/* Explain tab (T43, variant A in ADR-042). Tokens only; rules in docs/design.md §5.1f. */
+
+.explain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 100%;
+}
+
+/* Controls stay on top while a long answer scrolls, like the other tab toolbars (T30). */
+.explain__toolbar {
+  position: sticky;
+  top: calc(-1 * var(--space-3));
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) 0;
+  padding: var(--space-3);
+  background: var(--bg-panel);
+  container-type: inline-size;
+}
+
+.explain__level-text,
+.explain__model-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.explain__level {
+  max-width: 100%;
+}
+
+.explain__level-text {
+  color: var(--text-muted);
+}
+
+.explain__prompt-button {
+  margin-left: auto;
+}
+
+/* A narrow zone keeps just "L2" on the level button; the menu still has the descriptions. */
+@container (max-width: 520px) {
+  .explain__level-text {
+    display: none;
+  }
+}
+
+.explain-menu {
+  min-width: 240px;
+}
+
+.explain-menu__hint {
+  margin-left: auto;
+  padding-left: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.explain__sections {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.explain__sections-label {
+  margin-right: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.explain__section-note {
+  color: var(--text-muted);
+}
+
+.explain__conversation {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.explain-question {
+  align-self: flex-end;
+  max-width: 85%;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.explain-answer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* ---- markdown of an answer (react-markdown, no raw HTML) ---- */
+
+.explain-answer__text {
+  color: var(--text);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.explain-answer__text > :first-child {
+  margin-top: 0;
+}
+
+.explain-answer__text > :last-child {
+  margin-bottom: 0;
+}
+
+.explain-answer__text :is(h1, h2, h3, h4, h5, h6) {
+  margin: var(--space-4) 0 var(--space-1);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+.explain-answer__text p,
+.explain-answer__text ul,
+.explain-answer__text ol,
+.explain-answer__text pre,
+.explain-answer__text blockquote {
+  margin: 0 0 var(--space-2);
+}
+
+.explain-answer__text ul,
+.explain-answer__text ol {
+  padding-left: var(--space-5);
+}
+
+.explain-answer__text li + li {
+  margin-top: 2px;
+}
+
+.explain-answer__text code {
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-active);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.explain-answer__text pre {
+  padding: var(--space-3);
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  line-height: var(--leading-code);
+}
+
+.explain-answer__text pre code {
+  padding: 0;
+  background: none;
+}
+
+.explain-answer__text blockquote {
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--border-strong);
+  color: var(--text-secondary);
+}
+
+.explain-answer__text a {
+  color: var(--accent-text);
+}
+
+.explain-answer__text table {
+  margin: 0 0 var(--space-2);
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.explain-answer__text :is(th, td) {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+/* Blinks while text arrives (off with prefers-reduced-motion, base.css). */
+.explain-answer__cursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  margin-top: var(--space-1);
+  border-radius: 1px;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  animation: explain-blink 1s steps(2, start) infinite;
+}
+
+@keyframes explain-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.explain-answer__meta,
+.explain-answer__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- follow-up question, kept at the bottom of the tab ---- */
+
+.explain-follow-up {
+  position: sticky;
+  bottom: calc(-1 * var(--space-3));
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  margin: 0 calc(-1 * var(--space-3)) calc(-1 * var(--space-3));
+  padding: var(--space-3);
+  border-top: 1px solid var(--border);
+  background: var(--bg-panel);
+}
+
+.explain-follow-up__input {
+  flex: 1;
+  height: auto;
+  min-height: 48px;
+  max-height: 160px;
+  padding: 6px var(--space-2);
+  font-family: inherit;
+  line-height: var(--leading);
+  resize: vertical;
+}
+
+.explain-follow-up__input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.explain-follow-up__limit {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- "Show prompt" dialog ---- */
+
+.prompt-dialog .dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.prompt-sections {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prompt-sections__item {
+  display: contents;
+}
+
+.prompt-sections__omitted {
+  padding: 0 7px;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  text-decoration: line-through;
+}
+
+.prompt-sections__reason {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.prompt-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.prompt-block__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.prompt-block__size {
+  margin-left: var(--space-2);
+  color: var(--text-muted);
+  font-weight: var(--weight-regular);
+}
+
+.prompt-block__text {
+  max-height: 50vh;
+  overflow: auto;
+}

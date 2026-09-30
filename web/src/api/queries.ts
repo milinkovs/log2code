@@ -6,7 +6,7 @@ import {
   useQuery,
 } from '@tanstack/react-query';
 import { ApiError, api } from './client';
-import type { LogSearchParams, LogSearchResponse, NeighborScope } from './types';
+import type { ExplainLevel, LogSearchParams, LogSearchResponse, NeighborScope } from './types';
 
 /** Page size of the log list; a short page means there is nothing more to load. */
 export const LOG_PAGE_SIZE = 100;
@@ -26,6 +26,9 @@ export const queryKeys = {
   source: (fileId: string) => ['sources', fileId] as const,
   method: (methodId: string) => ['methods', 'detail', methodId] as const,
   methodCallers: (methodId: string) => ['methods', 'callers', methodId] as const,
+  llmModels: () => ['llm', 'models'] as const,
+  explainPrompt: (logId: string, level: ExplainLevel) =>
+    ['logs', 'explain-prompt', logId, level] as const,
 };
 
 export function createQueryClient(): QueryClient {
@@ -184,5 +187,27 @@ export function useMethodCallers(methodId: string, enabled: boolean) {
     queryFn: ({ signal }) => api.getMethodCallers(methodId, signal),
     enabled: enabled && !!methodId,
     staleTime: Infinity,
+  });
+}
+
+/** Models the explain tab offers and whether a Gemini key is set (T40); fixed while the API runs. */
+export function useLlmModels() {
+  return useQuery({
+    queryKey: queryKeys.llmModels(),
+    queryFn: ({ signal }) => api.getLlmModels(signal),
+    staleTime: Infinity,
+  });
+}
+
+/**
+ * The prompt the explain tab would send for a log at a level (T41), loaded only when `enabled`
+ * ("Show prompt"). Built from indexed data, so it does not change while someone browses.
+ */
+export function useExplainPrompt(logId: string, level: ExplainLevel, enabled: boolean) {
+  return useQuery({
+    queryKey: queryKeys.explainPrompt(logId, level),
+    queryFn: ({ signal }) => api.getExplainPrompt(logId, level, signal),
+    enabled: enabled && !!logId,
+    staleTime: 5 * 60_000,
   });
 }

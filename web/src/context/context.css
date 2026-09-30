@@ -532,7 +532,7 @@ button.tree-row__toggle:hover {
   background: var(--service-color);
 }
 
-/* Five tabs (T30) do not fit a narrow zone: below 640px only the icons show, with a tooltip;
+/* Six tabs (T30, T43) do not fit a narrow zone: below 640px only the icons show, with a tooltip;
    the label stays for screen readers, like the filter buttons of a narrow top bar (T27). */
 .context-zone .zone__header {
   container-type: inline-size;

@@ -16,6 +16,8 @@ export interface ProblemDetail {
   status?: number;
   detail?: string;
   instance?: string;
+  /** Machine-readable reason, when the API sends one (503 `llm_not_configured`, T42). */
+  code?: string;
 }
 
 // ---- logs (T23) ----
@@ -438,3 +440,91 @@ export interface ReviewQueueParams {
   limit?: number;
   seed?: number;
 }
+
+// ---- LLM explanation (T40–T43, docs/llm-explain.md) ----
+
+export interface LlmModel {
+  id: string;
+  label: string;
+}
+
+/** `GET /api/llm/models` (T40): `configured` is false when no Gemini API key is set. */
+export interface LlmModels {
+  configured: boolean;
+  defaultModel: string;
+  models: LlmModel[];
+}
+
+/** Cumulative context levels (10.1): each adds to the one before. */
+export type ExplainLevel = 'L0' | 'L1' | 'L2' | 'L3' | 'L4';
+
+/** Stable ids of the prompt sections (T41), always all eight, in this order. */
+export type ExplainSectionId =
+  'log' | 'exception' | 'statement' | 'method' | 'flow' | 'stackCode' | 'callers' | 'neighbors';
+
+/**
+ * One prompt section: whether it is in the prompt and, if not (or only partly), why. The set of
+ * reasons is open (`level`, `unmatched`, `library`, `truncated`, …), so `reason` is a string.
+ */
+export interface ExplainSection {
+  id: ExplainSectionId | string;
+  included: boolean;
+  reason: string | null;
+}
+
+/** `GET /api/logs/{logId}/explain/prompt?level=` (T41): exactly what would be sent to the model. */
+export interface ExplainPrompt {
+  promptVersion: number;
+  level: ExplainLevel;
+  systemPrompt: string;
+  userPrompt: string;
+  promptChars: number;
+  sections: ExplainSection[];
+}
+
+/** One turn of the conversation after the first (context) message (T42). */
+export interface ExplainTurn {
+  role: 'model' | 'user';
+  text: string;
+}
+
+/** Body of `POST /api/logs/{logId}/explain` (T42). `turns` is empty for the first explanation. */
+export interface ExplainRequest {
+  level: ExplainLevel;
+  model: string;
+  turns: ExplainTurn[];
+}
+
+export type ExplainErrorCode = 'invalid_key' | 'rate_limited' | 'blocked' | 'timeout' | 'upstream';
+
+/** Server-Sent Events of the explain stream (T42): `meta`, `delta`…, then `done` or `error`. */
+export interface ExplainMetaEvent {
+  type: 'meta';
+  level: ExplainLevel;
+  model: string;
+  promptVersion: number;
+  promptChars: number;
+  sections: ExplainSection[];
+}
+
+export interface ExplainDeltaEvent {
+  type: 'delta';
+  text: string;
+}
+
+export interface ExplainDoneEvent {
+  type: 'done';
+  finishReason: string;
+  promptTokens: number | null;
+  outputTokens: number | null;
+  durationMs: number;
+}
+
+export interface ExplainErrorEvent {
+  type: 'error';
+  code: ExplainErrorCode | string;
+  message: string;
+}
+
+export type ExplainEvent =
+  ExplainMetaEvent | ExplainDeltaEvent | ExplainDoneEvent | ExplainErrorEvent;
