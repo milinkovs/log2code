@@ -1,0 +1,28 @@
+dataset_id: test-02
+description: "Oracle test sesija (K3): chaos 9/9 prvo, CRUD, S1x3, S2x3, stop customers"
+created_at: 2026-10-08T19:03:13+02:00
+oracle: true
+log_format: spring-boot-default
+code:
+  name: spring-petclinic-microservices
+  version: da4784072d5f7e5ea268dc62fd0237ba31da5094
+files:
+  - path: logs/config-server.log.gz
+    service: config-server
+    module: spring-petclinic-config-server
+  - path: logs/discovery-server.log.gz
+    service: discovery-server
+    module: spring-petclinic-discovery-server
+  - path: logs/customers-service.log.gz
+    service: customers-service
+    module: spring-petclinic-customers-service
+  - path: logs/visits-service.log.gz
+    service: visits-service
+    module: spring-petclinic-visits-service
+  - path: logs/vets-service.log.gz
+    service: vets-service
+    module: spring-petclinic-vets-service
+  - path: logs/api-gateway.log.gz
+    service: api-gateway
+    module: spring-petclinic-api-gateway
+notes: ""
