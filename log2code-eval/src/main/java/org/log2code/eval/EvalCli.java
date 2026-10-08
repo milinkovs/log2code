@@ -1,7 +1,10 @@
 package org.log2code.eval;
 
 import java.util.concurrent.Callable;
+import org.log2code.eval.cli.AblateCommand;
 import org.log2code.eval.cli.RunCommand;
+import org.log2code.eval.cli.TuneCommand;
+import org.log2code.eval.cli.ValidateCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.IExecutionExceptionHandler;
@@ -13,7 +16,8 @@ import picocli.CommandLine.ScopeType;
 
 /**
  * log2code evaluation CLI (T33): measures how well log events were linked to their log statements,
- * using the oracle ground truth of a dataset and manual labels. T34 adds {@code ablate} and {@code tune}.
+ * using the oracle ground truth of a dataset and manual labels. {@code run} evaluates an ingested dataset (T33); {@code ablate},
+ * {@code tune} and {@code validate} (T34) replay the matcher in memory to measure components and tune the weights.
  *
  * <p>Exit codes (0.14): {@code 0} success, {@code 1} user/input error, {@code 2} internal error.
  */
@@ -22,7 +26,7 @@ import picocli.CommandLine.ScopeType;
     mixinStandardHelpOptions = true,
     version = "log2code-eval",
     description = "Measures the accuracy of linking log events to log statements.",
-    subcommands = {RunCommand.class, CommandLine.HelpCommand.class}
+    subcommands = {RunCommand.class, AblateCommand.class, TuneCommand.class, ValidateCommand.class, CommandLine.HelpCommand.class}
 )
 public final class EvalCli implements Callable<Integer> {
 

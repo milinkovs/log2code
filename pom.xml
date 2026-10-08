@@ -59,6 +59,11 @@
         <artifactId>log2code-core</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.log2code</groupId>
+        <artifactId>log2code-ingester</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!-- AST -->
       <dependency>

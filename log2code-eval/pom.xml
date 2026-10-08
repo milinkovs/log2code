@@ -23,6 +23,15 @@
       <groupId>org.log2code</groupId>
       <artifactId>log2code-core</artifactId>
     </dependency>
+    <!-- T34: ablations and tuning run the ingester's Matcher, EventAssembler and CatalogIndex in memory (ADR-044 point 8) -->
+    <dependency>
+      <groupId>org.log2code</groupId>
+      <artifactId>log2code-ingester</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+    </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>

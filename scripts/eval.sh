@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs the log2code-eval CLI (T33). Usage: scripts/eval.sh <command> [options...]
+# Runs the log2code-eval CLI (T33 run; T34 ablate, tune, validate). Usage: scripts/eval.sh <command> [options...]
 # Always runs from the log2code/ repo root, regardless of the caller's working directory,
 # so relative paths (docs/eval/, config/) resolve correctly.
 set -euo pipefail

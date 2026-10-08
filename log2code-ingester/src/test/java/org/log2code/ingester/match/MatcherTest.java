@@ -239,13 +239,75 @@ class MatcherTest {
             .contains("stmt-owner");
     }
 
+    @Test
+    void loggerOnlyModeLeavesOutCandidatesThatOnlyTheTokensFind() {
+        CatalogEntry shared = entry("stmt-shared", "org.log2code.fixture.X", "org.log2code.fixture.X",
+            "class_literal", Level.INFO, false, "Shared message", "literal", false);
+        CatalogEntry other = entry("stmt-other", "org.log2code.fixture.Y", "org.log2code.fixture.Y",
+            "class_literal", Level.INFO, false, "Something else entirely", "literal", false);
+        // The logger resolves to Y, whose own statement does not match the message; only the tokens find X.
+        LogEvent event = event("org.log2code.fixture.Y", Level.INFO, "Shared message", false);
+
+        MatchResult both = matcher(List.of(shared, other), List.of(), CandidateMode.BOTH).match(event);
+        MatchResult loggerOnly = matcher(List.of(shared, other), List.of(), CandidateMode.LOGGER_ONLY).match(event);
+        MatchResult tokensOnly = matcher(List.of(shared, other), List.of(), CandidateMode.TOKENS_ONLY).match(event);
+
+        assertThat(both.statementId()).isEqualTo("stmt-shared");
+        assertThat(loggerOnly.status()).isEqualTo(MatchResult.STATUS_UNMATCHED);
+        assertThat(loggerOnly.candidates()).isEmpty();
+        assertThat(tokensOnly.statementId()).isEqualTo("stmt-shared");
+        assertThat(tokensOnly.scoreBreakdown()).containsEntry("logger_conflict", CONFIG.weights().loggerConflict());
+    }
+
+    @Test
+    void tokensOnlyModeLeavesOutCandidatesThatOnlyTheLoggerFinds() {
+        // A "{}" template has no constant tokens, so only byLogger can ever propose it.
+        CatalogEntry dynamic = entry("stmt-dynamic", "org.log2code.fixture.Z", "org.log2code.fixture.Z",
+            "class_literal", Level.INFO, false, "{}", "dynamic", false);
+        LogEvent event = event("org.log2code.fixture.Z", Level.INFO, "anything at all", false);
+
+        MatchResult both = matcher(List.of(dynamic), List.of(), CandidateMode.BOTH).match(event);
+        MatchResult loggerOnly = matcher(List.of(dynamic), List.of(), CandidateMode.LOGGER_ONLY).match(event);
+        MatchResult tokensOnly = matcher(List.of(dynamic), List.of(), CandidateMode.TOKENS_ONLY).match(event);
+
+        assertThat(both.statementId()).isEqualTo("stmt-dynamic");
+        assertThat(loggerOnly.statementId()).isEqualTo("stmt-dynamic");
+        assertThat(tokensOnly.status()).isEqualTo(MatchResult.STATUS_UNMATCHED);
+        assertThat(tokensOnly.candidates()).isEmpty();
+    }
+
+    @Test
+    void theDefaultConstructorBehavesAsBothMode() {
+        CatalogEntry a = entry("stmt-a", "org.log2code.fixture.A", "org.log2code.fixture.A",
+            "class_literal", Level.INFO, false, "Handling request", "literal", false);
+        CatalogEntry b = entry("stmt-b", "org.log2code.fixture.B", "org.log2code.fixture.B",
+            "class_literal", Level.INFO, false, "Handling request", "literal", false);
+        AnalysisRun run = run();
+        CatalogIndex index = CatalogIndex.build(run, List.of(a, b), List.of());
+        Matcher implicit = new Matcher(index, CONFIG);
+        Matcher explicit = new Matcher(index, CONFIG, CandidateMode.BOTH);
+
+        for (LogEvent event : List.of(
+            event("org.log2code.fixture.A", Level.INFO, "Handling request", false),
+            event("org.log2code.fixture.B", Level.WARN, "Handling request", true),
+            event("com.unrelated.Nothing", Level.INFO, "Handling request", false))) {
+            assertThat(implicit.match(event)).isEqualTo(explicit.match(event));
+        }
+    }
+
     private static Matcher matcher(List<CatalogEntry> entries, List<TypeInfo> types) {
-        AnalysisRun run = new AnalysisRun("run-1", CodeUnit.TYPE_PROJECT, PROJECT,
+        return matcher(entries, types, CandidateMode.BOTH);
+    }
+
+    private static Matcher matcher(List<CatalogEntry> entries, List<TypeInfo> types, CandidateMode mode) {
+        return new Matcher(CatalogIndex.build(run(), entries, types), CONFIG, mode);
+    }
+
+    private static AnalysisRun run() {
+        return new AnalysisRun("run-1", CodeUnit.TYPE_PROJECT, PROJECT,
             "https://example.invalid/matcher-fixture", "test-analyzer",
             Instant.parse("2026-09-24T10:00:00Z"), Instant.parse("2026-09-24T10:00:05Z"), 1000, Map.of(),
             List.of(new ModuleInfo("matcher-fixture-mod", SERVICE, List.of("src/main/java"), List.of(), List.of())));
-        CatalogIndex index = CatalogIndex.build(run, entries, types);
-        return new Matcher(index, CONFIG);
     }
 
     private static LogEvent event(String loggerRaw, Level level, String message, boolean hasException) {

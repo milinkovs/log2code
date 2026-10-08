@@ -29,9 +29,7 @@ import org.opensearch.client.opensearch.OpenSearchClient;
  */
 public final class Wiring {
 
-    private static final Path MATCHING_CONFIG_FILE = Path.of("config/matching.yml");
-    private static final Path LOG_FORMATS_CONFIG_FILE = Path.of("config/log-formats.yml");
-    private static final Path CODE_UNITS_CONFIG_FILE = Path.of("config/code-units.yml");
+    private static final Path DEFAULT_CONFIG_DIR = Path.of("config");
 
     private Wiring() {
     }
@@ -40,16 +38,22 @@ public final class Wiring {
     }
 
     public static Components build(OpenSearchClient client, IndexNames indexNames, DatasetManifest manifest) throws IOException {
+        return build(client, indexNames, manifest, DEFAULT_CONFIG_DIR);
+    }
+
+    /** As above, reading {@code matching.yml}, {@code log-formats.yml} and {@code code-units.yml} from {@code configDir} (tests and tools run elsewhere than the repo root). */
+    public static Components build(OpenSearchClient client, IndexNames indexNames, DatasetManifest manifest, Path configDir)
+            throws IOException {
         CatalogIndex catalogIndex = CatalogIndex.load(client, manifest.code().name(), manifest.code().version());
 
-        MatchingConfig matchingConfig = MatchingConfigLoader.load(MATCHING_CONFIG_FILE);
+        MatchingConfig matchingConfig = MatchingConfigLoader.load(configDir.resolve("matching.yml"));
         Matcher matcher = new Matcher(catalogIndex, matchingConfig);
 
-        LogFormatRegistry formats = LogFormatRegistry.load(LOG_FORMATS_CONFIG_FILE);
+        LogFormatRegistry formats = LogFormatRegistry.load(configDir.resolve("log-formats.yml"));
         LineParser lineParser = formats.get(manifest.logFormat());
         EventAssembler assembler = new EventAssembler(lineParser, matchingConfig.oracle().unreliableCallers());
 
-        CodeUnitsConfig codeUnitsConfig = CodeUnitsConfigLoader.load(CODE_UNITS_CONFIG_FILE);
+        CodeUnitsConfig codeUnitsConfig = CodeUnitsConfigLoader.load(configDir.resolve("code-units.yml"));
         GithubLinker linker = new GithubLinker(codeUnitsConfig, catalogIndex.projectRepoUrl());
         DocumentReader reader = new DocumentReader(client);
         Predicate<String> dependencySourceExists = fileId -> existsUnchecked(reader, indexNames.sources(), fileId);

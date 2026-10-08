@@ -42,11 +42,18 @@ public final class Matcher {
 
     private final CatalogIndex index;
     private final MatchingConfig config;
+    private final CandidateMode candidateMode;
     private final LruCache<CacheKey, Outcome> cache = new LruCache<>(100_000);
 
     public Matcher(CatalogIndex index, MatchingConfig config) {
+        this(index, config, CandidateMode.BOTH);
+    }
+
+    /** {@code candidateMode} other than {@link CandidateMode#BOTH} is for T34's ablations only. */
+    public Matcher(CatalogIndex index, MatchingConfig config, CandidateMode candidateMode) {
         this.index = Objects.requireNonNull(index, "index");
         this.config = Objects.requireNonNull(config, "config");
+        this.candidateMode = Objects.requireNonNull(candidateMode, "candidateMode");
     }
 
     /** 0.10 in full: candidates, scoring, decision. Cached per event (see the class javadoc). */
@@ -98,9 +105,10 @@ public final class Matcher {
         String message = event.message() == null ? "" : event.message();
         Resolution resolution = index.loggerResolver().resolve(event.loggerRaw(), service);
 
-        List<CatalogKey> byLogger = index.byLogger(resolution.names(), service);
-        List<String> messageTokens = Tokenizer.tokens(message);
-        List<CatalogKey> byTokens = index.byTokens(messageTokens, service, config.candidates().topKTokens());
+        List<CatalogKey> byLogger = candidateMode == CandidateMode.TOKENS_ONLY
+            ? List.of() : index.byLogger(resolution.names(), service);
+        List<CatalogKey> byTokens = candidateMode == CandidateMode.LOGGER_ONLY
+            ? List.of() : index.byTokens(Tokenizer.tokens(message), service, config.candidates().topKTokens());
 
         Set<CatalogKey> pool = new LinkedHashSet<>(byLogger);
         pool.addAll(byTokens);
