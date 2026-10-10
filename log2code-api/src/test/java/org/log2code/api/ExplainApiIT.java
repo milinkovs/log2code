@@ -154,7 +154,7 @@ class ExplainApiIT {
 
         assertThat(prompt.promptVersion()).isEqualTo(1);
         assertThat(prompt.level()).isEqualTo("L4");
-        assertThat(prompt.systemPrompt()).startsWith("Ti si iskusan Java i Spring Boot inženjer.");
+        assertThat(prompt.systemPrompt()).startsWith("Ti si iskusan Java inženjer.");
         assertThat(prompt.promptChars()).isEqualTo(prompt.userPrompt().length());
         assertThat(prompt.sections()).extracting(ExplainSectionDto::id)
             .containsExactly("log", "exception", "statement", "method", "flow", "stackCode", "callers", "neighbors");

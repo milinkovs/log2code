@@ -27,7 +27,7 @@ class ExplainPromptServiceTest {
         assertThat(prompt.promptVersion()).isEqualTo(1);
         assertThat(prompt.level()).isEqualTo(ExplainLevel.L2);
         assertThat(prompt.userPrompt()).startsWith("# Log zapis\n").contains("# Uslovi i tok do loga");
-        assertThat(prompt.systemPrompt()).startsWith("Ti si iskusan Java i Spring Boot inženjer.");
+        assertThat(prompt.systemPrompt()).startsWith("Ti si iskusan Java inženjer.");
     }
 
     @Test
